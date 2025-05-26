@@ -29,7 +29,8 @@ function ImageDetailSection({ selectedPublicId, originalImageUrl, isDetailModalO
       open={isDetailModalOpen} // 使用新的状态控制模态框显示
       onCancel={handleCancel}
       footer={null} // 不显示底部按钮
-      width={800} // 调整模态框宽度
+      width={'80%'} // 调整模态框宽度为百分比
+      style={{ maxWidth: '800px' }} // 设置最大宽度
       centered // 居中显示
     >
       <Space direction="vertical" style={{ width: '100%', alignItems: 'center' }}>

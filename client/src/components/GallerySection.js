@@ -97,15 +97,16 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
     <section style={{ marginBottom: '20px' }}>
       {contextHolder} {/* 渲染 contextHolder */}
       <h2>图片画廊</h2>
-      <Space style={{ marginBottom: '16px', width: '100%', justifyContent: 'space-between' }}>
-        <Space>
+      {/* 调整 Space 布局以适应小屏幕，使用 wrap 属性 */}
+      <div style={{ marginBottom: '16px' }}>
+        <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start' }}>
           <span style={{ whiteSpace: 'nowrap' }}>当前文件夹: </span>
           <Input
             prefix={<FolderOutlined />}
             placeholder="输入文件夹名称"
             value={folderInput}
             onChange={(e) => setFolderInput(e.target.value)}
-            style={{ width: 200 }}
+            style={{ flexGrow: 1, minWidth: '150px', maxWidth: 'calc(100% - 100px)' }} // 调整宽度，确保不会溢出
           />
           <Button
             type="primary"
@@ -118,7 +119,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
             跳转
           </Button>
         </Space>
-        <Space>
+        <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start', marginTop: '16px' }}>
           <Input.Search
             placeholder="按标签搜索 (例如: nature)"
             enterButton={<SearchOutlined />}
@@ -131,11 +132,11 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
                 message.warning('请输入要搜索的标签。');
               }
             }}
-            style={{ width: 250 }}
+            style={{ flexGrow: 1, minWidth: '200px', maxWidth: 'calc(100% - 100px)' }} // 调整宽度，确保不会溢出
           />
           <Button onClick={() => { setSearchTagInput(''); fetchAndDisplayImages(''); }}>清除搜索</Button>
         </Space>
-      </Space>
+      </div>
 
       <Spin spinning={loading} tip="加载图片中...">
         {error && <Empty description={`获取图片失败: ${error}`} />}
