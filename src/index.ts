@@ -59,7 +59,7 @@ export default {
     } catch (error: any) {
       console.error('Worker Request Handling Error:', error);
       return new Response(JSON.stringify({ error: 'Internal Server Error', details: error.message }), {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
         status: 500
       });
     }
@@ -79,6 +79,19 @@ async function handleAuthenticatedRequest(request: Request, env: { CLOUDINARY_CL
   const CLOUD_NAME = env.CLOUDINARY_CLOUD_NAME;
   const API_KEY = env.CLOUDINARY_API_KEY;
   const API_SECRET = env.CLOUDINARY_API_SECRET;
+
+  // 处理 OPTIONS 请求，用于 CORS 预检
+  if (method === 'OPTIONS') {
+    return new Response(null, {
+      headers: {
+        'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Max-Age': '86400',
+      },
+      status: 204,
+    });
+  }
 
   switch (path) {
     case '/api/upload':
@@ -110,7 +123,14 @@ async function handleAuthenticatedRequest(request: Request, env: { CLOUDINARY_CL
 
   // 如果不是 API 请求，则尝试服务静态文件
   // 使用 ASSETS 绑定来服务 Cloudflare Pages 上的静态文件
-  return env.ASSETS.fetch(request);
+  const assetResponse = await env.ASSETS.fetch(request);
+  const newHeaders = new Headers(assetResponse.headers);
+  newHeaders.set('Access-Control-Allow-Origin', 'https://k-edit.10110531.xyz');
+  return new Response(assetResponse.body, {
+    status: assetResponse.status,
+    statusText: assetResponse.statusText,
+    headers: newHeaders,
+  });
 }
 
 /**
@@ -129,7 +149,7 @@ async function handleUpload(request: Request, cloudName: string, apiKey: string,
     const tags = formData.get('tags') as string | null;
 
     if (!file || !(file instanceof File)) {
-      return new Response(JSON.stringify({ error: 'No valid file uploaded.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+      return new Response(JSON.stringify({ error: 'No valid file uploaded.' }), { status: 400, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' } });
     }
 
     const timestamp = Math.round((new Date()).getTime() / 1000);
@@ -165,13 +185,13 @@ async function handleUpload(request: Request, cloudName: string, apiKey: string,
     if (response.ok) {
       console.log('图片上传成功:', result);
       return new Response(JSON.stringify(result), {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
         status: 200
       });
     } else {
       console.error('Cloudinary 图片上传失败:', result);
       return new Response(JSON.stringify({ error: 'Cloudinary upload failed.', details: (result as any).error?.message || 'Unknown error' }), {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
         status: response.status
       });
     }
@@ -179,7 +199,7 @@ async function handleUpload(request: Request, cloudName: string, apiKey: string,
   } catch (error: any) {
     console.error('图片上传失败:', error);
     return new Response(JSON.stringify({ error: 'Image upload failed.', details: error.message }), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
       status: 500
     });
   }
@@ -236,20 +256,20 @@ async function handleGetImages(request: Request, cloudName: string, apiKey: stri
       images = images.filter((image: any) => !image.public_id.includes('cld-sample') && !image.public_id.includes('samples/'));
 
       return new Response(JSON.stringify(images), {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
         status: 200
       });
     } else {
       console.error('Cloudinary 获取图片列表失败:', result);
       return new Response(JSON.stringify({ error: 'Failed to fetch images from Cloudinary.', details: (result as any).error?.message || 'Unknown error' }), {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
         status: response.status
       });
     }
   } catch (error: any) {
     console.error('获取图片列表失败:', error);
     return new Response(JSON.stringify({ error: 'Failed to fetch images.', details: error.message }), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
       status: 500
     });
   }
@@ -269,7 +289,7 @@ async function handleTransformImage(request: Request, cloudName: string): Promis
     const transformationsJson = url.searchParams.get('transformations');
 
     if (!public_id) {
-      return new Response(JSON.stringify({ error: 'Public ID is required.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+      return new Response(JSON.stringify({ error: 'Public ID is required.' }), { status: 400, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' } });
     }
 
     let transformations: Record<string, any> = {}; // 明确类型
@@ -277,7 +297,7 @@ async function handleTransformImage(request: Request, cloudName: string): Promis
       try {
         transformations = JSON.parse(transformationsJson);
       } catch (parseError: any) { // 明确指定 error 类型为 any
-        return new Response(JSON.stringify({ error: 'Invalid transformations JSON.', details: parseError.message }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+        return new Response(JSON.stringify({ error: 'Invalid transformations JSON.', details: parseError.message }), { status: 400, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' } });
       }
     }
 
@@ -406,13 +426,13 @@ async function handleTransformImage(request: Request, cloudName: string): Promis
     const transformedUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${transformationString}/${public_id}`;
 
     return new Response(JSON.stringify({ transformed_url: transformedUrl }), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
       status: 200
     });
   } catch (error: any) {
     console.error('生成转换图片 URL 失败:', error);
     return new Response(JSON.stringify({ error: 'Failed to generate transformed image URL.', details: error.message }), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
       status: 500
     });
   }
@@ -431,13 +451,13 @@ async function handleSaveTransformedImage(request: Request, cloudName: string, a
     const { imageUrl, folder } = await request.json() as { imageUrl: string; folder?: string };
 
     if (!imageUrl) {
-      return new Response(JSON.stringify({ error: 'Image URL is required.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+      return new Response(JSON.stringify({ error: 'Image URL is required.' }), { status: 400, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' } });
     }
 
     // 获取图片内容并转换为 Blob
     const imageResponse = await fetch(imageUrl);
     if (!imageResponse.ok) {
-      return new Response(JSON.stringify({ error: `Failed to fetch image from URL: ${imageUrl}` }), { status: imageResponse.status, headers: { 'Content-Type': 'application/json' } });
+      return new Response(JSON.stringify({ error: `Failed to fetch image from URL: ${imageUrl}` }), { status: imageResponse.status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' } });
     }
     const imageBlob = await imageResponse.blob();
 
@@ -467,13 +487,13 @@ async function handleSaveTransformedImage(request: Request, cloudName: string, a
     if (response.ok) {
       console.log('转换后图片保存成功:', result);
       return new Response(JSON.stringify(result), {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
         status: 200
       });
     } else {
       console.error('Cloudinary 保存转换后图片失败:', result);
       return new Response(JSON.stringify({ error: 'Cloudinary save failed.', details: (result as any).error?.message || 'Unknown error' }), {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
         status: response.status
       });
     }
@@ -481,7 +501,7 @@ async function handleSaveTransformedImage(request: Request, cloudName: string, a
   } catch (error: any) {
     console.error('保存转换后图片失败:', error);
     return new Response(JSON.stringify({ error: 'Failed to save transformed image.', details: error.message }), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
       status: 500
     });
   }
@@ -501,7 +521,7 @@ async function handleDeleteImage(request: Request, cloudName: string, apiKey: st
     const public_id = url.searchParams.get('public_id');
 
     if (!public_id) {
-      return new Response(JSON.stringify({ error: 'Public ID is required.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+      return new Response(JSON.stringify({ error: 'Public ID is required.' }), { status: 400, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' } });
     }
 
     const timestamp = Math.round((new Date()).getTime() / 1000);
@@ -529,13 +549,13 @@ async function handleDeleteImage(request: Request, cloudName: string, apiKey: st
     if (response.ok) {
       console.log('图片删除成功:', result);
       return new Response(JSON.stringify(result), {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
         status: 200
       });
     } else {
       console.error('Cloudinary 删除图片失败:', result);
       return new Response(JSON.stringify({ error: 'Cloudinary delete failed.', details: (result as any).error?.message || 'Unknown error' }), {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
         status: response.status
       });
     }
@@ -543,7 +563,7 @@ async function handleDeleteImage(request: Request, cloudName: string, apiKey: st
   } catch (error: any) {
     console.error('删除图片失败:', error);
     return new Response(JSON.stringify({ error: 'Failed to delete image.', details: error.message }), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://k-edit.10110531.xyz' },
       status: 500
     });
   }
