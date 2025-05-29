@@ -1,11 +1,9 @@
-import { DeleteOutlined, FolderOutlined, SearchOutlined } from '@ant-design/icons'; // 导入 Ant Design 图标
-import { Button, Card, Empty, Input, List, message, Space, Spin } from 'antd'; // 导入 Ant Design 组件
+import { DeleteOutlined, FolderOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, Card, Empty, Input, List, message, Space, Spin, Tag } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
-import { deleteImage, fetchImages } from '../api'; // 导入 API 函数
+import { deleteImage, fetchImages } from '../api';
 
-const { useMessage } = message; // 解构 message
-
-const { Meta } = Card; // 解构 Card 组件
+const { Meta } = Card;
 
 /**
  * GallerySection 组件：显示图片画廊，处理文件夹导航和标签搜索
@@ -16,10 +14,11 @@ const { Meta } = Card; // 解构 Card 组件
  * @param {function} props.setOriginalImageUrl - 设置当前选中图片原图 URL 的回调函数
  * @param {number} props.refreshTrigger - 用于触发画廊刷新的依赖项
  * @param {function} props.setIsDetailModalOpen - 设置图片详情模态框打开状态的回调函数
+ * @param {boolean} props.darkMode - 是否处于暗黑模式
  * @returns {JSX.Element} - 图片画廊部分的 JSX 元素
  */
-function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, setOriginalImageUrl, refreshTrigger, setIsDetailModalOpen }) {
-  const [messageApi, contextHolder] = useMessage(); // 获取 messageApi 和 contextHolder
+function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, setOriginalImageUrl, refreshTrigger, setIsDetailModalOpen, darkMode }) {
+  const [messageApi, contextHolder] = message.useMessage();
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,15 +37,15 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
     try {
       const fetchedImages = await fetchImages(folder, tag);
       setImages(fetchedImages);
-      setCurrentFolder(folder); // 更新父组件的当前文件夹状态
+      setCurrentFolder(folder);
     } catch (err) {
-      messageApi.error(`获取图片失败: ${err.message}`); // 使用 messageApi
+      messageApi.error(`获取图片失败: ${err.message}`);
       setError(err.message);
       setImages([]);
     } finally {
       setLoading(false);
     }
-  }, [setCurrentFolder, messageApi]); // 依赖 setCurrentFolder 和 messageApi
+  }, [setCurrentFolder, messageApi]);
 
   // 组件挂载时、currentFolder 变化时和 refreshTrigger 变化时获取图片
   useEffect(() => {
@@ -61,7 +60,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
   const handleImageClick = (image) => {
     setSelectedPublicId(image.public_id);
     setOriginalImageUrl(image.secure_url);
-    setIsDetailModalOpen(true); // 打开图片详情模态框
+    setIsDetailModalOpen(true);
   };
 
   /**
@@ -70,43 +69,37 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
    * @returns {Promise<void>}
    */
   const handleDeleteImage = async (publicId) => {
-    console.log('handleDeleteImage: 尝试删除图片，publicId:', publicId); // 添加日志
-
-    // 使用浏览器原生的 confirm 替代 Ant Design 的 Modal.confirm 进行测试
     if (!window.confirm('确定要删除这张图片吗？此操作不可逆！')) {
-      console.log('用户取消删除。'); // 添加日志
-      return; // 用户取消删除
+      return;
     }
 
-    console.log('用户确认删除。'); // 添加日志
     try {
-      console.log('调用 deleteImage API...'); // 添加日志
       await deleteImage(publicId);
-      console.log('deleteImage API 调用成功。'); // 添加日志
-      messageApi.success('图片已成功删除！'); // 使用 messageApi
-      setSelectedPublicId(null); // 清空选中状态
+      messageApi.success('图片已成功删除！');
+      setSelectedPublicId(null);
       setOriginalImageUrl(null);
-      fetchAndDisplayImages(currentFolder); // 刷新画廊
+      fetchAndDisplayImages(currentFolder);
     } catch (err) {
-      console.error('删除图片错误:', err); // 添加日志
-      messageApi.error(`删除失败: ${err.message}`); // 使用 messageApi
+      messageApi.error(`删除失败: ${err.message}`);
     }
   };
 
   return (
-    <section style={{ marginBottom: '20px' }}>
-      {contextHolder} {/* 渲染 contextHolder */}
+    <section className="animated-section" style={{ marginBottom: '20px' }}>
+      {contextHolder}
       <h2>图片画廊</h2>
-      {/* 调整 Space 布局以适应小屏幕，使用 wrap 属性 */}
+      
       <div style={{ marginBottom: '16px' }}>
         <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start' }}>
-          <span style={{ whiteSpace: 'nowrap' }}>当前文件夹: </span>
+          <Tag color={darkMode ? "purple" : "geekblue"} style={{ fontSize: '1rem', padding: '5px 10px' }}>
+            当前文件夹: {currentFolder || '全部'}
+          </Tag>
           <Input
-            prefix={<FolderOutlined />}
+            prefix={<FolderOutlined style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }} />}
             placeholder="输入文件夹名称"
             value={folderInput}
             onChange={(e) => setFolderInput(e.target.value)}
-            style={{ flexGrow: 1, minWidth: '150px', maxWidth: 'calc(100% - 100px)' }} // 调整宽度，确保不会溢出
+            style={{ flexGrow: 1, minWidth: '150px', maxWidth: 'calc(100% - 100px)' }}
           />
           <Button
             type="primary"
@@ -115,14 +108,16 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
               setFolderInput('');
               setSearchTagInput('');
             }}
+            style={{ background: darkMode ? 'linear-gradient(135deg, #7e22ce, #8b5cf6)' : 'linear-gradient(135deg, #8b5cf6, #7e22ce)' }}
           >
             跳转
           </Button>
         </Space>
+        
         <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start', marginTop: '16px' }}>
           <Input.Search
             placeholder="按标签搜索 (例如: nature)"
-            enterButton={<SearchOutlined />}
+            enterButton={<SearchOutlined style={{ color: darkMode ? '#e9d5ff' : '#7e22ce' }} />}
             value={searchTagInput}
             onChange={(e) => setSearchTagInput(e.target.value)}
             onSearch={(value) => {
@@ -132,15 +127,25 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
                 message.warning('请输入要搜索的标签。');
               }
             }}
-            style={{ flexGrow: 1, minWidth: '200px', maxWidth: 'calc(100% - 100px)' }} // 调整宽度，确保不会溢出
+            style={{ flexGrow: 1, minWidth: '200px', maxWidth: 'calc(100% - 100px)' }}
           />
-          <Button onClick={() => { setSearchTagInput(''); fetchAndDisplayImages(''); }}>清除搜索</Button>
+          <Button 
+            onClick={() => { 
+              setSearchTagInput(''); 
+              fetchAndDisplayImages(''); 
+            }}
+            style={{ borderColor: darkMode ? '#7e22ce' : '#8b5cf6', color: darkMode ? '#e9d5ff' : '#7e22ce' }}
+          >
+            清除搜索
+          </Button>
         </Space>
       </div>
 
-      <Spin spinning={loading} tip="加载图片中...">
+      <Spin spinning={loading} tip="加载图片中..." indicator={<div className="custom-spin" />}>
         {error && <Empty description={`获取图片失败: ${error}`} />}
-        {!loading && !error && images.length === 0 && <Empty description="暂无图片，请先上传。" />}
+        {!loading && !error && images.length === 0 && (
+          <Empty description="暂无图片，请先上传。" imageStyle={{ height: 100 }} />
+        )}
         {!loading && !error && images.length > 0 && (
           <List
             grid={{
@@ -156,13 +161,24 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
             renderItem={(image) => (
               <List.Item>
                 <Card
+                  className="card-hover"
                   hoverable
-                  style={{ width: '100%' }}
+                  style={{ 
+                    width: '100%',
+                    border: darkMode ? '1px solid #334155' : '1px solid #e2e8f0',
+                    background: darkMode ? '#1e293b' : '#ffffff'
+                  }}
                   cover={
                     <img
                       alt={image.public_id}
                       src={image.secure_url}
-                      style={{ width: '100%', height: 180, objectFit: 'cover', cursor: 'pointer' }}
+                      style={{ 
+                        width: '100%', 
+                        height: 180, 
+                        objectFit: 'cover', 
+                        cursor: 'pointer',
+                        borderBottom: darkMode ? '1px solid #334155' : '1px solid #e2e8f0'
+                      }}
                       onClick={() => handleImageClick(image)}
                     />
                   }
@@ -171,16 +187,30 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
                       type="text"
                       icon={<DeleteOutlined />}
                       danger
-                      onClick={(e) => { // 添加事件对象 e
-                        e.stopPropagation(); // 阻止事件冒泡
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleDeleteImage(image.public_id);
                       }}
+                      style={{ color: '#ef4444' }}
                     >
                       删除
                     </Button>,
                   ]}
                 >
-                  <Meta title={image.public_id.split('/').pop()} description={currentFolder ? `文件夹: ${currentFolder}` : '所有上传图片'} />
+                  <Meta 
+                    title={image.public_id.split('/').pop()} 
+                    description={
+                      <div>
+                        <Tag color={darkMode ? "purple" : "geekblue"}>
+                          {image.folder || '根目录'}
+                        </Tag>
+                        {image.tags && image.tags.length > 0 && (
+                          <Tag color="cyan">{image.tags[0]}</Tag>
+                        )}
+                      </div>
+                    }
+                    style={{ color: darkMode ? '#e2e8f0' : '#334155' }}
+                  />
                 </Card>
               </List.Item>
             )}
