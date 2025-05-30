@@ -512,6 +512,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('improve', undefined, !improve);
                   }}
                   className="effect-button"
+                  style={improve ? { color: '#334155' } : {}}
                 >
                   Improve
                 </Button>
@@ -522,6 +523,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('auto_brightness', undefined, !autoBrightness);
                   }}
                   className="effect-button"
+                  style={autoBrightness ? { color: '#334155' } : {}}
                 >
                   Auto Brightness
                 </Button>
@@ -532,6 +534,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('auto_color', undefined, !autoColor);
                   }}
                   className="effect-button"
+                  style={autoColor ? { color: '#334155' } : {}}
                 >
                   Auto Color
                 </Button>
@@ -542,6 +545,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('auto_contrast', undefined, !autoContrast);
                   }}
                   className="effect-button"
+                  style={autoContrast ? { color: '#334155' } : {}}
                 >
                   Auto Contrast
                 </Button>
@@ -555,6 +559,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('sharpen', undefined, !sharpen);
                   }}
                   className="effect-button"
+                  style={sharpen ? { color: '#334155' } : {}}
                 >
                   Sharpen
                 </Button>
@@ -565,6 +570,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('e_vibrance', undefined, !vibrance); // 将 vibrance 作为一个无参数效果处理
                   }}
                   className="effect-button"
+                  style={vibrance ? { color: '#334155' } : {}}
                 >
                   Vibrance
                 </Button>
@@ -575,6 +581,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('upscale', undefined, !upscale);
                   }}
                   className="effect-button"
+                  style={upscale ? { color: '#334155' } : {}}
                 >
                   Upscale
                 </Button>
@@ -585,6 +592,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('enhance', undefined, !enhance);
                   }}
                   className="effect-button"
+                  style={enhance ? { color: '#334155' } : {}}
                 >
                   Enhance
                 </Button>
@@ -616,6 +624,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('cartoonify', undefined, !cartoonify);
                   }}
                   className="effect-button"
+                  style={cartoonify ? { color: '#334155' } : {}}
                 >
                   Cartoonify
                 </Button>
@@ -626,6 +635,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('sepia', undefined, !sepia);
                   }}
                   className="effect-button"
+                  style={sepia ? { color: '#334155' } : {}}
                 >
                   Sepia
                 </Button>
@@ -636,6 +646,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('vignette', undefined, !vignette);
                   }}
                   className="effect-button"
+                  style={vignette ? { color: '#334155' } : {}}
                 >
                   Vignette
                 </Button>
@@ -646,6 +657,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('pixelate', undefined, !pixelateEffect);
                   }}
                   className="effect-button"
+                  style={pixelateEffect ? { color: '#334155' } : {}}
                 >
                   Pixelate Effect
                 </Button>
@@ -656,6 +668,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('grayscale', undefined, !grayscale);
                   }}
                   className="effect-button"
+                  style={grayscale ? { color: '#334155' } : {}}
                 >
                   Grayscale
                 </Button>
@@ -730,6 +743,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('remove_background', undefined, !removeBackground);
                   }}
                   className="effect-button"
+                  style={removeBackground ? { color: '#334155' } : {}}
                 >
                   Remove Background
                 </Button>
@@ -740,6 +754,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('shadow', undefined, !shadow);
                   }}
                   className="effect-button"
+                  style={shadow ? { color: '#334155' } : {}}
                 >
                   Shadow
                 </Button>
@@ -1156,6 +1171,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('e_blur_faces', undefined, !blurFaces);
                   }}
                   className="effect-button"
+                  style={blurFaces ? { color: '#334155' } : {}}
                 >
                   Blur Faces
                 </Button>
@@ -1166,6 +1182,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('e_pixelate_faces', undefined, !pixelateFaces);
                   }}
                   className="effect-button"
+                  style={pixelateFaces ? { color: '#334155' } : {}}
                 >
                   Pixelate Faces
                 </Button>

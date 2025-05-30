@@ -138,8 +138,9 @@ function UploadSection({ onUploadSuccess }) {
           loading={isUploading}
           icon={<CloudUploadOutlined />}
           style={{ 
-            background: 'linear-gradient(135deg, #8b5cf6, #7e22ce)',
-            border: 'none',
+            background: '#f5f3ff',
+            borderColor: '#8b5cf6',
+            color: '#7e22ce',
             height: 40,
             fontWeight: 600
           }}

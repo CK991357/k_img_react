@@ -101,13 +101,12 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
             style={{ flexGrow: 1, minWidth: '150px', maxWidth: 'calc(100% - 100px)' }}
           />
           <Button
-            type="primary"
             onClick={() => {
               fetchAndDisplayImages(folderInput);
               setFolderInput('');
               setSearchTagInput('');
             }}
-            style={{ background: 'linear-gradient(135deg, #8b5cf6, #7e22ce)' }}
+            style={{ borderColor: '#8b5cf6', color: '#7e22ce' }}
           >
             跳转
           </Button>
