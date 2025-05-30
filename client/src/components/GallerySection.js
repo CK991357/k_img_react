@@ -117,7 +117,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
         <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start', marginTop: '16px' }}>
           <Input.Search
             placeholder="按标签搜索 (例如: nature)"
-            enterButton={<SearchOutlined />}
+            enterButton={<Button type="primary" icon={<SearchOutlined />} />}
             value={searchTagInput}
             onChange={(e) => setSearchTagInput(e.target.value)}
             onSearch={(value) => {

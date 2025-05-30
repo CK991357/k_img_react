@@ -39,9 +39,6 @@ function App() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style={{ marginRight: '12px' }}>
-            <path d="M4 8H20M4 16H20M8 4V20M16 4V20" stroke="#fff" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
           <h1 style={{ color: '#fff', margin: 0, fontWeight: 600, letterSpacing: '0.5px' }}>K-Edit 图片管理</h1>
         </div>
       </Header>
