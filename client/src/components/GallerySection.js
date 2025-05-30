@@ -88,15 +88,15 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
       {contextHolder}
       <h2 className="section-title-gradient">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ marginRight: '10px', verticalAlign: 'middle' }}>
-          <path d="M4 8H20M4 16H20M8 4V20M16 4V20" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M4 8H20M4 16H20M8 4V20M16 4V20" stroke="var(--button-text-color)" strokeWidth="2" strokeLinecap="round"/>
         </svg>
         图片画廊
       </h2>
       <div style={{ marginBottom: '20px' }}>
         <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start' }}>
-          <span style={{ whiteSpace: 'nowrap', fontWeight: 500, color: '#5b21b6' }}>当前文件夹: </span>
+          <span style={{ whiteSpace: 'nowrap', fontWeight: 500, color: 'var(--secondary-text-color)' }}>当前文件夹: </span>
           <Input
-            prefix={<FolderOutlined style={{ color: '#8b5cf6' }} />}
+            prefix={<FolderOutlined style={{ color: 'var(--link-accent-color)' }} />}
             placeholder="输入文件夹名称"
             value={folderInput}
             onChange={(e) => setFolderInput(e.target.value)}
@@ -117,7 +117,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
         <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start', marginTop: '16px' }}>
           <Input.Search
             placeholder="按标签搜索 (例如: nature)"
-            enterButton={<Button type="primary" icon={<SearchOutlined />} />}
+            enterButton={<Button type="primary" icon={<SearchOutlined style={{ color: 'var(--button-text-color)' }} />} />}
             value={searchTagInput}
             onChange={(e) => setSearchTagInput(e.target.value)}
             onSearch={(value) => {
@@ -129,7 +129,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
             }}
             style={{ flexGrow: 1, minWidth: '200px', maxWidth: 'calc(100% - 100px)' }}
           />
-          <Button onClick={() => { setSearchTagInput(''); fetchAndDisplayImages(''); }}>清除搜索</Button>
+          <Button type="default" onClick={() => { setSearchTagInput(''); fetchAndDisplayImages(''); }}>清除搜索</Button>
         </Space>
       </div>
 
@@ -164,7 +164,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
                   actions={[
                     <Button
                       type="text"
-                      icon={<DeleteOutlined />}
+                      icon={<DeleteOutlined style={{ color: 'var(--link-accent-color)' }} />} /* Adjust icon color */
                       danger
                       onClick={(e) => {
                         e.stopPropagation();
@@ -176,8 +176,8 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
                   ]}
                 >
                   <Meta 
-                    title={image.public_id.split('/').pop()} 
-                    description={currentFolder ? `文件夹: ${currentFolder}` : '所有上传图片'} 
+                    title={<span style={{ color: 'var(--text-color)' }}>{image.public_id.split('/').pop()}</span>} /* Adjust title color */
+                    description={<span style={{ color: 'var(--secondary-text-color)' }}>{currentFolder ? `文件夹: ${currentFolder}` : '所有上传图片'}</span>} /* Adjust description color */
                   />
                 </Card>
               </List.Item>

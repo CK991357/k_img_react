@@ -273,9 +273,9 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
       {contextHolder}
       <h2 className="section-title-gradient">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ marginRight: '10px', verticalAlign: 'middle' }}>
-          <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 16V12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 8H12.01" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="var(--button-text-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 16V12" stroke="var(--button-text-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 8H12.01" stroke="var(--button-text-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
         图片编辑
       </h2>
@@ -283,8 +283,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
         <div style={{ textAlign: 'center', width: '100%' }}>
           <h3>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
-              <path d="M15 8.5C15 10.433 13.433 12 11.5 12C9.567 12 8 10.433 8 8.5C8 6.567 9.567 5 11.5 5C13.433 5 15 6.567 15 8.5Z" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M2 17C2 14.1716 2 12.7574 2.87868 11.8787C3.75736 11 5.17157 11 8 11H15C17.8284 11 19.2426 11 20.1213 11.8787C21 12.7574 21 14.1716 21 17V19C21 20.1046 20.1046 21 19 21H4C2.89543 21 2 20.1046 2 19V17Z" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M15 8.5C15 10.433 13.433 12 11.5 12C9.567 12 8 10.433 8 8.5C8 6.567 9.567 5 11.5 5C13.433 5 15 6.567 15 8.5Z" stroke="var(--heading-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M2 17C2 14.1716 2 12.7574 2.87868 11.8787C3.75736 11 5.17157 11 8 11H15C17.8284 11 19.2426 11 20.1213 11.8787C21 12.7574 21 14.1716 21 17V19C21 20.1046 20.1046 21 19 21H4C2.89543 21 2 20.1046 2 19V17Z" stroke="var(--heading-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             原图
           </h3>
@@ -295,14 +295,14 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
               className="image-preview-img"
             />
           ) : (
-            <div className="image-placeholder">暂无原图</div>
+            <div className="image-placeholder" style={{ color: 'var(--secondary-text-color)' }}>暂无原图</div>
           )}
         </div>
         <div style={{ textAlign: 'center', width: '100%' }}>
           <h3>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
-              <path d="M15 8.5C15 10.433 13.433 12 11.5 12C9.567 12 8 10.433 8 8.5C8 6.567 9.567 5 11.5 5C13.433 5 15 6.567 15 8.5Z" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M2 17C2 14.1716 2 12.7574 2.87868 11.8787C3.75736 11 5.17157 11 8 11H15C17.8284 11 19.2426 11 20.1213 11.8787C21 12.7574 21 14.1716 21 17V19C21 20.1046 20.1046 21 19 21H4C2.89543 21 2 20.1046 2 19V17Z" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M15 8.5C15 10.433 13.433 12 11.5 12C9.567 12 8 10.433 8 8.5C8 6.567 9.567 5 11.5 5C13.433 5 15 6.567 15 8.5Z" stroke="var(--heading-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M2 17C2 14.1716 2 12.7574 2.87868 11.8787C3.75736 11 5.17157 11 8 11H15C17.8284 11 19.2426 11 20.1213 11.8787C21 12.7574 21 14.1716 21 17V19C21 20.1046 20.1046 21 19 21H4C2.89543 21 2 20.1046 2 19V17Z" stroke="var(--heading-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             转换后图片
           </h3>
@@ -313,7 +313,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
               className="image-preview-img"
             />
           ) : (
-            <div className="image-placeholder">暂无转换后图片</div>
+            <div className="image-placeholder" style={{ color: 'var(--secondary-text-color)' }}>暂无转换后图片</div>
           )}
         </div>
       </Space>
@@ -343,6 +343,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setBrightness(val);
                     updateTransformation('e_brightness', 'level', val);
                   }}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{brightness}</div>
@@ -359,6 +360,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof contrast === 'number' ? contrast : 0}
                   className="effect-slider"
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
                 <InputNumber
                   min={-100}
@@ -368,6 +370,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setContrast(val);
                     updateTransformation('e_contrast', 'level', val);
                   }}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{contrast}</div>
@@ -384,6 +387,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof saturation === 'number' ? saturation : 0}
                   className="effect-slider"
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
                 <InputNumber
                   min={-100}
@@ -393,6 +397,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setSaturation(val);
                     updateTransformation('e_saturation', 'level', val);
                   }}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{saturation}</div>
@@ -409,6 +414,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof fillLight === 'number' ? fillLight : 0}
                   className="effect-slider"
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
                 <InputNumber
                   min={0}
@@ -418,6 +424,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setFillLight(val);
                     updateTransformation('e_fill_light', 'level', val);
                   }}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{fillLight}</div>
@@ -434,6 +441,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof fillLightBlend === 'number' ? fillLightBlend : 0}
                   className="effect-slider"
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
                 <InputNumber
                   min={0}
@@ -443,6 +451,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setFillLightBlend(val);
                     updateTransformation('e_fill_light', 'blend', val);
                   }}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{fillLightBlend}</div>
@@ -462,7 +471,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('improve', undefined, !improve);
                 }}
               >
-                Improve
+                优化
               </Button>
               <Button
                 className={autoBrightness ? 'effect-button active' : 'effect-button'}
@@ -471,7 +480,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('auto_brightness', undefined, !autoBrightness);
                 }}
               >
-                Auto Brightness
+                自动亮度
               </Button>
               <Button
                 className={autoColor ? 'effect-button active' : 'effect-button'}
@@ -480,7 +489,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('auto_color', undefined, !autoColor);
                 }}
               >
-                Auto Color
+                自动颜色
               </Button>
               <Button
                 className={autoContrast ? 'effect-button active' : 'effect-button'}
@@ -489,7 +498,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('auto_contrast', undefined, !autoContrast);
                 }}
               >
-                Auto Contrast
+                自动对比度
               </Button>
               <Button
                 className={sharpen ? 'effect-button active' : 'effect-button'}
@@ -498,7 +507,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('sharpen', undefined, !sharpen);
                 }}
               >
-                Sharpen
+                锐化
               </Button>
               <Button
                 className={vibrance ? 'effect-button active' : 'effect-button'}
@@ -507,7 +516,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('e_vibrance', undefined, !vibrance);
                 }}
               >
-                Vibrance
+                鲜艳度
               </Button>
               <Button
                 className={upscale ? 'effect-button active' : 'effect-button'}
@@ -516,7 +525,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('upscale', undefined, !upscale);
                 }}
               >
-                Upscale
+                放大
               </Button>
               <Button
                 className={enhance ? 'effect-button active' : 'effect-button'}
@@ -525,7 +534,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('enhance', undefined, !enhance);
                 }}
               >
-                Enhance
+                增强
               </Button>
             </Space>
           </Space>
@@ -543,7 +552,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('cartoonify', undefined, !cartoonify);
                 }}
               >
-                Cartoonify
+                卡通化
               </Button>
               <Button
                 className={sepia ? 'effect-button active' : 'effect-button'}
@@ -552,7 +561,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('sepia', undefined, !sepia);
                 }}
               >
-                Sepia
+                复古
               </Button>
               <Button
                 className={vignette ? 'effect-button active' : 'effect-button'}
@@ -561,7 +570,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('vignette', undefined, !vignette);
                 }}
               >
-                Vignette
+                暗角
               </Button>
               <Button
                 className={pixelateEffect ? 'effect-button active' : 'effect-button'}
@@ -570,7 +579,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('pixelate', undefined, !pixelateEffect);
                 }}
               >
-                Pixelate Effect
+                像素化
               </Button>
               <Button
                 className={grayscale ? 'effect-button active' : 'effect-button'}
@@ -579,11 +588,11 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('grayscale', undefined, !grayscale);
                 }}
               >
-                Grayscale
+                灰度
               </Button>
             </Space>
             <div className="effect-group">
-              <label htmlFor="artFilterSelect">Art Filter:</label>
+              <label htmlFor="artFilterSelect">艺术滤镜:</label>
               <Select
                 id="artFilterSelect"
                 value={artFilter}
@@ -600,11 +609,12 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }
                 }}
                 className="effect-select"
+                style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               >
-                <Select.Option value="">None</Select.Option>
+                <Select.Option value="">无</Select.Option>
                 <Select.Option value="al_dente">Al Dente</Select.Option>
                 <Select.Option value="athena">Athena</Select.Option>
-                <Select.Option value="audrey">Audrey</Select.Option>
+                <Select.Option value="audrey">Audley</Select.Option>
                 <Select.Option value="aurora">Aurora</Select.Option>
                 <Select.Option value="daguerre">Daguerre</Select.Option>
                 <Select.Option value="eucalyptus">Eucalyptus</Select.Option>
@@ -637,7 +647,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('remove_background', undefined, !removeBackground);
                 }}
               >
-                Remove Background
+                移除背景
               </Button>
               <Button
                 className={shadow ? 'effect-button active' : 'effect-button'}
@@ -646,7 +656,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('shadow', undefined, !shadow);
                 }}
               >
-                Shadow
+                阴影
               </Button>
             </Space>
           </Space>
@@ -658,7 +668,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
           <Space direction="vertical" style={{ width: '100%' }}>
             <div className="effect-group">
               <div className="effect-control-row">
-                <label htmlFor="opacitySlider">不透明度:</label>
+                <label htmlFor="opacitySlider">不透明度 (0-100):</label>
                 <Slider
                   min={0}
                   max={100}
@@ -677,6 +687,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setOpacity(val);
                     updateTransformation('o', 'level', val);
                   }}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{opacity}</div>
@@ -689,29 +700,31 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
         <Panel header="替换颜色" key="1">
           <Space direction="vertical" style={{ width: '100%' }}>
             <div className="effect-group">
-              <label htmlFor="replaceColorFrom">源颜色 (Hex):</label>
+              <label htmlFor="replaceColorFrom">原色:</label>
               <Input
                 id="replaceColorFrom"
-                placeholder="#RRGGBB 或 color_name"
+                placeholder="例如: red 或 #FF0000"
                 value={replaceColorFrom}
                 onChange={(e) => {
                   const val = e.target.value;
                   setReplaceColorFrom(val);
                   updateTransformation('e_replace_color', 'from_color', val);
                 }}
+                style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               />
             </div>
             <div className="effect-group">
-              <label htmlFor="replaceColorTo">目标颜色 (Hex):</label>
+              <label htmlFor="replaceColorTo">目标颜色:</label>
               <Input
                 id="replaceColorTo"
-                placeholder="#RRGGBB 或 color_name"
+                placeholder="例如: blue 或 #0000FF"
                 value={replaceColorTo}
                 onChange={(e) => {
                   const val = e.target.value;
                   setReplaceColorTo(val);
                   updateTransformation('e_replace_color', 'to_color', val);
                 }}
+                style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               />
             </div>
             <div className="effect-group">
@@ -735,6 +748,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setReplaceColorTolerance(val);
                     updateTransformation('e_replace_color', 'tolerance', val);
                   }}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{replaceColorTolerance}</div>
@@ -764,8 +778,9 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }
                 }}
                 className="effect-select"
+                style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               >
-                <Select.Option value="">Original</Select.Option>
+                <Select.Option value="">选择格式</Select.Option>
                 <Select.Option value="jpg">JPG</Select.Option>
                 <Select.Option value="png">PNG</Select.Option>
                 <Select.Option value="webp">WebP</Select.Option>
@@ -777,7 +792,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             </div>
 
             <div className="effect-group">
-              <label htmlFor="cropModeSelect">裁剪模式:</label>
+              <label htmlFor="cropModeSelect">模式:</label>
               <Select
                 id="cropModeSelect"
                 value={cropMode}
@@ -786,8 +801,9 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('c', 'crop_mode', val);
                 }}
                 className="effect-select"
+                style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               >
-                <Select.Option value="">None</Select.Option>
+                <Select.Option value="">选择模式</Select.Option>
                 <Select.Option value="fill">Fill</Select.Option>
                 <Select.Option value="scale">Scale</Select.Option>
                 <Select.Option value="fit">Fit</Select.Option>
@@ -809,6 +825,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   setCropWidth(val);
                   updateTransformation('c', 'width', val);
                 }}
+                style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               />
               <label htmlFor="cropHeightInput">高度:</label>
               <InputNumber
@@ -819,6 +836,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   setCropHeight(val);
                   updateTransformation('c', 'height', val);
                 }}
+                style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               />
               <label htmlFor="cropGravitySelect">重力:</label>
               <Select
@@ -829,8 +847,9 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('c', 'gravity', val);
                 }}
                 className="effect-select"
+                style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               >
-                <Select.Option value="">None</Select.Option>
+                <Select.Option value="">无 (默认)</Select.Option>
                 <Select.Option value="auto">Auto</Select.Option>
                 <Select.Option value="face">Face</Select.Option>
                 <Select.Option value="faces">Faces</Select.Option>
@@ -848,7 +867,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
 
             <div className="effect-group">
               <div className="effect-control-row">
-                <label htmlFor="qualitySlider">质量:</label>
+                <label htmlFor="qualitySlider">质量 (1-100):</label>
                 <Slider
                   min={1}
                   max={100}
@@ -869,6 +888,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('q', 'level', val);
                   }}
                   disabled={qualityAuto}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{quality}</div>
@@ -884,8 +904,9 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('q', 'level', quality);
                   }
                 }}
+                style={{ color: 'var(--secondary-text-color)' }}
               >
-                自动
+                自动质量 (q_auto)
               </Checkbox>
             </div>
 
@@ -914,6 +935,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('dpr', 'value', val);
                   }}
                   disabled={dprAuto}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{dpr}</div>
@@ -929,8 +951,9 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('dpr', 'value', dpr);
                   }
                 }}
+                style={{ color: 'var(--secondary-text-color)' }}
               >
-                自动
+                自动DPR (dpr_auto)
               </Checkbox>
             </div>
           </Space>
@@ -961,6 +984,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setBlurStrength(val);
                     updateTransformation('e_blur', 'strength', val);
                   }}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{blurStrength}</div>
@@ -986,6 +1010,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setPixelateStrength(val);
                     updateTransformation('e_pixelate', 'strength', val);
                   }}
+                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
               <div className="slider-value-display">{pixelateStrength}</div>
@@ -1018,7 +1043,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
         <Button type="primary" onClick={handleSaveTransformedImage}>
           保存
         </Button>
-        <Button onClick={handleResetAllEffects}>
+        <Button type="primary" onClick={handleResetAllEffects}>
           重置所有效果
         </Button>
       </Space>

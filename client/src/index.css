@@ -1,13 +1,127 @@
+:root {
+  /* Light Mode Colors */
+  --primary-bg-color: #faf5ff;
+  --card-bg-color: #fff;
+  --top-navbar-gradient-start: #8b5cf6;
+  --top-navbar-gradient-end: #7e22ce;
+  --text-color: #4a1d72;
+  --heading-color: #6a0dad;
+  --secondary-text-color: #5b21b6; /* Used for labels, strong text */
+  --link-accent-color: #7e22ce;
+  --link-hover-color: #6a0dad;
+  --button-bg-gradient-start: #7e22ce;
+  --button-bg-gradient-end: #8b5cf6;
+  --button-text-color: white;
+  --button-shadow-color: rgba(139, 92, 246, 0.2);
+  --button-hover-shadow-color: rgba(139, 92, 246, 0.3);
+  --secondary-button-bg-color: #a78bfa; /* For "选择文件" */
+  --secondary-button-text-color: white;
+  --input-border-color: #e9d8ff;
+  --input-focus-border-color: #a78bfa;
+  --input-focus-shadow-color: rgba(167, 139, 250, 0.2);
+  --slider-track-color: #e9d8ff; /* Default slider track */
+  --slider-fill-color: #7e22ce; /* Slider fill and thumb */
+  --toggle-track-bg-color: #e9d8ff;
+  --toggle-thumb-color: #fff;
+  --toggle-active-color: #7e22ce;
+  --section-border-color: #f0e6ff;
+  --section-box-shadow-color: rgba(106, 13, 173, 0.08);
+  --section-hover-shadow-color: rgba(106, 13, 173, 0.12);
+  --section-title-shadow-color: rgba(106, 13, 173, 0.15);
+  --upload-result-bg: #faf5ff;
+  --upload-result-border-top: #f0e6ff;
+  --image-border-color: #e9d8ff;
+  --image-bg-color: #fff;
+  --image-gallery-bg: #faf5ff;
+  --image-gallery-border: #f0e6ff;
+  --image-gallery-hover-border: #c4b5fd;
+  --image-gallery-hover-shadow: rgba(106, 13, 173, 0.15);
+  --image-editor-bg: #faf5ff;
+  --image-editor-border: #f0e6ff;
+  --image-preview-bg: white;
+  --image-preview-shadow: rgba(106, 13, 173, 0.1);
+  --image-detail-viewer-bg: #faf5ff;
+  --image-detail-viewer-border: #f0e6ff;
+  --controls-border-bottom: #e9d8ff;
+  --effect-button-gradient-start: #a78bfa;
+  --effect-button-gradient-end: #c4b5fd;
+  --effect-button-shadow-color: rgba(167, 139, 250, 0.2);
+  --effect-button-hover-shadow-color: rgba(167, 139, 250, 0.3);
+  --effect-button-active-gradient-start: #7e22ce;
+  --effect-button-active-gradient-end: #8b5cf6;
+  --effect-button-active-shadow-color: rgba(123, 31, 162, 0.3);
+  --effect-group-bg: white;
+  --effect-group-border: #f0e6ff;
+  --effect-group-shadow: rgba(106, 13, 173, 0.05);
+}
+
+/* Dark Mode Colors */
+body.dark-mode {
+  --primary-bg-color: #202020;
+  --card-bg-color: #2C3E50;
+  --top-navbar-gradient-start: #4A90E2;
+  --top-navbar-gradient-end: #8E44AD;
+  --text-color: #E0E0E0;
+  --heading-color: #E0E0E0;
+  --secondary-text-color: #A0A0A0;
+  --link-accent-color: #4A90E2;
+  --link-hover-color: #3498DB;
+  --button-bg-gradient-start: #4A90E2;
+  --button-bg-gradient-end: #8E44AD;
+  --button-text-color: #FFFFFF;
+  --button-shadow-color: rgba(74, 144, 226, 0.2);
+  --button-hover-shadow-color: rgba(74, 144, 226, 0.3);
+  --secondary-button-bg-color: #3498DB;
+  --secondary-button-text-color: #FFFFFF;
+  --input-border-color: var(--card-bg-color);
+  --input-focus-border-color: #4A90E2;
+  --input-focus-shadow-color: rgba(74, 144, 226, 0.2);
+  --slider-track-color: #606060;
+  --slider-fill-color: #4A90E2;
+  --toggle-track-bg-color: #606060;
+  --toggle-thumb-color: #FFFFFF;
+  --toggle-active-color: #4A90E2;
+  --section-border-color: var(--card-bg-color);
+  --section-box-shadow-color: rgba(0, 0, 0, 0.15);
+  --section-hover-shadow-color: rgba(0, 0, 0, 0.25);
+  --section-title-shadow-color: rgba(0, 0, 0, 0.2);
+  --upload-result-bg: #2C3E50;
+  --upload-result-border-top: var(--card-bg-color);
+  --image-border-color: var(--card-bg-color);
+  --image-bg-color: #2C3E50;
+  --image-gallery-bg: #2C3E50;
+  --image-gallery-border: var(--card-bg-color);
+  --image-gallery-hover-border: #4A90E2;
+  --image-gallery-hover-shadow: rgba(0, 0, 0, 0.2);
+  --image-editor-bg: #2C3E50;
+  --image-editor-border: var(--card-bg-color);
+  --image-preview-bg: #2C3E50;
+  --image-preview-shadow: rgba(0, 0, 0, 0.15);
+  --image-detail-viewer-bg: #2C3E50;
+  --image-detail-viewer-border: var(--card-bg-color);
+  --controls-border-bottom: var(--card-bg-color);
+  --effect-button-gradient-start: #2C3E50;
+  --effect-button-gradient-end: #2C3E50;
+  --effect-button-shadow-color: rgba(0, 0, 0, 0.1);
+  --effect-button-hover-shadow-color: rgba(0, 0, 0, 0.15);
+  --effect-button-active-gradient-start: #4A90E2;
+  --effect-button-active-gradient-end: #4A90E2;
+  --effect-button-active-shadow-color: rgba(74, 144, 226, 0.3);
+  --effect-group-bg: #253545; /* 更深的背景色 */
+  --effect-group-border: var(--card-bg-color); /* 与卡片背景色一致的边框 */
+  --effect-group-shadow: rgba(0, 0, 0, 0.2); /* 更明显的阴影 */
+}
+
 body {
   font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   line-height: 1.6;
   margin: 0;
-  background-color: #faf5ff;
-  color: #4a1d72;
+  background-color: var(--primary-bg-color);
+  color: var(--text-color);
 }
 
 h1, h2, h3 {
-  color: #6a0dad;
+  color: var(--heading-color);
   font-weight: 600;
 }
 
@@ -21,28 +135,28 @@ h2 {
 }
 
 .section-title-gradient {
-  background: linear-gradient(90deg, #8b5cf6 0%, #7e22ce 100%);
-  color: white; /* 标题文字颜色 */
+  background: linear-gradient(90deg, var(--top-navbar-gradient-start) 0%, var(--top-navbar-gradient-end) 100%);
+  color: var(--button-text-color); /* 标题文字颜色 */
   padding: 15px 20px; /* 调整内边距 */
   border-radius: 12px 12px 0 0; /* 顶部圆角 */
   margin: -20px -20px 20px -20px; /* 负外边距以覆盖父section的padding */
   display: flex; /* 使内容水平居中 */
   align-items: center; /* 垂直居中 */
-  box-shadow: 0 4px 12px rgba(106, 13, 173, 0.15); /* 阴影效果 */
+  box-shadow: 0 4px 12px var(--section-title-shadow-color); /* 阴影效果 */
 }
 
 section {
-  background-color: #fff;
+  background-color: var(--card-bg-color);
   padding: 20px;
   margin-bottom: 24px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(106, 13, 173, 0.08);
-  border: 1px solid #f0e6ff;
+  box-shadow: 0 4px 12px var(--section-box-shadow-color);
+  border: 1px solid var(--section-border-color);
   transition: all 0.3s ease;
 }
 
 section:hover {
-  box-shadow: 0 6px 16px rgba(106, 13, 173, 0.12);
+  box-shadow: 0 6px 16px var(--section-hover-shadow-color);
 }
 
 form {
@@ -53,7 +167,7 @@ label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #5b21b6;
+  color: var(--secondary-text-color);
 }
 
 input[type="file"],
@@ -61,53 +175,59 @@ input[type="text"],
 button {
   padding: 10px 16px;
   margin-bottom: 12px;
-  border: 1px solid #e9d8ff;
+  border: 1px solid var(--input-border-color);
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
+  background-color: var(--card-bg-color); /* Ensure input background matches card */
+  color: var(--text-color); /* Ensure input text color matches general text */
+}
+
+input[type="text"]::placeholder {
+  color: var(--secondary-text-color); /* Placeholder color */
 }
 
 button {
-  background: linear-gradient(90deg, #7e22ce 0%, #8b5cf6 100%);
-  color: white;
+  background: linear-gradient(90deg, var(--button-bg-gradient-start) 0%, var(--button-bg-gradient-end) 100%);
+  color: var(--button-text-color);
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
-  box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 4px 6px var(--button-shadow-color);
 }
 
 button:hover {
-  background: linear-gradient(90deg, #8b5cf6 0%, #7e22ce 100%);
+  background: linear-gradient(90deg, var(--button-bg-gradient-end) 0%, var(--button-bg-gradient-start) 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 6px 12px var(--button-hover-shadow-color);
 }
 
 #uploadResult {
   margin-top: 15px;
   padding: 15px;
-  border-top: 1px solid #f0e6ff;
+  border-top: 1px solid var(--upload-result-border-top);
   border-radius: 8px;
-  background: #faf5ff;
+  background: var(--upload-result-bg);
 }
 
 #uploadResult img {
   display: block;
   margin-top: 10px;
-  border: 1px solid #e9d8ff;
+  border: 1px solid var(--image-border-color);
   padding: 8px;
-  background-color: #fff;
+  background-color: var(--image-bg-color);
   border-radius: 8px;
 }
 
 a {
-  color: #7e22ce;
+  color: var(--link-accent-color);
   text-decoration: none;
   transition: color 0.2s;
 }
 
 a:hover {
-  color: #6a0dad;
+  color: var(--link-hover-color);
   text-decoration: underline;
 }
 
@@ -116,16 +236,16 @@ a:hover {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
   padding: 15px;
-  border: 1px solid #f0e6ff;
+  border: 1px solid var(--image-gallery-border);
   border-radius: 12px;
-  background-color: #faf5ff;
+  background-color: var(--image-gallery-bg);
 }
 
 .image-gallery img {
   width: 100%;
   height: 180px;
   object-fit: cover;
-  border: 2px solid #f0e6ff;
+  border: 2px solid var(--image-border-color);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -133,8 +253,8 @@ a:hover {
 
 .image-gallery img:hover {
   transform: scale(1.05);
-  border-color: #c4b5fd;
-  box-shadow: 0 8px 15px rgba(106, 13, 173, 0.15);
+  border-color: var(--image-gallery-hover-border);
+  box-shadow: 0 8px 15px var(--image-gallery-hover-shadow);
 }
 
 .image-editor {
@@ -143,30 +263,30 @@ a:hover {
   gap: 30px;
   margin-top: 25px;
   padding: 20px;
-  border: 1px solid #f0e6ff;
+  border: 1px solid var(--image-editor-border);
   border-radius: 16px;
-  background-color: #faf5ff;
+  background-color: var(--image-editor-bg);
 }
 
 .image-preview {
   text-align: center;
   flex: 1;
   padding: 15px;
-  background: white;
+  background: var(--image-preview-bg);
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(106, 13, 173, 0.1);
+  box-shadow: 0 4px 8px var(--image-preview-shadow);
 }
 
 .image-preview img {
   max-width: 100%;
   height: auto;
   max-height: 300px;
-  border: 1px solid #e9d8ff;
+  border: 1px solid var(--image-border-color);
   border-radius: 8px;
   margin-top: 10px;
   object-fit: contain;
   padding: 10px;
-  background: white;
+  background: var(--image-bg-color);
 }
 
 .image-preview .hidden {
@@ -177,21 +297,21 @@ a:hover {
   text-align: center;
   margin-top: 20px;
   padding: 20px;
-  border: 1px solid #f0e6ff;
+  border: 1px solid var(--image-detail-viewer-border);
   border-radius: 16px;
-  background-color: #faf5ff;
+  background-color: var(--image-detail-viewer-bg);
 }
 
 .image-detail-viewer img {
   max-width: 100%;
   height: auto;
   max-height: 400px;
-  border: 1px solid #e9d8ff;
+  border: 1px solid var(--image-border-color);
   border-radius: 10px;
   margin-top: 15px;
   object-fit: contain;
   padding: 15px;
-  background: white;
+  background: var(--image-bg-color);
 }
 
 .image-detail-viewer .hidden {
@@ -201,7 +321,7 @@ a:hover {
 .image-detail-viewer p {
   margin-top: 15px;
   font-weight: 600;
-  color: #5b21b6;
+  color: var(--secondary-text-color);
 }
 
 .controls {
@@ -215,33 +335,33 @@ a:hover {
 .controls h3 {
   width: 100%;
   margin-bottom: 10px;
-  color: #6a0dad;
+  color: var(--heading-color);
   font-size: 1.3rem;
   padding-bottom: 8px;
-  border-bottom: 2px solid #e9d8ff;
+  border-bottom: 2px solid var(--controls-border-bottom);
 }
 
 .effect-button {
-  background: linear-gradient(90deg, #a78bfa 0%, #c4b5fd 100%);
-  color: white;
+  background: linear-gradient(90deg, var(--button-bg-gradient-start) 0%, var(--button-bg-gradient-end) 100%);
+  color: var(--button-text-color);
   border: none;
   padding: 10px 16px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
-  box-shadow: 0 4px 6px rgba(167, 139, 250, 0.2);
+  box-shadow: 0 4px 6px var(--button-shadow-color);
 }
 
 .effect-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(167, 139, 250, 0.3);
-  background: linear-gradient(90deg, #c4b5fd 0%, #a78bfa 100%);
+  box-shadow: 0 6px 12px var(--button-hover-shadow-color);
+  background: linear-gradient(90deg, var(--button-bg-gradient-end) 0%, var(--button-bg-gradient-start) 100%);
 }
 
 .effect-button.active {
-  background: linear-gradient(90deg, #7e22ce 0%, #8b5cf6 100%);
-  box-shadow: 0 4px 8px rgba(123, 31, 162, 0.3);
+  background: linear-gradient(90deg, var(--effect-button-active-gradient-start) 0%, var(--effect-button-active-gradient-end) 100%);
+  box-shadow: 0 4px 8px var(--effect-button-active-shadow-color);
 }
 
 .effect-group {
@@ -251,16 +371,16 @@ a:hover {
   gap: 15px;
   margin-bottom: 15px;
   padding: 15px;
-  border: 1px solid #f0e6ff;
+  border: 1px solid var(--effect-group-border);
   border-radius: 12px;
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(106, 13, 173, 0.05);
+  background-color: var(--effect-group-bg);
+  box-shadow: 0 2px 8px var(--effect-group-shadow);
 }
 
 .effect-group label {
   margin-bottom: 0;
   font-weight: 600;
-  color: #5b21b6;
+  color: var(--secondary-text-color);
   min-width: 100px;
 }
 
@@ -271,30 +391,62 @@ a:hover {
   min-width: 100px;
   max-width: 180px;
   padding: 10px;
-  border: 1px solid #e9d8ff;
+  border: 1px solid var(--input-border-color);
   border-radius: 8px;
   font-size: 0.95rem;
   transition: all 0.3s ease;
+  background-color: var(--card-bg-color); /* Ensure input background matches card */
+  color: var(--text-color); /* Ensure input text color matches general text */
 }
 
 .effect-group input[type="text"]:focus,
 .effect-group input[type="number"]:focus,
 .effect-group select.effect-select:focus {
-  border-color: #a78bfa;
-  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2);
+  border-color: var(--input-focus-border-color);
+  box-shadow: 0 0 0 2px var(--input-focus-shadow-color);
 }
 
 .effect-group input[type="range"].effect-slider {
   flex-grow: 1;
   width: auto;
   margin: 0 10px;
+  /* Custom slider styles */
+  -webkit-appearance: none; /* Remove default webkit styles */
+  appearance: none;
+  height: 8px; /* Track height */
+  background: var(--slider-track-color); /* Track background */
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+}
+
+.effect-group input[type="range"].effect-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px; /* Thumb width */
+  height: 20px; /* Thumb height */
+  background: var(--slider-fill-color); /* Thumb color */
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  margin-top: -6px; /* Center thumb vertically */
+}
+
+.effect-group input[type="range"].effect-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--slider-fill-color);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .effect-group span {
   min-width: 40px;
   text-align: center;
   font-weight: 500;
-  color: #5b21b6;
+  color: var(--secondary-text-color);
 }
 
 .effect-group input[type="checkbox"] {
@@ -314,7 +466,7 @@ a:hover {
 /* 响应式设计 */
 @media (max-width: 768px) {
   body {
-    margin: 10px;
+    margin: 0; /* 移除手机端 body 的 margin */
   }
 
   h1 {
@@ -416,4 +568,32 @@ a:hover {
   .effect-group {
     gap: 15px;
   }
+}
+
+/* 添加这些新规则 */
+.ant-input-number,
+.ant-select-selector,
+.ant-slider {
+  background-color: var(--card-bg-color) !important;
+  color: var(--text-color) !important;
+  border-color: var(--input-border-color) !important;
+}
+
+/* 确保 InputNumber 内部的数值颜色正确 */
+.ant-input-number-input {
+  color: var(--text-color) !important;
+}
+
+.ant-select-arrow {
+  color: var(--secondary-text-color) !important;
+}
+
+/* 确保滑块轨道使用正确的颜色 */
+.ant-slider-track {
+  background-color: var(--slider-fill-color) !important;
+}
+
+/* 滑块手柄样式 */
+.ant-slider-handle {
+  border-color: var(--slider-fill-color) !important;
 }

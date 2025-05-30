@@ -99,26 +99,28 @@ function UploadSection({ onUploadSuccess }) {
         <Input
           prefix={
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ marginRight: '8px' }}>
-              <path d="M3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7Z" stroke="#8b5cf6" strokeWidth="2"/>
-              <path d="M8 12H16" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round"/>
-              <path d="M12 8V16" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7Z" stroke="var(--link-accent-color)" strokeWidth="2"/>
+              <path d="M8 12H16" stroke="var(--link-accent-color)" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M12 8V16" stroke="var(--link-accent-color)" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           }
           placeholder="上传到文件夹 (可选): 例如: my_new_folder"
           value={uploadFolder}
           onChange={(e) => setUploadFolder(e.target.value)}
           disabled={isUploading}
+          style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
         />
         <Input
           prefix={
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ marginRight: '8px' }}>
-              <path d="M7 7H17M7 11H13M7 15H17M5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3Z" stroke="#8b5cf6" strokeWidth="2"/>
+              <path d="M7 7H17M7 11H13M7 15H17M5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3Z" stroke="var(--link-accent-color)" strokeWidth="2"/>
             </svg>
           }
           placeholder="添加标签 (可选, 逗号分隔): 例如: nature, landscape"
           value={uploadTags}
           onChange={(e) => setUploadTags(e.target.value)}
           disabled={isUploading}
+          style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
         />
         <Button
           type="primary"

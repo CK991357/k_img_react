@@ -24,11 +24,11 @@ function ImageDetailSection({ selectedPublicId, originalImageUrl, isDetailModalO
   return (
     <Modal
       title={
-        <div style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
+        <div style={{ display: 'flex', alignItems: 'center', color: 'var(--button-text-color)' }}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ marginRight: '10px' }}>
-            <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M12 16V12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M12 8H12.01" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="var(--button-text-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12 16V12" stroke="var(--button-text-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12 8H12.01" stroke="var(--button-text-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           图片详情
         </div>
@@ -46,10 +46,10 @@ function ImageDetailSection({ selectedPublicId, originalImageUrl, isDetailModalO
             className="image-detail-viewer-img" // 使用 CSS 类来控制样式
           />
         )}
-        <Text strong>Public ID:</Text>
-        <Text copyable>{selectedPublicId || 'N/A'}</Text>
-        <Text strong>URL:</Text>
-        <Link href={originalImageUrl || '#'} target="_blank" rel="noopener noreferrer" copyable>
+        <Text strong style={{ color: 'var(--text-color)' }}>Public ID:</Text>
+        <Text copyable style={{ color: 'var(--text-color)' }}>{selectedPublicId || 'N/A'}</Text>
+        <Text strong style={{ color: 'var(--text-color)' }}>URL:</Text>
+        <Link href={originalImageUrl || '#'} target="_blank" rel="noopener noreferrer" copyable style={{ color: 'var(--link-accent-color)' }}>
           {originalImageUrl || 'N/A'}
         </Link>
       </Space>

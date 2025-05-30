@@ -11,15 +11,15 @@
 /* 按钮悬停效果 */
 .ant-btn-primary {
   transition: all 0.3s ease, transform 0.2s;
-  background: linear-gradient(90deg, #7e22ce 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, var(--button-bg-gradient-start) 0%, var(--button-bg-gradient-end) 100%);
   border: none;
-  box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 4px 6px var(--button-shadow-color);
 }
 
 .ant-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(139, 92, 246, 0.3);
-  background: linear-gradient(90deg, #8b5cf6 0%, #7e22ce 100%);
+  box-shadow: 0 6px 12px var(--button-hover-shadow-color);
+  background: linear-gradient(90deg, var(--button-bg-gradient-end) 0%, var(--button-bg-gradient-start) 100%);
 }
 
 /* 卡片悬停效果 */
@@ -27,30 +27,31 @@
   transition: all 0.3s ease;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #f0e6ff;
+  border: 1px solid var(--card-bg-color);
+  background-color: var(--card-bg-color); /* Add background color for Ant Card */
 }
 
 .ant-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(106, 13, 173, 0.15);
-  border-color: #d9c4ff;
+  box-shadow: 0 10px 20px var(--section-hover-shadow-color); /* Use hover shadow variable */
+  border-color: var(--image-gallery-hover-border); /* Use hover border variable */
 }
 
 /* 输入框焦点效果 */
 .ant-input:focus, .ant-input-focused {
-  border-color: #a78bfa;
-  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2);
+  border-color: var(--input-focus-border-color);
+  box-shadow: 0 0 0 2px var(--input-focus-shadow-color);
 }
 
 /* 折叠面板样式 */
 .ant-collapse {
-  background: #faf5ff;
+  background: var(--upload-result-bg); /* Use a background variable */
   border-radius: 12px;
-  border: 1px solid #f0e6ff;
+  border: 1px solid var(--section-border-color); /* Ensure border color is consistent */
 }
 
 .ant-collapse > .ant-collapse-item {
-  border-bottom: 1px solid #f0e6ff;
+  border-bottom: 1px solid var(--section-border-color); /* Ensure border color is consistent */
 }
 
 .ant-collapse > .ant-collapse-item:last-child {
@@ -59,33 +60,42 @@
 
 .ant-collapse-header {
   font-weight: 600;
-  color: #6a0dad !important;
+  color: var(--heading-color) !important;
+}
+
+/* 自定义折叠面板样式 */
+.ant-collapse-custom {
+  border: 1px solid var(--section-border-color); /* 确保自定义折叠面板边框颜色一致 */
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 /* 滑块样式 */
 .ant-slider-track {
-  background-color: #8b5cf6 !important;
+  background-color: var(--slider-fill-color) !important;
 }
 
 .ant-slider-handle {
-  border-color: #8b5cf6 !important;
+  border-color: var(--slider-fill-color) !important;
 }
 
 /* 模态框样式 */
 .ant-modal-content {
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid #e9d8ff;
+  border: 1px solid var(--card-bg-color);
+  background-color: var(--card-bg-color); /* Modal content background */
+  color: var(--text-color); /* Modal content text color */
 }
 
 .ant-modal-header {
-  background: linear-gradient(90deg, #7e22ce 0%, #8b5cf6 100%);
-  color: white;
+  background: linear-gradient(90deg, var(--top-navbar-gradient-start) 0%, var(--top-navbar-gradient-end) 100%);
+  color: var(--button-text-color);
   border-bottom: none;
 }
 
 .ant-modal-title {
-  color: white !important;
+  color: var(--button-text-color) !important;
 }
 
 /* 全局字体优化 */
@@ -98,9 +108,10 @@ body {
   max-width: 300px;
   max-height: 300px;
   object-fit: contain;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--card-bg-color);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--image-preview-shadow);
+  background-color: var(--image-bg-color); /* Image preview background */
 }
 
 /* 图片详情模态框中的图片样式 */
@@ -109,6 +120,8 @@ body {
   max-height: 500px;
   object-fit: contain;
   border-radius: 8px;
+  background-color: var(--image-bg-color); /* Image detail viewer background */
+  border: 1px solid var(--card-bg-color); /* Image detail viewer border */
 }
 
 /* 效果组布局 */
@@ -118,9 +131,11 @@ body {
   width: 100%;
   margin-bottom: 15px;
   padding: 10px;
-  border: 1px solid #e9d8ff;
+  border: 1px solid var(--card-bg-color);
   border-radius: 8px;
-  background-color: #fdfbff;
+  background-color: var(--effect-group-bg); /* Ensure background is set */
+  box-shadow: none; /* Remove box-shadow as per image */
+  border: 1px solid var(--card-bg-color); /* Ensure border is consistent */
 }
 
 .effect-control-row {
@@ -135,7 +150,7 @@ body {
   flex-shrink: 0; /* 防止标签被压缩 */
   margin-right: 15px;
   font-weight: 500;
-  color: #6a0dad;
+  color: var(--secondary-text-color);
   min-width: 80px; /* 确保标签有足够的宽度 */
 }
 
@@ -147,61 +162,81 @@ body {
 .effect-group .ant-input-number {
   width: 80px; /* 固定输入框宽度 */
   flex-shrink: 0;
+  background-color: var(--card-bg-color); /* Ensure input background matches card */
+  color: var(--text-color); /* Ensure input text color matches general text */
+  border: 1px solid var(--input-border-color); /* Ensure input border matches general input */
 }
 
 .slider-value-display {
   text-align: center;
   font-size: 14px;
-  color: #8b5cf6;
+  color: var(--link-accent-color);
   font-weight: 600;
   margin-top: 5px;
+  background-color: var(--card-bg-color); /* 确保背景与卡片背景色一致 */
+  padding: 5px 0; /* 添加一些内边距以获得更好的外观 */
+  border-radius: 4px; /* 略微圆角 */
 }
 
 /* 增强效果和艺术效果按钮组的布局 */
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px; /* 按钮之间的间距 */
-  width: 100%;
-  justify-content: flex-start; /* 按钮左对齐 */
-}
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    background-color: var(--card-bg-color); /* 确保背景色在移动视图中应用 */
+    padding: 10px; /* 确保内边距在移动视图中应用 */
+    border-radius: 8px; /* 确保边框圆角在移动视图中应用 */
+    border: 1px solid var(--card-bg-color); /* 确保边框在移动视图中应用 */
+  }
+
+  .controls button,
+  .controls .effect-group {
+    width: 100%;
+    box-sizing: border-box;
+  }
 
 .effect-button {
-  background-color: #e9d8ff;
-  border-color: #e9d8ff;
-  color: #6a0dad;
+  background-color: var(--card-bg-color); /* 使用卡片背景色 */
+  border-color: var(--card-bg-color); /* 使用效果组边框颜色 */
+  color: var(--link-accent-color); /* 使用强调色作为文本颜色 */
   transition: all 0.3s ease;
 }
 
 .effect-button:hover {
-  background-color: #d9c4ff;
-  border-color: #d9c4ff;
-  color: #6a0dad;
+  background-color: var(--effect-group-bg); /* 悬停时使用效果组背景色 */
+  border-color: var(--card-bg-color); /* 悬停时使用效果组边框颜色 */
+  color: var(--link-accent-color);
   transform: translateY(-2px);
 }
 
 .effect-button.active {
-  background: linear-gradient(90deg, #7e22ce 0%, #8b5cf6 100%);
+  background: linear-gradient(90deg, var(--effect-button-active-gradient-start) 0%, var(--effect-button-active-gradient-end) 100%);
   border: none;
-  color: white;
-  box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+  color: var(--button-text-color);
+  box-shadow: 0 4px 6px var(--effect-button-active-shadow-color);
 }
 
 .effect-button.active:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(139, 92, 246, 0.3);
-  background: linear-gradient(90deg, #8b5cf6 0%, #7e22ce 100%);
+  box-shadow: 0 6px 12px var(--effect-button-active-shadow-color);
+  background: linear-gradient(90deg, var(--effect-button-active-gradient-end) 0%, var(--effect-button-active-gradient-start) 100%);
 }
 
 /* Select 组件样式 */
 .effect-select {
   flex: 1;
   margin-left: 15px; /* 与标签的间距 */
+  background-color: var(--card-bg-color); /* Ensure select background matches card */
+  color: var(--text-color); /* Ensure select text color matches general text */
+  border: 1px solid var(--input-border-color); /* Ensure select border matches general input */
+  outline: none !important; /* 移除焦点时的轮廓 */
+  box-shadow: none !important; /* 移除焦点时的阴影 */
 }
 
 .effect-select .ant-select-arrow {
   right: 11px !important; /* 调整箭头位置到右侧，并提高优先级 */
   transform: translateY(-50%) !important; /* 垂直居中，并提高优先级 */
+  color: var(--secondary-text-color); /* Adjust arrow color */
 }
 
 /* 响应式调整 */
@@ -231,5 +266,29 @@ body {
     width: 100%; /* Select 组件占据整行 */
     margin-left: 0;
     margin-top: 5px; /* 与上方元素的间距 */
+  }
+
+  /* 手机端夜览开关大小调整 */
+  .ant-switch {
+    width: 44px !important; /* 减小开关宽度 */
+    min-width: 44px !important; /* 确保最小宽度也被覆盖 */
+    height: 22px !important; /* 减小开关高度 */
+    line-height: 22px !important; /* 调整行高以适应新高度 */
+  }
+
+  .ant-switch-handle {
+    width: 18px !important; /* 减小滑块宽度 */
+    height: 18px !important; /* 减小滑块高度 */
+    top: 2px !important; /* 调整滑块位置 */
+    left: 2px !important; /* 调整滑块位置 */
+  }
+
+  .ant-switch-checked .ant-switch-handle {
+    left: calc(100% - 20px) !important; /* 调整选中时滑块位置 */
+  }
+
+  .ant-switch-inner {
+    font-size: 12px !important; /* 减小文字大小 */
+    margin: 0 5px !important; /* 调整文字边距 */
   }
 }
