@@ -9,10 +9,9 @@ const { Text } = Typography;
  * UploadSection 组件：处理图片上传功能
  * @param {object} props - 组件属性
  * @param {function} props.onUploadSuccess - 图片上传成功后的回调函数
- * @param {boolean} props.darkMode - 是否处于暗黑模式
  * @returns {JSX.Element} - 上传图片部分的 JSX 元素
  */
-function UploadSection({ onUploadSuccess, darkMode }) {
+function UploadSection({ onUploadSuccess }) {
   const [messageApi, contextHolder] = message.useMessage();
   const [imageFile, setImageFile] = useState(null);
   const [uploadFolder, setUploadFolder] = useState('');
@@ -78,8 +77,8 @@ function UploadSection({ onUploadSuccess, darkMode }) {
   return (
     <section className="animated-section" style={{ 
       marginBottom: '20px',
-      border: darkMode ? '1px dashed #4c1d95' : '1px dashed #c4b5fd',
-      background: darkMode ? 'rgba(30, 41, 59, 0.3)' : 'rgba(199, 210, 254, 0.1)'
+      border: '1px dashed #c4b5fd',
+      background: 'rgba(199, 210, 254, 0.1)'
     }}>
       {contextHolder}
       <h2>上传图片</h2>
@@ -100,9 +99,9 @@ function UploadSection({ onUploadSuccess, darkMode }) {
             icon={<UploadOutlined />} 
             disabled={isUploading}
             style={{ 
-              background: darkMode ? 'rgba(30, 41, 59, 0.5)' : '#f5f3ff',
-              borderColor: darkMode ? '#7e22ce' : '#8b5cf6',
-              color: darkMode ? '#e9d5ff' : '#7e22ce'
+              background: '#f5f3ff',
+              borderColor: '#8b5cf6',
+              color: '#7e22ce'
             }}
           >
             选择图片
@@ -110,7 +109,7 @@ function UploadSection({ onUploadSuccess, darkMode }) {
         </Upload>
         
         {fileList.length > 0 && (
-          <Text strong style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>
+          <Text strong style={{ color: '#7e22ce' }}>
             已选择: {fileList[0].name}
           </Text>
         )}
@@ -120,8 +119,8 @@ function UploadSection({ onUploadSuccess, darkMode }) {
           value={uploadFolder}
           onChange={(e) => setUploadFolder(e.target.value)}
           disabled={isUploading}
-          prefix={<span style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>📁</span>}
-          style={{ background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+          prefix={<span style={{ color: '#7e22ce' }}>📁</span>}
+          style={{ background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
         />
         
         <Input
@@ -129,8 +128,8 @@ function UploadSection({ onUploadSuccess, darkMode }) {
           value={uploadTags}
           onChange={(e) => setUploadTags(e.target.value)}
           disabled={isUploading}
-          prefix={<span style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>🏷️</span>}
-          style={{ background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+          prefix={<span style={{ color: '#7e22ce' }}>🏷️</span>}
+          style={{ background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
         />
         
         <Button
@@ -139,7 +138,7 @@ function UploadSection({ onUploadSuccess, darkMode }) {
           loading={isUploading}
           icon={<CloudUploadOutlined />}
           style={{ 
-            background: darkMode ? 'linear-gradient(135deg, #7e22ce, #8b5cf6)' : 'linear-gradient(135deg, #8b5cf6, #7e22ce)',
+            background: 'linear-gradient(135deg, #8b5cf6, #7e22ce)',
             border: 'none',
             height: 40,
             fontWeight: 600

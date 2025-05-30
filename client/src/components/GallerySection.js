@@ -14,10 +14,9 @@ const { Meta } = Card;
  * @param {function} props.setOriginalImageUrl - 设置当前选中图片原图 URL 的回调函数
  * @param {number} props.refreshTrigger - 用于触发画廊刷新的依赖项
  * @param {function} props.setIsDetailModalOpen - 设置图片详情模态框打开状态的回调函数
- * @param {boolean} props.darkMode - 是否处于暗黑模式
  * @returns {JSX.Element} - 图片画廊部分的 JSX 元素
  */
-function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, setOriginalImageUrl, refreshTrigger, setIsDetailModalOpen, darkMode }) {
+function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, setOriginalImageUrl, refreshTrigger, setIsDetailModalOpen }) {
   const [messageApi, contextHolder] = message.useMessage();
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -91,11 +90,11 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
       
       <div style={{ marginBottom: '16px' }}>
         <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start' }}>
-          <Tag color={darkMode ? "purple" : "geekblue"} style={{ fontSize: '1rem', padding: '5px 10px' }}>
+          <Tag color="geekblue" style={{ fontSize: '1rem', padding: '5px 10px' }}>
             当前文件夹: {currentFolder || '全部'}
           </Tag>
           <Input
-            prefix={<FolderOutlined style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }} />}
+            prefix={<FolderOutlined style={{ color: '#7e22ce' }} />}
             placeholder="输入文件夹名称"
             value={folderInput}
             onChange={(e) => setFolderInput(e.target.value)}
@@ -108,7 +107,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
               setFolderInput('');
               setSearchTagInput('');
             }}
-            style={{ background: darkMode ? 'linear-gradient(135deg, #7e22ce, #8b5cf6)' : 'linear-gradient(135deg, #8b5cf6, #7e22ce)' }}
+            style={{ background: 'linear-gradient(135deg, #8b5cf6, #7e22ce)' }}
           >
             跳转
           </Button>
@@ -117,7 +116,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
         <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start', marginTop: '16px' }}>
           <Input.Search
             placeholder="按标签搜索 (例如: nature)"
-            enterButton={<SearchOutlined style={{ color: darkMode ? '#e9d5ff' : '#7e22ce' }} />}
+            enterButton={<SearchOutlined style={{ color: '#7e22ce' }} />}
             value={searchTagInput}
             onChange={(e) => setSearchTagInput(e.target.value)}
             onSearch={(value) => {
@@ -134,7 +133,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
               setSearchTagInput(''); 
               fetchAndDisplayImages(''); 
             }}
-            style={{ borderColor: darkMode ? '#7e22ce' : '#8b5cf6', color: darkMode ? '#e9d5ff' : '#7e22ce' }}
+            style={{ borderColor: '#8b5cf6', color: '#7e22ce' }}
           >
             清除搜索
           </Button>
@@ -165,8 +164,8 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
                   hoverable
                   style={{ 
                     width: '100%',
-                    border: darkMode ? '1px solid #334155' : '1px solid #e2e8f0',
-                    background: darkMode ? '#1e293b' : '#ffffff'
+                    border: '1px solid #e2e8f0',
+                    background: '#ffffff'
                   }}
                   cover={
                     <img
@@ -177,7 +176,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
                         height: 180, 
                         objectFit: 'cover', 
                         cursor: 'pointer',
-                        borderBottom: darkMode ? '1px solid #334155' : '1px solid #e2e8f0'
+                        borderBottom: '1px solid #e2e8f0'
                       }}
                       onClick={() => handleImageClick(image)}
                     />
@@ -201,7 +200,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
                     title={image.public_id.split('/').pop()} 
                     description={
                       <div>
-                        <Tag color={darkMode ? "purple" : "geekblue"}>
+                        <Tag color="geekblue">
                           {image.folder || '根目录'}
                         </Tag>
                         {image.tags && image.tags.length > 0 && (
@@ -209,7 +208,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
                         )}
                       </div>
                     }
-                    style={{ color: darkMode ? '#e2e8f0' : '#334155' }}
+                    style={{ color: '#334155' }}
                   />
                 </Card>
               </List.Item>

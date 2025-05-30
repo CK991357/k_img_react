@@ -1,20 +1,12 @@
 :root {
   --primary-light: #8b5cf6;
-  --primary-dark: #7e22ce;
   --secondary-light: #c4b5fd;
-  --secondary-dark: #a78bfa;
   --accent-light: #d8b4fe;
-  --accent-dark: #c084fc;
   --text-light: #1e293b;
-  --text-dark: #f1f5f9;
   --bg-light: #f5f3ff;
-  --bg-dark: #0f172a;
   --card-light: #ffffff;
-  --card-dark: #1e293b;
   --border-light: #e2e8f0;
-  --border-dark: #334155;
   --shadow-light: rgba(126, 34, 206, 0.1);
-  --shadow-dark: rgba(0, 0, 0, 0.3);
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
@@ -31,9 +23,6 @@ body {
   transition: var(--transition);
 }
 
-body.dark-mode {
-  color: var(--text-dark);
-}
 
 h1, h2, h3 {
   font-weight: 700;
@@ -59,7 +48,7 @@ h2::after {
   left: 0;
   width: 50px;
   height: 4px;
-  background: linear-gradient(90deg, var(--primary-light), var(--primary-dark));
+  background: var(--primary-light);
   border-radius: 2px;
 }
 
@@ -73,11 +62,6 @@ section {
   border: 1px solid var(--border-light);
 }
 
-.dark-mode section {
-  background-color: var(--card-dark);
-  box-shadow: 0 4px 12px var(--shadow-dark);
-  border: 1px solid var(--border-dark);
-}
 
 button {
   transition: var(--transition) !important;
@@ -132,10 +116,6 @@ button {
   transition: var(--transition);
 }
 
-.dark-mode .effect-group {
-  background: rgba(30, 41, 59, 0.5);
-}
-
 .ant-collapse {
   background: transparent !important;
   border: none !important;
@@ -143,10 +123,6 @@ button {
 
 .ant-collapse > .ant-collapse-item {
   border-bottom: 1px solid rgba(126, 34, 206, 0.1) !important;
-}
-
-.dark-mode .ant-collapse > .ant-collapse-item {
-  border-bottom: 1px solid rgba(124, 58, 237, 0.2) !important;
 }
 
 .ant-collapse-content {

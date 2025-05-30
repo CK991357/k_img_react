@@ -12,10 +12,9 @@ const { Panel } = Collapse;
  * @param {function} props.setRefreshGallery - 触发画廊刷新的回调函数
  * @param {function} props.setSelectedPublicId - 设置当前选中图片 public_id 的回调函数
  * @param {function} props.setOriginalImageUrl - 设置当前选中图片原图 URL 的回调函数
- * @param {boolean} props.darkMode - 是否处于暗黑模式
  * @returns {JSX.Element} - 图片编辑部分的 JSX 元素
  */
-function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGallery, setSelectedPublicId, setOriginalImageUrl, darkMode }) {
+function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGallery, setSelectedPublicId, setOriginalImageUrl }) {
   const [messageApi, contextHolder] = message.useMessage();
   const [transformedImageUrl, setTransformedImageUrl] = useState(null);
   const [currentTransformations, setCurrentTransformations] = useState({});
@@ -300,10 +299,10 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
               textAlign: 'center', 
               padding: 16,
               borderRadius: 12,
-              background: darkMode ? '#1e293b' : '#f5f3ff',
-              border: darkMode ? '1px solid #334155' : '1px solid #ddd6fe'
+              background: '#f5f3ff',
+              border: '1px solid #ddd6fe'
             }}>
-              <h3 style={{ color: darkMode ? '#e9d5ff' : '#7e22ce' }}>原图</h3>
+              <h3 style={{ color: '#7e22ce' }}>原图</h3>
               <Image
                 src={originalImageUrl || ''}
                 alt="原图"
@@ -312,7 +311,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   maxHeight: '300px', 
                   objectFit: 'contain', 
                   borderRadius: 8,
-                  border: darkMode ? '1px solid #334155' : '1px solid #e2e8f0'
+                  border: '1px solid #e2e8f0'
                 }}
                 fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
               />
@@ -324,10 +323,10 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
               textAlign: 'center', 
               padding: 16,
               borderRadius: 12,
-              background: darkMode ? '#1e293b' : '#f5f3ff',
-              border: darkMode ? '1px solid #334155' : '1px solid #ddd6fe'
+              background: '#f5f3ff',
+              border: '1px solid #ddd6fe'
             }}>
-              <h3 style={{ color: darkMode ? '#e9d5ff' : '#7e22ce' }}>转换后图片</h3>
+              <h3 style={{ color: '#7e22ce' }}>转换后图片</h3>
               <Image
                 src={transformedImageUrl || ''}
                 alt="转换后图片"
@@ -336,7 +335,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   maxHeight: '300px', 
                   objectFit: 'contain', 
                   borderRadius: 8,
-                  border: darkMode ? '1px solid #334155' : '1px solid #e2e8f0'
+                  border: '1px solid #e2e8f0'
                 }}
                 fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
               />
@@ -355,13 +354,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
           bordered={false}
         >
           <Panel 
-            header={<span style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>颜色调整</span>} 
+            header={<span style={{ color: '#7e22ce' }}>颜色调整</span>} 
             key="1"
             style={{ background: 'transparent' }}
           >
             <Space direction="vertical" style={{ width: '100%' }}>
               <div className="effect-group">
-                <label htmlFor="brightnessSlider" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>亮度:</label>
+                <label htmlFor="brightnessSlider" style={{ color: '#334155' }}>亮度:</label>
                 <Slider
                   min={-100}
                   max={100}
@@ -371,13 +370,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof brightness === 'number' ? brightness : 0}
                   style={{ flex: 1, margin: '0 10px' }}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={-100}
                   max={100}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={brightness}
                   onChange={(val) => {
                     setBrightness(val);
@@ -386,7 +385,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 />
               </div>
               <div className="effect-group">
-                <label htmlFor="contrastSlider" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>对比度:</label>
+                <label htmlFor="contrastSlider" style={{ color: '#334155' }}>对比度:</label>
                 <Slider
                   min={-100}
                   max={100}
@@ -396,13 +395,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof contrast === 'number' ? contrast : 0}
                   style={{ flex: 1, margin: '0 10px' }}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={-100}
                   max={100}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={contrast}
                   onChange={(val) => {
                     setContrast(val);
@@ -411,7 +410,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 />
               </div>
               <div className="effect-group">
-                <label htmlFor="saturationSlider" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>饱和度:</label>
+                <label htmlFor="saturationSlider" style={{ color: '#334155' }}>饱和度:</label>
                 <Slider
                   min={-100}
                   max={100}
@@ -421,13 +420,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof saturation === 'number' ? saturation : 0}
                   style={{ flex: 1, margin: '0 10px' }}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={-100}
                   max={100}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={saturation}
                   onChange={(val) => {
                     setSaturation(val);
@@ -436,7 +435,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 />
               </div>
               <div className="effect-group">
-                <label htmlFor="fillLightSlider" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>补光:</label>
+                <label htmlFor="fillLightSlider" style={{ color: '#334155' }}>补光:</label>
                 <Slider
                   min={0}
                   max={100}
@@ -446,13 +445,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof fillLight === 'number' ? fillLight : 0}
                   style={{ flex: 1, margin: '0 10px' }}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={0}
                   max={100}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={fillLight}
                   onChange={(val) => {
                     setFillLight(val);
@@ -461,7 +460,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 />
               </div>
               <div className="effect-group">
-                <label htmlFor="fillLightBlendSlider" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>补光混合:</label>
+                <label htmlFor="fillLightBlendSlider" style={{ color: '#334155' }}>补光混合:</label>
                 <Slider
                   min={0}
                   max={100}
@@ -471,13 +470,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof fillLightBlend === 'number' ? fillLightBlend : 0}
                   style={{ flex: 1, margin: '0 10px' }}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={0}
                   max={100}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={fillLightBlend}
                   onChange={(val) => {
                     setFillLightBlend(val);
@@ -499,7 +498,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
           bordered={false}
         >
           <Panel 
-            header={<span style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>增强效果</span>} 
+            header={<span style={{ color: '#7e22ce' }}>增强效果</span>} 
             key="1"
             style={{ background: 'transparent' }}
           >
@@ -604,7 +603,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
           bordered={false}
         >
           <Panel 
-            header={<span style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>艺术效果</span>} 
+            header={<span style={{ color: '#7e22ce' }}>艺术效果</span>} 
             key="1"
             style={{ background: 'transparent' }}
           >
@@ -662,7 +661,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 </Button>
               </div>
               <div className="effect-group">
-                <label htmlFor="artFilterSelect" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>Art Filter:</label>
+                <label htmlFor="artFilterSelect" style={{ color: '#334155' }}>Art Filter:</label>
                 <Select
                   id="artFilterSelect"
                   value={artFilter}
@@ -679,29 +678,29 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     }
                   }}
                   style={{ flex: 1, margin: '0 10px' }}
-                  dropdownStyle={{ background: darkMode ? '#1e293b' : '#ffffff' }}
+                  dropdownStyle={{ background: '#ffffff' }}
                   optionLabelProp="children"
                   optionFilterProp="children"
                 >
-                  <Select.Option value="" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>None</Select.Option>
-                  <Select.Option value="al_dente" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Al Dente</Select.Option>
-                  <Select.Option value="athena" style={{ color: darkMode ? '#e2e8f0' : '#334153', background: darkMode ? '#1e293b' : '#ffffff' }}>Athena</Select.Option>
-                  <Select.Option value="audrey" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Audrey</Select.Option>
-                  <Select.Option value="aurora" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Aurora</Select.Option>
-                  <Select.Option value="daguerre" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Daguerre</Select.Option>
-                  <Select.Option value="eucalyptus" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Eucalyptus</Select.Option>
-                  <Select.Option value="fes" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Fes</Select.Option>
-                  <Select.Option value="hokusai" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Hokusai</Select.Option>
-                  <Select.Option value="incognito" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Incognito</Select.Option>
-                  <Select.Option value="linen" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Linen</Select.Option>
-                  <Select.Option value="peacock" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Peacock</Select.Option>
-                  <Select.Option value="primavera" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Primavera</Select.Option>
-                  <Select.Option value="quartz" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Quartz</Select.Option>
-                  <Select.Option value="red_rock" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Red Rock</Select.Option>
-                  <Select.Option value="sizzle" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Sizzle</Select.Option>
-                  <Select.Option value="sonnet" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Sonnet</Select.Option>
-                  <Select.Option value="ukiyo" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Ukiyo</Select.Option>
-                  <Select.Option value="zorro" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Zorro</Select.Option>
+                  <Select.Option value="" style={{ color: '#334155', background: '#ffffff' }}>None</Select.Option>
+                  <Select.Option value="al_dente" style={{ color: '#334155', background: '#ffffff' }}>Al Dente</Select.Option>
+                  <Select.Option value="athena" style={{ color: '#334153', background: '#ffffff' }}>Athena</Select.Option>
+                  <Select.Option value="audrey" style={{ color: '#334155', background: '#ffffff' }}>Audrey</Select.Option>
+                  <Select.Option value="aurora" style={{ color: '#334155', background: '#ffffff' }}>Aurora</Select.Option>
+                  <Select.Option value="daguerre" style={{ color: '#334155', background: '#ffffff' }}>Daguerre</Select.Option>
+                  <Select.Option value="eucalyptus" style={{ color: '#334155', background: '#ffffff' }}>Eucalyptus</Select.Option>
+                  <Select.Option value="fes" style={{ color: '#334155', background: '#ffffff' }}>Fes</Select.Option>
+                  <Select.Option value="hokusai" style={{ color: '#334155', background: '#ffffff' }}>Hokusai</Select.Option>
+                  <Select.Option value="incognito" style={{ color: '#334155', background: '#ffffff' }}>Incognito</Select.Option>
+                  <Select.Option value="linen" style={{ color: '#334155', background: '#ffffff' }}>Linen</Select.Option>
+                  <Select.Option value="peacock" style={{ color: '#334155', background: '#ffffff' }}>Peacock</Select.Option>
+                  <Select.Option value="primavera" style={{ color: '#334155', background: '#ffffff' }}>Primavera</Select.Option>
+                  <Select.Option value="quartz" style={{ color: '#334155', background: '#ffffff' }}>Quartz</Select.Option>
+                  <Select.Option value="red_rock" style={{ color: '#334155', background: '#ffffff' }}>Red Rock</Select.Option>
+                  <Select.Option value="sizzle" style={{ color: '#334155', background: '#ffffff' }}>Sizzle</Select.Option>
+                  <Select.Option value="sonnet" style={{ color: '#334155', background: '#ffffff' }}>Sonnet</Select.Option>
+                  <Select.Option value="ukiyo" style={{ color: '#334155', background: '#ffffff' }}>Ukiyo</Select.Option>
+                  <Select.Option value="zorro" style={{ color: '#334155', background: '#ffffff' }}>Zorro</Select.Option>
                 </Select>
               </div>
             </Space>
@@ -718,7 +717,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
           bordered={false}
         >
           <Panel 
-            header={<span style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>背景与阴影</span>} 
+            header={<span style={{ color: '#7e22ce' }}>背景与阴影</span>} 
             key="1"
             style={{ background: 'transparent' }}
           >
@@ -759,13 +758,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
           bordered={false}
         >
           <Panel 
-            header={<span style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>不透明度</span>} 
+            header={<span style={{ color: '#7e22ce' }}>不透明度</span>} 
             key="1"
             style={{ background: 'transparent' }}
           >
             <Space direction="vertical" style={{ width: '100%' }}>
               <div className="effect-group">
-                <label htmlFor="opacitySlider" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>不透明度:</label>
+                <label htmlFor="opacitySlider" style={{ color: '#334155' }}>不透明度:</label>
                 <Slider
                   min={0}
                   max={100}
@@ -775,13 +774,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof opacity === 'number' ? opacity : 0}
                   style={{ flex: 1, margin: '0 10px' }}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={0}
                   max={100}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={opacity}
                   onChange={(val) => {
                     setOpacity(val);
@@ -803,13 +802,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
           bordered={false}
         >
           <Panel 
-            header={<span style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>替换颜色</span>} 
+            header={<span style={{ color: '#7e22ce' }}>替换颜色</span>} 
             key="1"
             style={{ background: 'transparent' }}
           >
             <Space direction="vertical" style={{ width: '100%' }}>
               <div className="effect-group">
-                <label htmlFor="replaceColorFrom" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>源颜色 (Hex):</label>
+                <label htmlFor="replaceColorFrom" style={{ color: '#334155' }}>源颜色 (Hex):</label>
                 <Input
                   id="replaceColorFrom"
                   placeholder="#RRGGBB 或 color_name"
@@ -819,11 +818,11 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setReplaceColorFrom(val);
                     updateTransformation('e_replace_color', 'from_color', val);
                   }}
-                  style={{ flex: 1, margin: '0 10px', background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ flex: 1, margin: '0 10px', background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                 />
               </div>
               <div className="effect-group">
-                <label htmlFor="replaceColorTo" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>目标颜色 (Hex):</label>
+                <label htmlFor="replaceColorTo" style={{ color: '#334155' }}>目标颜色 (Hex):</label>
                 <Input
                   id="replaceColorTo"
                   placeholder="#RRGGBB 或 color_name"
@@ -833,11 +832,11 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setReplaceColorTo(val);
                     updateTransformation('e_replace_color', 'to_color', val);
                   }}
-                  style={{ flex: 1, margin: '0 10px', background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ flex: 1, margin: '0 10px', background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                 />
               </div>
               <div className="effect-group">
-                <label htmlFor="replaceColorTolerance" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>容差 (0-100):</label>
+                <label htmlFor="replaceColorTolerance" style={{ color: '#334155' }}>容差 (0-100):</label>
                 <Slider
                   min={0}
                   max={100}
@@ -847,13 +846,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof replaceColorTolerance === 'number' ? replaceColorTolerance : 0}
                   style={{ flex: 1, margin: '0 10px' }}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={0}
                   max={100}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={replaceColorTolerance}
                   onChange={(val) => {
                     setReplaceColorTolerance(val);
@@ -875,13 +874,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
           bordered={false}
         >
           <Panel 
-            header={<span style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>图像转换</span>} 
+            header={<span style={{ color: '#7e22ce' }}>图像转换</span>} 
             key="1"
             style={{ background: 'transparent' }}
           >
             <Space direction="vertical" style={{ width: '100%' }}>
               <div className="effect-group">
-                <label htmlFor="formatSelect" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>格式转换:</label>
+                <label htmlFor="formatSelect" style={{ color: '#334155' }}>格式转换:</label>
                 <Select
                   id="formatSelect"
                   value={format}
@@ -898,23 +897,23 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     }
                   }}
                   style={{ flex: 1, margin: '0 10px' }}
-                  dropdownStyle={{ background: darkMode ? '#1e293b' : '#ffffff' }}
+                  dropdownStyle={{ background: '#ffffff' }}
                   optionLabelProp="children"
                   optionFilterProp="children"
                 >
-                  <Select.Option value="" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Original</Select.Option>
-                  <Select.Option value="jpg" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>JPG</Select.Option>
-                  <Select.Option value="png" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>PNG</Select.Option>
-                  <Select.Option value="webp" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>WebP</Select.Option>
-                  <Select.Option value="gif" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>GIF</Select.Option>
-                  <Select.Option value="bmp" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>BMP</Select.Option>
-                  <Select.Option value="tiff" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>TIFF</Select.Option>
-                  <Select.Option value="pdf" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>PDF</Select.Option>
+                  <Select.Option value="" style={{ color: '#334155', background: '#ffffff' }}>Original</Select.Option>
+                  <Select.Option value="jpg" style={{ color: '#334155', background: '#ffffff' }}>JPG</Select.Option>
+                  <Select.Option value="png" style={{ color: '#334155', background: '#ffffff' }}>PNG</Select.Option>
+                  <Select.Option value="webp" style={{ color: '#334155', background: '#ffffff' }}>WebP</Select.Option>
+                  <Select.Option value="gif" style={{ color: '#334155', background: '#ffffff' }}>GIF</Select.Option>
+                  <Select.Option value="bmp" style={{ color: '#334155', background: '#ffffff' }}>BMP</Select.Option>
+                  <Select.Option value="tiff" style={{ color: '#334155', background: '#ffffff' }}>TIFF</Select.Option>
+                  <Select.Option value="pdf" style={{ color: '#334155', background: '#ffffff' }}>PDF</Select.Option>
                 </Select>
               </div>
 
               <div className="effect-group">
-                <label htmlFor="cropModeSelect" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>裁剪模式:</label>
+                <label htmlFor="cropModeSelect" style={{ color: '#334155' }}>裁剪模式:</label>
                 <Select
                   id="cropModeSelect"
                   value={cropMode}
@@ -923,24 +922,24 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('c', 'crop_mode', val);
                   }}
                   style={{ flex: 1, margin: '0 10px' }}
-                  dropdownStyle={{ background: darkMode ? '#1e293b' : '#ffffff' }}
+                  dropdownStyle={{ background: '#ffffff' }}
                   optionLabelProp="children"
                   optionFilterProp="children"
                 >
-                  <Select.Option value="" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>None</Select.Option>
-                  <Select.Option value="fill" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Fill</Select.Option>
-                  <Select.Option value="scale" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Scale</Select.Option>
-                  <Select.Option value="fit" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Fit</Select.Option>
-                  <Select.Option value="limit" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Limit</Select.Option>
-                  <Select.Option value="mfill" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Mfill</Select.Option>
-                  <Select.Option value="lfill" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Lfill</Select.Option>
-                  <Select.Option value="mpad" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Mpad</Select.Option>
-                  <Select.Option value="crop" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Crop</Select.Option>
-                  <Select.Option value="thumb" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Thumb</Select.Option>
-                  <Select.Option value="imagga_crop" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Imagga Crop</Select.Option>
-                  <Select.Option value="imagga_scale" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Imagga Scale</Select.Option>
+                  <Select.Option value="" style={{ color: '#334155', background: '#ffffff' }}>None</Select.Option>
+                  <Select.Option value="fill" style={{ color: '#334155', background: '#ffffff' }}>Fill</Select.Option>
+                  <Select.Option value="scale" style={{ color: '#334155', background: '#ffffff' }}>Scale</Select.Option>
+                  <Select.Option value="fit" style={{ color: '#334155', background: '#ffffff' }}>Fit</Select.Option>
+                  <Select.Option value="limit" style={{ color: '#334155', background: '#ffffff' }}>Limit</Select.Option>
+                  <Select.Option value="mfill" style={{ color: '#334155', background: '#ffffff' }}>Mfill</Select.Option>
+                  <Select.Option value="lfill" style={{ color: '#334155', background: '#ffffff' }}>Lfill</Select.Option>
+                  <Select.Option value="mpad" style={{ color: '#334155', background: '#ffffff' }}>Mpad</Select.Option>
+                  <Select.Option value="crop" style={{ color: '#334155', background: '#ffffff' }}>Crop</Select.Option>
+                  <Select.Option value="thumb" style={{ color: '#334155', background: '#ffffff' }}>Thumb</Select.Option>
+                  <Select.Option value="imagga_crop" style={{ color: '#334155', background: '#ffffff' }}>Imagga Crop</Select.Option>
+                  <Select.Option value="imagga_scale" style={{ color: '#334155', background: '#ffffff' }}>Imagga Scale</Select.Option>
                 </Select>
-                <label htmlFor="cropWidthInput" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>宽度:</label>
+                <label htmlFor="cropWidthInput" style={{ color: '#334155' }}>宽度:</label>
                 <InputNumber
                   id="cropWidthInput"
                   placeholder="宽度"
@@ -949,9 +948,9 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setCropWidth(val);
                     updateTransformation('c', 'width', val);
                   }}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                 />
-                <label htmlFor="cropHeightInput" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>高度:</label>
+                <label htmlFor="cropHeightInput" style={{ color: '#334155' }}>高度:</label>
                 <InputNumber
                   id="cropHeightInput"
                   placeholder="高度"
@@ -960,9 +959,9 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     setCropHeight(val);
                     updateTransformation('c', 'height', val);
                   }}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                 />
-                <label htmlFor="cropGravitySelect" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>重力:</label>
+                <label htmlFor="cropGravitySelect" style={{ color: '#334155' }}>重力:</label>
                 <Select
                   id="cropGravitySelect"
                   value={cropGravity}
@@ -971,28 +970,28 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                     updateTransformation('c', 'gravity', val);
                   }}
                   style={{ flex: 1, margin: '0 10px' }}
-                  dropdownStyle={{ background: darkMode ? '#1e293b' : '#ffffff' }}
+                  dropdownStyle={{ background: '#ffffff' }}
                   optionLabelProp="children"
                   optionFilterProp="children"
                 >
-                  <Select.Option value="" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>None</Select.Option>
-                  <Select.Option value="auto" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Auto</Select.Option>
-                  <Select.Option value="face" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Face</Select.Option>
-                  <Select.Option value="faces" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Faces</Select.Option>
-                  <Select.Option value="north" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>North</Select.Option>
-                  <Select.Option value="north_east" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>North East</Select.Option>
-                  <Select.Option value="east" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>East</Select.Option>
-                  <Select.Option value="south_east" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>South East</Select.Option>
-                  <Select.Option value="south" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>South</Select.Option>
-                  <Select.Option value="south_west" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>South West</Select.Option>
-                  <Select.Option value="west" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>West</Select.Option>
-                  <Select.Option value="north_west" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>North West</Select.Option>
-                  <Select.Option value="center" style={{ color: darkMode ? '#e2e8f0' : '#334155', background: darkMode ? '#1e293b' : '#ffffff' }}>Center</Select.Option>
+                  <Select.Option value="" style={{ color: '#334155', background: '#ffffff' }}>None</Select.Option>
+                  <Select.Option value="auto" style={{ color: '#334155', background: '#ffffff' }}>Auto</Select.Option>
+                  <Select.Option value="face" style={{ color: '#334155', background: '#ffffff' }}>Face</Select.Option>
+                  <Select.Option value="faces" style={{ color: '#334155', background: '#ffffff' }}>Faces</Select.Option>
+                  <Select.Option value="north" style={{ color: '#334155', background: '#ffffff' }}>North</Select.Option>
+                  <Select.Option value="north_east" style={{ color: '#334155', background: '#ffffff' }}>North East</Select.Option>
+                  <Select.Option value="east" style={{ color: '#334155', background: '#ffffff' }}>East</Select.Option>
+                  <Select.Option value="south_east" style={{ color: '#334155', background: '#ffffff' }}>South East</Select.Option>
+                  <Select.Option value="south" style={{ color: '#334155', background: '#ffffff' }}>South</Select.Option>
+                  <Select.Option value="south_west" style={{ color: '#334155', background: '#ffffff' }}>South West</Select.Option>
+                  <Select.Option value="west" style={{ color: '#334155', background: '#ffffff' }}>West</Select.Option>
+                  <Select.Option value="north_west" style={{ color: '#334155', background: '#ffffff' }}>North West</Select.Option>
+                  <Select.Option value="center" style={{ color: '#334155', background: '#ffffff' }}>Center</Select.Option>
                 </Select>
               </div>
 
               <div className="effect-group">
-                <label htmlFor="qualitySlider" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>质量:</label>
+                <label htmlFor="qualitySlider" style={{ color: '#334155' }}>质量:</label>
                 <Slider
                   min={1}
                   max={100}
@@ -1003,13 +1002,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   value={typeof quality === 'number' ? quality : 0}
                   style={{ flex: 1, margin: '0 10px' }}
                   disabled={qualityAuto}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={1}
                   max={100}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={quality}
                   onChange={(val) => {
                     setQuality(val);
@@ -1029,14 +1028,14 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                       updateTransformation('q', 'level', quality); // 恢复到手动设置的值
                     }
                   }}
-                  style={{ color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ color: '#334155' }}
                 >
                   自动
                 </Checkbox>
               </div>
 
               <div className="effect-group">
-                <label htmlFor="dprSlider" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>DPR:</label>
+                <label htmlFor="dprSlider" style={{ color: '#334155' }}>DPR:</label>
                 <Slider
                   min={0.1}
                   max={5}
@@ -1048,14 +1047,14 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   value={typeof dpr === 'number' ? dpr : 0}
                   style={{ flex: 1, margin: '0 10px' }}
                   disabled={dprAuto}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={0.1}
                   max={5}
                   step={0.1}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={dpr}
                   onChange={(val) => {
                     setDpr(val);
@@ -1075,7 +1074,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                       updateTransformation('dpr', 'value', dpr); // 恢复到手动设置的值
                     }
                   }}
-                  style={{ color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ color: '#334155' }}
                 >
                   自动
                 </Checkbox>
@@ -1094,13 +1093,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
           bordered={false}
         >
           <Panel 
-            header={<span style={{ color: darkMode ? '#c4b5fd' : '#7e22ce' }}>模糊与像素化</span>} 
+            header={<span style={{ color: '#7e22ce' }}>模糊与像素化</span>} 
             key="1"
             style={{ background: 'transparent' }}
           >
             <Space direction="vertical" style={{ width: '100%' }}>
               <div className="effect-group">
-                <label htmlFor="blurSlider" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>模糊强度:</label>
+                <label htmlFor="blurSlider" style={{ color: '#334155' }}>模糊强度:</label>
                 <Slider
                   min={0}
                   max={2000}
@@ -1110,13 +1109,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof blurStrength === 'number' ? blurStrength : 0}
                   style={{ flex: 1, margin: '0 10px' }}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={0}
                   max={2000}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={blurStrength}
                   onChange={(val) => {
                     setBlurStrength(val);
@@ -1125,7 +1124,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 />
               </div>
               <div className="effect-group">
-                <label htmlFor="pixelateSlider" style={{ color: darkMode ? '#e2e8f0' : '#334155' }}>像素化强度:</label>
+                <label htmlFor="pixelateSlider" style={{ color: '#334155' }}>像素化强度:</label>
                 <Slider
                   min={0}
                   max={200}
@@ -1135,13 +1134,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   }}
                   value={typeof pixelateStrength === 'number' ? pixelateStrength : 0}
                   style={{ flex: 1, margin: '0 10px' }}
-                  trackStyle={{ background: darkMode ? '#a78bfa' : '#7e22ce' }}
-                  handleStyle={{ borderColor: darkMode ? '#a78bfa' : '#7e22ce' }}
+                  trackStyle={{ background: '#7e22ce' }}
+                  handleStyle={{ borderColor: '#7e22ce' }}
                 />
                 <InputNumber
                   min={0}
                   max={200}
-                  style={{ margin: '0 10px', width: 80, background: darkMode ? '#0f172a' : '#ffffff', borderColor: darkMode ? '#334155' : '#e2e8f0', color: darkMode ? '#e2e8f0' : '#334155' }}
+                  style={{ margin: '0 10px', width: 80, background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
                   value={pixelateStrength}
                   onChange={(val) => {
                     setPixelateStrength(val);
@@ -1179,7 +1178,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
           <Button type="primary" onClick={handleSaveTransformedImage} className="effect-button">
             保存转换结果
           </Button>
-          <Button onClick={handleResetAllEffects} className="effect-button" style={{ background: darkMode ? 'rgba(30, 41, 59, 0.5)' : '#f5f3ff', borderColor: darkMode ? '#7e22ce' : '#8b5cf6', color: darkMode ? '#e9d5ff' : '#7e22ce' }}>
+          <Button onClick={handleResetAllEffects} className="effect-button" style={{ background: '#f5f3ff', borderColor: '#8b5cf6', color: '#7e22ce' }}>
             重置所有效果
           </Button>
         </Space>
