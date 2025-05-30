@@ -48,7 +48,7 @@ function App() {
   }, [isDarkMode]);
 
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { borderRadiusLG },
   } = theme.useToken();
 
   /**
