@@ -998,7 +998,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('e_blur_faces', undefined, !blurFaces);
                 }}
               >
-                Blur Faces
+                模糊人脸
               </Button>
               <Button
                 className={pixelateFaces ? 'effect-button active' : 'effect-button'}
@@ -1007,7 +1007,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   updateTransformation('e_pixelate_faces', undefined, !pixelateFaces);
                 }}
               >
-                Pixelate Faces
+                像素化人脸
               </Button>
             </Space>
           </Space>

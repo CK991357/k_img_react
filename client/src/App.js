@@ -39,6 +39,13 @@ function App() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style={{ marginRight: '10px' }}>
+            <g fill="#FFFFFF">
+              <circle cx="9" cy="12" r="3"/>
+              <circle cx="15" cy="10" r="3"/>
+              <ellipse cx="14" cy="14" rx="6" ry="4"/>
+            </g>
+          </svg>
           <h1 style={{ color: '#fff', margin: 0, fontWeight: 600, letterSpacing: '0.5px' }}>K-Edit 图片管理</h1>
         </div>
       </Header>
