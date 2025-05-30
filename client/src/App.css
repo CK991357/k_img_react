@@ -92,3 +92,109 @@
 body {
   font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
+
+/* 图片预览样式 */
+.image-preview-img {
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: contain;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 图片详情模态框中的图片样式 */
+.image-detail-viewer-img {
+  max-width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* 效果组布局 */
+.effect-group {
+  display: flex;
+  flex-direction: column; /* 垂直布局，使滑块和数值显示在不同行 */
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #e9d8ff;
+  border-radius: 8px;
+  background-color: #fdfbff;
+}
+
+.effect-control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 标签、滑块、输入框之间有间距 */
+  width: 100%;
+  margin-bottom: 5px; /* 与下方数值显示区域的间距 */
+}
+
+.effect-control-row label {
+  flex-shrink: 0; /* 防止标签被压缩 */
+  margin-right: 15px;
+  font-weight: 500;
+  color: #6a0dad;
+  min-width: 80px; /* 确保标签有足够的宽度 */
+}
+
+.effect-slider {
+  flex-grow: 1; /* 滑块占据剩余空间 */
+  margin: 0 15px !important; /* 调整滑块左右间距 */
+}
+
+.effect-group .ant-input-number {
+  width: 80px; /* 固定输入框宽度 */
+  flex-shrink: 0;
+}
+
+.slider-value-display {
+  text-align: center;
+  font-size: 14px;
+  color: #8b5cf6;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+/* 增强效果和艺术效果按钮组的布局 */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* 按钮之间的间距 */
+  width: 100%;
+  justify-content: flex-start; /* 按钮左对齐 */
+}
+
+.effect-button {
+  background-color: #e9d8ff;
+  border-color: #e9d8ff;
+  color: #6a0dad;
+  transition: all 0.3s ease;
+}
+
+.effect-button:hover {
+  background-color: #d9c4ff;
+  border-color: #d9c4ff;
+  color: #6a0dad;
+  transform: translateY(-2px);
+}
+
+.effect-button.active {
+  background: linear-gradient(90deg, #7e22ce 0%, #8b5cf6 100%);
+  border: none;
+  color: white;
+  box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+}
+
+.effect-button.active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(139, 92, 246, 0.3);
+  background: linear-gradient(90deg, #8b5cf6 0%, #7e22ce 100%);
+}
+
+/* Select 组件样式 */
+.effect-select {
+  flex: 1;
+  margin-left: 15px; /* 与标签的间距 */
+}

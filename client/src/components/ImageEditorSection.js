@@ -279,9 +279,15 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
         </svg>
         图片编辑
       </h2>
-      <Space size="large" style={{ width: '100%', justifyContent: 'center', marginBottom: '20px' }}>
-        <div style={{ textAlign: 'center' }}>
-          <h3>原图</h3>
+      <Space direction="vertical" size="large" style={{ width: '100%', alignItems: 'center', marginBottom: '20px' }}>
+        <div style={{ textAlign: 'center', width: '100%' }}>
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+              <path d="M15 8.5C15 10.433 13.433 12 11.5 12C9.567 12 8 10.433 8 8.5C8 6.567 9.567 5 11.5 5C13.433 5 15 6.567 15 8.5Z" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M2 17C2 14.1716 2 12.7574 2.87868 11.8787C3.75736 11 5.17157 11 8 11H15C17.8284 11 19.2426 11 20.1213 11.8787C21 12.7574 21 14.1716 21 17V19C21 20.1046 20.1046 21 19 21H4C2.89543 21 2 20.1046 2 19V17Z" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            原图
+          </h3>
           <Image
             src={originalImageUrl || ''}
             alt="原图"
@@ -289,13 +295,19 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
           />
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <h3>转换后图片</h3>
+        <div style={{ textAlign: 'center', width: '100%' }}>
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+              <path d="M15 8.5C15 10.433 13.433 12 11.5 12C9.567 12 8 10.433 8 8.5C8 6.567 9.567 5 11.5 5C13.433 5 15 6.567 15 8.5Z" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M2 17C2 14.1716 2 12.7574 2.87868 11.8787C3.75736 11 5.17157 11 8 11H15C17.8284 11 19.2426 11 20.1213 11.8787C21 12.7574 21 14.1716 21 17V19C21 20.1046 20.1046 21 19 21H4C2.89543 21 2 20.1046 2 19V17Z" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            转换后图片
+          </h3>
           <Image
             src={transformedImageUrl || ''}
             alt="转换后图片"
             className="image-preview-img"
-            fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+            fallback="data:image/png;base64,iVBQRw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
           />
         </div>
       </Space>
@@ -305,114 +317,129 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
         <Panel header="颜色调整" key="1">
           <Space direction="vertical" style={{ width: '100%' }}>
             <div className="effect-group">
-              <label htmlFor="brightnessSlider">亮度:</label>
-              <Slider
-                min={-100}
-                max={100}
-                onChange={(val) => {
-                  setBrightness(val);
-                  updateTransformation('e_brightness', 'level', val);
-                }}
-                value={typeof brightness === 'number' ? brightness : 0}
-                className="effect-slider"
-              />
-              <InputNumber
-                min={-100}
-                max={100}
-                value={brightness}
-                onChange={(val) => {
-                  setBrightness(val);
-                  updateTransformation('e_brightness', 'level', val);
-                }}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="brightnessSlider">亮度:</label>
+                <Slider
+                  min={-100}
+                  max={100}
+                  onChange={(val) => {
+                    setBrightness(val);
+                    updateTransformation('e_brightness', 'level', val);
+                  }}
+                  value={typeof brightness === 'number' ? brightness : 0}
+                  className="effect-slider"
+                />
+                <InputNumber
+                  min={-100}
+                  max={100}
+                  value={brightness}
+                  onChange={(val) => {
+                    setBrightness(val);
+                    updateTransformation('e_brightness', 'level', val);
+                  }}
+                />
+              </div>
+              <div className="slider-value-display">{brightness}</div>
             </div>
             <div className="effect-group">
-              <label htmlFor="contrastSlider">对比度:</label>
-              <Slider
-                min={-100}
-                max={100}
-                onChange={(val) => {
-                  setContrast(val);
-                  updateTransformation('e_contrast', 'level', val);
-                }}
-                value={typeof contrast === 'number' ? contrast : 0}
-                className="effect-slider"
-              />
-              <InputNumber
-                min={-100}
-                max={100}
-                value={contrast}
-                onChange={(val) => {
-                  setContrast(val);
-                  updateTransformation('e_contrast', 'level', val);
-                }}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="contrastSlider">对比度:</label>
+                <Slider
+                  min={-100}
+                  max={100}
+                  onChange={(val) => {
+                    setContrast(val);
+                    updateTransformation('e_contrast', 'level', val);
+                  }}
+                  value={typeof contrast === 'number' ? contrast : 0}
+                  className="effect-slider"
+                />
+                <InputNumber
+                  min={-100}
+                  max={100}
+                  value={contrast}
+                  onChange={(val) => {
+                    setContrast(val);
+                    updateTransformation('e_contrast', 'level', val);
+                  }}
+                />
+              </div>
+              <div className="slider-value-display">{contrast}</div>
             </div>
             <div className="effect-group">
-              <label htmlFor="saturationSlider">饱和度:</label>
-              <Slider
-                min={-100}
-                max={100}
-                onChange={(val) => {
-                  setSaturation(val);
-                  updateTransformation('e_saturation', 'level', val);
-                }}
-                value={typeof saturation === 'number' ? saturation : 0}
-                className="effect-slider"
-              />
-              <InputNumber
-                min={-100}
-                max={100}
-                value={saturation}
-                onChange={(val) => {
-                  setSaturation(val);
-                  updateTransformation('e_saturation', 'level', val);
-                }}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="saturationSlider">饱和度:</label>
+                <Slider
+                  min={-100}
+                  max={100}
+                  onChange={(val) => {
+                    setSaturation(val);
+                    updateTransformation('e_saturation', 'level', val);
+                  }}
+                  value={typeof saturation === 'number' ? saturation : 0}
+                  className="effect-slider"
+                />
+                <InputNumber
+                  min={-100}
+                  max={100}
+                  value={saturation}
+                  onChange={(val) => {
+                    setSaturation(val);
+                    updateTransformation('e_saturation', 'level', val);
+                  }}
+                />
+              </div>
+              <div className="slider-value-display">{saturation}</div>
             </div>
             <div className="effect-group">
-              <label htmlFor="fillLightSlider">补光:</label>
-              <Slider
-                min={0}
-                max={100}
-                onChange={(val) => {
-                  setFillLight(val);
-                  updateTransformation('e_fill_light', 'level', val);
-                }}
-                value={typeof fillLight === 'number' ? fillLight : 0}
-                className="effect-slider"
-              />
-              <InputNumber
-                min={0}
-                max={100}
-                value={fillLight}
-                onChange={(val) => {
-                  setFillLight(val);
-                  updateTransformation('e_fill_light', 'level', val);
-                }}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="fillLightSlider">补光:</label>
+                <Slider
+                  min={0}
+                  max={100}
+                  onChange={(val) => {
+                    setFillLight(val);
+                    updateTransformation('e_fill_light', 'level', val);
+                  }}
+                  value={typeof fillLight === 'number' ? fillLight : 0}
+                  className="effect-slider"
+                />
+                <InputNumber
+                  min={0}
+                  max={100}
+                  value={fillLight}
+                  onChange={(val) => {
+                    setFillLight(val);
+                    updateTransformation('e_fill_light', 'level', val);
+                  }}
+                />
+              </div>
+              <div className="slider-value-display">{fillLight}</div>
             </div>
             <div className="effect-group">
-              <label htmlFor="fillLightBlendSlider">补光混合:</label>
-              <Slider
-                min={0}
-                max={100}
-                onChange={(val) => {
-                  setFillLightBlend(val);
-                  updateTransformation('e_fill_light', 'blend', val);
-                }}
-                value={typeof fillLightBlend === 'number' ? fillLightBlend : 0}
-                className="effect-slider"
-              />
-              <InputNumber
-                min={0}
-                max={100}
-                value={fillLightBlend}
-                onChange={(val) => {
-                  setFillLightBlend(val);
-                  updateTransformation('e_fill_light', 'blend', val);
-                }}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="fillLightBlendSlider">补光混合:</label>
+                <Slider
+                  min={0}
+                  max={100}
+                  onChange={(val) => {
+                    setFillLightBlend(val);
+                    updateTransformation('e_fill_light', 'blend', val);
+                  }}
+                  value={typeof fillLightBlend === 'number' ? fillLightBlend : 0}
+                  className="effect-slider"
+                />
+                <InputNumber
+                  min={0}
+                  max={100}
+                  value={fillLightBlend}
+                  onChange={(val) => {
+                    setFillLightBlend(val);
+                    updateTransformation('e_fill_light', 'blend', val);
+                  }}
+                />
+              </div>
+              <div className="slider-value-display">{fillLightBlend}</div>
             </div>
           </Space>
         </Panel>
@@ -624,26 +651,29 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
         <Panel header="不透明度" key="1">
           <Space direction="vertical" style={{ width: '100%' }}>
             <div className="effect-group">
-              <label htmlFor="opacitySlider">不透明度:</label>
-              <Slider
-                min={0}
-                max={100}
-                onChange={(val) => {
-                  setOpacity(val);
-                  updateTransformation('o', 'level', val);
-                }}
-                value={typeof opacity === 'number' ? opacity : 0}
-                className="effect-slider"
-              />
-              <InputNumber
-                min={0}
-                max={100}
-                value={opacity}
-                onChange={(val) => {
-                  setOpacity(val);
-                  updateTransformation('o', 'level', val);
-                }}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="opacitySlider">不透明度:</label>
+                <Slider
+                  min={0}
+                  max={100}
+                  onChange={(val) => {
+                    setOpacity(val);
+                    updateTransformation('o', 'level', val);
+                  }}
+                  value={typeof opacity === 'number' ? opacity : 0}
+                  className="effect-slider"
+                />
+                <InputNumber
+                  min={0}
+                  max={100}
+                  value={opacity}
+                  onChange={(val) => {
+                    setOpacity(val);
+                    updateTransformation('o', 'level', val);
+                  }}
+                />
+              </div>
+              <div className="slider-value-display">{opacity}</div>
             </div>
           </Space>
         </Panel>
@@ -679,26 +709,29 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
               />
             </div>
             <div className="effect-group">
-              <label htmlFor="replaceColorTolerance">容差 (0-100):</label>
-              <Slider
-                min={0}
-                max={100}
-                onChange={(val) => {
-                  setReplaceColorTolerance(val);
-                  updateTransformation('e_replace_color', 'tolerance', val);
-                }}
-                value={typeof replaceColorTolerance === 'number' ? replaceColorTolerance : 0}
-                className="effect-slider"
-              />
-              <InputNumber
-                min={0}
-                max={100}
-                value={replaceColorTolerance}
-                onChange={(val) => {
-                  setReplaceColorTolerance(val);
-                  updateTransformation('e_replace_color', 'tolerance', val);
-                }}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="replaceColorTolerance">容差 (0-100):</label>
+                <Slider
+                  min={0}
+                  max={100}
+                  onChange={(val) => {
+                    setReplaceColorTolerance(val);
+                    updateTransformation('e_replace_color', 'tolerance', val);
+                  }}
+                  value={typeof replaceColorTolerance === 'number' ? replaceColorTolerance : 0}
+                  className="effect-slider"
+                />
+                <InputNumber
+                  min={0}
+                  max={100}
+                  value={replaceColorTolerance}
+                  onChange={(val) => {
+                    setReplaceColorTolerance(val);
+                    updateTransformation('e_replace_color', 'tolerance', val);
+                  }}
+                />
+              </div>
+              <div className="slider-value-display">{replaceColorTolerance}</div>
             </div>
           </Space>
         </Panel>
@@ -808,28 +841,31 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             </div>
 
             <div className="effect-group">
-              <label htmlFor="qualitySlider">质量:</label>
-              <Slider
-                min={1}
-                max={100}
-                onChange={(val) => {
-                  setQuality(val);
-                  updateTransformation('q', 'level', val);
-                }}
-                value={typeof quality === 'number' ? quality : 0}
-                className="effect-slider"
-                disabled={qualityAuto}
-              />
-              <InputNumber
-                min={1}
-                max={100}
-                value={quality}
-                onChange={(val) => {
-                  setQuality(val);
-                  updateTransformation('q', 'level', val);
-                }}
-                disabled={qualityAuto}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="qualitySlider">质量:</label>
+                <Slider
+                  min={1}
+                  max={100}
+                  onChange={(val) => {
+                    setQuality(val);
+                    updateTransformation('q', 'level', val);
+                  }}
+                  value={typeof quality === 'number' ? quality : 0}
+                  className="effect-slider"
+                  disabled={qualityAuto}
+                />
+                <InputNumber
+                  min={1}
+                  max={100}
+                  value={quality}
+                  onChange={(val) => {
+                    setQuality(val);
+                    updateTransformation('q', 'level', val);
+                  }}
+                  disabled={qualityAuto}
+                />
+              </div>
+              <div className="slider-value-display">{quality}</div>
               <Checkbox
                 id="qualityAutoToggle"
                 checked={qualityAuto}
@@ -848,30 +884,33 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             </div>
 
             <div className="effect-group">
-              <label htmlFor="dprSlider">DPR:</label>
-              <Slider
-                min={0.1}
-                max={5}
-                step={0.1}
-                onChange={(val) => {
-                  setDpr(val);
-                  updateTransformation('dpr', 'value', val);
-                }}
-                value={typeof dpr === 'number' ? dpr : 0}
-                className="effect-slider"
-                disabled={dprAuto}
-              />
-              <InputNumber
-                min={0.1}
-                max={5}
-                step={0.1}
-                value={dpr}
-                onChange={(val) => {
-                  setDpr(val);
-                  updateTransformation('dpr', 'value', val);
-                }}
-                disabled={dprAuto}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="dprSlider">DPR:</label>
+                <Slider
+                  min={0.1}
+                  max={5}
+                  step={0.1}
+                  onChange={(val) => {
+                    setDpr(val);
+                    updateTransformation('dpr', 'value', val);
+                  }}
+                  value={typeof dpr === 'number' ? dpr : 0}
+                  className="effect-slider"
+                  disabled={dprAuto}
+                />
+                <InputNumber
+                  min={0.1}
+                  max={5}
+                  step={0.1}
+                  value={dpr}
+                  onChange={(val) => {
+                    setDpr(val);
+                    updateTransformation('dpr', 'value', val);
+                  }}
+                  disabled={dprAuto}
+                />
+              </div>
+              <div className="slider-value-display">{dpr}</div>
               <Checkbox
                 id="dprAutoToggle"
                 checked={dprAuto}
@@ -896,48 +935,54 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
         <Panel header="模糊与像素化" key="1">
           <Space direction="vertical" style={{ width: '100%' }}>
             <div className="effect-group">
-              <label htmlFor="blurSlider">模糊强度:</label>
-              <Slider
-                min={0}
-                max={2000}
-                onChange={(val) => {
-                  setBlurStrength(val);
-                  updateTransformation('e_blur', 'strength', val);
-                }}
-                value={typeof blurStrength === 'number' ? blurStrength : 0}
-                className="effect-slider"
-              />
-              <InputNumber
-                min={0}
-                max={2000}
-                value={blurStrength}
-                onChange={(val) => {
-                  setBlurStrength(val);
-                  updateTransformation('e_blur', 'strength', val);
-                }}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="blurSlider">模糊强度:</label>
+                <Slider
+                  min={0}
+                  max={2000}
+                  onChange={(val) => {
+                    setBlurStrength(val);
+                    updateTransformation('e_blur', 'strength', val);
+                  }}
+                  value={typeof blurStrength === 'number' ? blurStrength : 0}
+                  className="effect-slider"
+                />
+                <InputNumber
+                  min={0}
+                  max={2000}
+                  value={blurStrength}
+                  onChange={(val) => {
+                    setBlurStrength(val);
+                    updateTransformation('e_blur', 'strength', val);
+                  }}
+                />
+              </div>
+              <div className="slider-value-display">{blurStrength}</div>
             </div>
             <div className="effect-group">
-              <label htmlFor="pixelateSlider">像素化强度:</label>
-              <Slider
-                min={0}
-                max={200}
-                onChange={(val) => {
-                  setPixelateStrength(val);
-                  updateTransformation('e_pixelate', 'strength', val);
-                }}
-                value={typeof pixelateStrength === 'number' ? pixelateStrength : 0}
-                className="effect-slider"
-              />
-              <InputNumber
-                min={0}
-                max={200}
-                value={pixelateStrength}
-                onChange={(val) => {
-                  setPixelateStrength(val);
-                  updateTransformation('e_pixelate', 'strength', val);
-                }}
-              />
+              <div className="effect-control-row">
+                <label htmlFor="pixelateSlider">像素化强度:</label>
+                <Slider
+                  min={0}
+                  max={200}
+                  onChange={(val) => {
+                    setPixelateStrength(val);
+                    updateTransformation('e_pixelate', 'strength', val);
+                  }}
+                  value={typeof pixelateStrength === 'number' ? pixelateStrength : 0}
+                  className="effect-slider"
+                />
+                <InputNumber
+                  min={0}
+                  max={200}
+                  value={pixelateStrength}
+                  onChange={(val) => {
+                    setPixelateStrength(val);
+                    updateTransformation('e_pixelate', 'strength', val);
+                  }}
+                />
+              </div>
+              <div className="slider-value-display">{pixelateStrength}</div>
             </div>
             <Space wrap className="controls">
               <Button
