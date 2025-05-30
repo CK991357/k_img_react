@@ -75,9 +75,9 @@ function UploadSection({ onUploadSuccess }) {
   return (
     <section style={{ marginBottom: '24px' }}>
       {contextHolder}
-      <h2>
+      <h2 className="section-title-gradient">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ marginRight: '10px', verticalAlign: 'middle' }}>
-          <path d="M7 10V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V10M12 14V21M8 21H16M3 15H21" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M7 10V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V10M12 14V21M8 21H16M3 15H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
         上传图片
       </h2>
@@ -122,11 +122,7 @@ function UploadSection({ onUploadSuccess }) {
         />
         <Button
           type="primary"
-          icon={
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M4 12V19C4 19.5304 4.21071 20.0391 4.58579 20.4142C4.96086 20.7893 5.46957 21 6 21H18C18.5304 21 19.0391 20.7893 19.4142 20.4142C19.7893 20.0391 20 19.5304 20 19V12M12 3V15M12 15L8.5 11.5M12 15L15.5 11.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          }
+          icon={<UploadOutlined />}
           onClick={handleUpload}
           loading={isUploading}
           disabled={isUploading}

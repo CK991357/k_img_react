@@ -86,9 +86,9 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
   return (
     <section style={{ marginBottom: '24px' }}>
       {contextHolder}
-      <h2>
+      <h2 className="section-title-gradient">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ marginRight: '10px', verticalAlign: 'middle' }}>
-          <path d="M4 8H20M4 16H20M8 4V20M16 4V20" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M4 8H20M4 16H20M8 4V20M16 4V20" stroke="white" strokeWidth="2" strokeLinecap="round"/>
         </svg>
         图片画廊
       </h2>

@@ -271,11 +271,11 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
   return (
     <section>
       {contextHolder}
-      <h2>
+      <h2 className="section-title-gradient">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ marginRight: '10px', verticalAlign: 'middle' }}>
-          <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 16V12" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 8H12.01" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 16V12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 8H12.01" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
         图片编辑
       </h2>
@@ -288,12 +288,15 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             </svg>
             原图
           </h3>
-          <Image
-            src={originalImageUrl || ''}
-            alt="原图"
-            className="image-preview-img"
-            fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-          />
+          {originalImageUrl ? (
+            <Image
+              src={originalImageUrl}
+              alt="原图"
+              className="image-preview-img"
+            />
+          ) : (
+            <div className="image-placeholder">暂无原图</div>
+          )}
         </div>
         <div style={{ textAlign: 'center', width: '100%' }}>
           <h3>
@@ -303,12 +306,15 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             </svg>
             转换后图片
           </h3>
-          <Image
-            src={transformedImageUrl || ''}
-            alt="转换后图片"
-            className="image-preview-img"
-            fallback="data:image/png;base64,iVBQRw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-          />
+          {transformedImageUrl ? (
+            <Image
+              src={transformedImageUrl}
+              alt="转换后图片"
+              className="image-preview-img"
+            />
+          ) : (
+            <div className="image-placeholder">暂无转换后图片</div>
+          )}
         </div>
       </Space>
 

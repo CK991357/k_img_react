@@ -17,9 +17,18 @@ h1 {
 
 h2 {
   font-size: 1.5rem;
-  border-bottom: 2px solid #e9d8ff;
-  padding-bottom: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* 保持与下方内容的间距 */
+}
+
+.section-title-gradient {
+  background: linear-gradient(90deg, #8b5cf6 0%, #7e22ce 100%);
+  color: white; /* 标题文字颜色 */
+  padding: 15px 20px; /* 调整内边距 */
+  border-radius: 12px 12px 0 0; /* 顶部圆角 */
+  margin: -20px -20px 20px -20px; /* 负外边距以覆盖父section的padding */
+  display: flex; /* 使内容水平居中 */
+  align-items: center; /* 垂直居中 */
+  box-shadow: 0 4px 12px rgba(106, 13, 173, 0.15); /* 阴影效果 */
 }
 
 section {
