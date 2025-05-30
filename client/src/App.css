@@ -200,6 +200,36 @@ body {
 }
 
 .effect-select .ant-select-arrow {
-  right: 11px; /* 调整箭头位置到右侧 */
-  transform: translateY(-50%); /* 垂直居中 */
+  right: 11px !important; /* 调整箭头位置到右侧，并提高优先级 */
+  transform: translateY(-50%) !important; /* 垂直居中，并提高优先级 */
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .effect-control-row {
+    flex-wrap: wrap; /* 允许元素换行 */
+    justify-content: flex-start; /* 元素左对齐 */
+  }
+
+  .effect-control-row label {
+    width: 100%; /* 标签占据整行 */
+    margin-right: 0;
+    margin-bottom: 5px; /* 标签与下方元素的间距 */
+    text-align: left;
+  }
+
+  .effect-slider {
+    flex-grow: 1; /* 滑块占据剩余空间 */
+    margin: 0 10px 0 0 !important; /* 调整滑块右侧间距 */
+  }
+
+  .effect-group .ant-input-number {
+    width: 60px; /* 缩小输入框宽度 */
+  }
+
+  .effect-select {
+    width: 100%; /* Select 组件占据整行 */
+    margin-left: 0;
+    margin-top: 5px; /* 与上方元素的间距 */
+  }
 }
