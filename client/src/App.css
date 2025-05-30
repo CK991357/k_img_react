@@ -198,3 +198,8 @@ body {
   flex: 1;
   margin-left: 15px; /* 与标签的间距 */
 }
+
+.effect-select .ant-select-arrow {
+  right: 11px; /* 调整箭头位置到右侧 */
+  transform: translateY(-50%); /* 垂直居中 */
+}
