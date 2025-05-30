@@ -101,7 +101,9 @@ function UploadSection({ onUploadSuccess }) {
             style={{ 
               background: '#f5f3ff',
               borderColor: '#8b5cf6',
-              color: '#7e22ce'
+              color: '#7e22ce',
+              height: 40,
+              fontWeight: 600
             }}
           >
             选择图片

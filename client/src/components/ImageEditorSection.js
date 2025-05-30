@@ -132,7 +132,10 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
    */
   const handleApplyTransformations = useCallback(async (transformations) => {
     if (!selectedPublicId) {
-      // alert('请先从画廊中选择一张图片进行编辑。'); // 避免重复弹窗 
+      messageApi.open({
+        type: 'warning',
+        content: '请先从画廊中选择一张图片进行编辑。',
+      });
       return;
     }
 
@@ -1192,7 +1195,16 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
         </Collapse>
 
         <Space size="middle" style={{ width: '100%', justifyContent: 'center', marginTop: '20px' }}>
-          <Button type="primary" onClick={handleSaveTransformedImage} className="effect-button">
+          <Button 
+            type="primary" 
+            onClick={handleSaveTransformedImage} 
+            className="effect-button"
+            style={{ 
+              background: '#f5f3ff',
+              borderColor: '#8b5cf6',
+              color: '#7e22ce'
+            }}
+          >
             保存转换结果
           </Button>
           <Button onClick={handleResetAllEffects} className="effect-button" style={{ background: '#f5f3ff', borderColor: '#8b5cf6', color: '#7e22ce' }}>

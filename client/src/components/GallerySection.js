@@ -90,32 +90,62 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
       
       <div style={{ marginBottom: '16px' }}>
         <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start' }}>
-          <Tag color="geekblue" style={{ fontSize: '1rem', padding: '5px 10px' }}>
+          <Tag 
+            style={{ 
+              fontSize: '1rem', 
+              padding: '5px 10px',
+              background: 'transparent', // 设置背景为透明
+              borderColor: '#8b5cf6', // 边框颜色与按钮一致
+              color: '#7e22ce' // 字体颜色与按钮一致
+            }}
+          >
             当前文件夹: {currentFolder || '全部'}
           </Tag>
-          <Input
+          <Input.Search
             prefix={<FolderOutlined style={{ color: '#7e22ce' }} />}
             placeholder="输入文件夹名称"
             value={folderInput}
             onChange={(e) => setFolderInput(e.target.value)}
-            style={{ flexGrow: 1, minWidth: '150px', maxWidth: 'calc(100% - 100px)' }}
-          />
-          <Button
-            onClick={() => {
+            onSearch={() => {
               fetchAndDisplayImages(folderInput);
               setFolderInput('');
               setSearchTagInput('');
             }}
-            style={{ borderColor: '#8b5cf6', color: '#7e22ce' }}
-          >
-            跳转
-          </Button>
+            enterButton={
+              <Button
+                icon={<FolderOutlined />}
+                style={{
+                  background: '#f5f3ff',
+                  borderColor: '#8b5cf6',
+                  color: '#7e22ce',
+                  height: 40,
+                  fontWeight: 600
+                }}
+              >
+                跳转
+              </Button>
+            }
+            style={{ flexGrow: 1, minWidth: '150px', maxWidth: 'calc(100% - 100px)' }}
+          />
         </Space>
         
         <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start', marginTop: '16px' }}>
           <Input.Search
             placeholder="按标签搜索 (例如: nature)"
-            enterButton={<SearchOutlined style={{ color: '#7e22ce' }} />}
+            enterButton={
+              <Button
+                icon={<SearchOutlined />}
+                style={{
+                  background: '#f5f3ff',
+                  borderColor: '#8b5cf6',
+                  color: '#7e22ce',
+                  height: 40,
+                  fontWeight: 600
+                }}
+              >
+                搜索
+              </Button>
+            }
             value={searchTagInput}
             onChange={(e) => setSearchTagInput(e.target.value)}
             onSearch={(value) => {
@@ -132,7 +162,13 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
               setSearchTagInput(''); 
               fetchAndDisplayImages(''); 
             }}
-            style={{ borderColor: '#8b5cf6', color: '#7e22ce' }}
+            style={{
+              background: '#f5f3ff',
+              borderColor: '#8b5cf6',
+              color: '#7e22ce',
+              height: 40,
+              fontWeight: 600
+            }}
           >
             清除搜索
           </Button>
