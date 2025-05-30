@@ -1,38 +1,94 @@
+/* 添加全局动画效果 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .App {
-  text-align: center;
+  animation: fadeIn 0.5s ease-out;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* 按钮悬停效果 */
+.ant-btn-primary {
+  transition: all 0.3s ease, transform 0.2s;
+  background: linear-gradient(90deg, #7e22ce 0%, #8b5cf6 100%);
+  border: none;
+  box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.ant-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(139, 92, 246, 0.3);
+  background: linear-gradient(90deg, #8b5cf6 0%, #7e22ce 100%);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* 卡片悬停效果 */
+.ant-card {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #f0e6ff;
+}
+
+.ant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(106, 13, 173, 0.15);
+  border-color: #d9c4ff;
+}
+
+/* 输入框焦点效果 */
+.ant-input:focus, .ant-input-focused {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2);
+}
+
+/* 折叠面板样式 */
+.ant-collapse {
+  background: #faf5ff;
+  border-radius: 12px;
+  border: 1px solid #f0e6ff;
+}
+
+.ant-collapse > .ant-collapse-item {
+  border-bottom: 1px solid #f0e6ff;
+}
+
+.ant-collapse > .ant-collapse-item:last-child {
+  border-bottom: none;
+}
+
+.ant-collapse-header {
+  font-weight: 600;
+  color: #6a0dad !important;
+}
+
+/* 滑块样式 */
+.ant-slider-track {
+  background-color: #8b5cf6 !important;
+}
+
+.ant-slider-handle {
+  border-color: #8b5cf6 !important;
+}
+
+/* 模态框样式 */
+.ant-modal-content {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e9d8ff;
+}
+
+.ant-modal-header {
+  background: linear-gradient(90deg, #7e22ce 0%, #8b5cf6 100%);
   color: white;
+  border-bottom: none;
 }
 
-.App-link {
-  color: #61dafb;
+.ant-modal-title {
+  color: white !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 全局字体优化 */
+body {
+  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }

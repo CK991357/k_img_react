@@ -17,7 +17,7 @@ const { Panel } = Collapse;
 function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGallery, setSelectedPublicId, setOriginalImageUrl }) {
   const [messageApi, contextHolder] = message.useMessage();
   const [transformedImageUrl, setTransformedImageUrl] = useState(null);
-  const [currentTransformations, setCurrentTransformations] = useState({}); // 用于存储当前应用的所有转换效果及其参数
+  const [currentTransformations, setCurrentTransformations] = useState({});
 
   // 颜色调整状态
   const [brightness, setBrightness] = useState(0);
@@ -32,7 +32,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
   const [autoColor, setAutoColor] = useState(false);
   const [autoContrast, setAutoContrast] = useState(false);
   const [sharpen, setSharpen] = useState(false);
-  const [vibrance, setVibrance] = useState(false); // Vibrance 变为布尔值，表示是否应用
+  const [vibrance, setVibrance] = useState(false);
   const [upscale, setUpscale] = useState(false);
   const [enhance, setEnhance] = useState(false);
 
@@ -40,9 +40,9 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
   const [cartoonify, setCartoonify] = useState(false);
   const [sepia, setSepia] = useState(false);
   const [vignette, setVignette] = useState(false);
-  const [pixelateEffect, setPixelateEffect] = useState(false); // 与 pixelate 转换区分
+  const [pixelateEffect, setPixelateEffect] = useState(false);
   const [grayscale, setGrayscale] = useState(false);
-  const [artFilter, setArtFilter] = useState(''); // 用于 e_art 效果
+  const [artFilter, setArtFilter] = useState('');
 
   // 背景与阴影状态
   const [removeBackground, setRemoveBackground] = useState(false);
@@ -61,7 +61,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
   const [cropMode, setCropMode] = useState('');
   const [cropWidth, setCropWidth] = useState('');
   const [cropHeight, setCropHeight] = useState('');
-  const [cropGravity, setCropGravity] = useState(''); // 新增重力参数
+  const [cropGravity, setCropGravity] = useState('');
   const [quality, setQuality] = useState(100);
   const [qualityAuto, setQualityAuto] = useState(false);
   const [dpr, setDpr] = useState(1);
@@ -89,7 +89,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
     setAutoColor(false);
     setAutoContrast(false);
     setSharpen(false);
-    setVibrance(false); // 重置为 false
+    setVibrance(false);
     setUpscale(false);
     setEnhance(false);
     // 重置艺术效果
@@ -132,7 +132,6 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
    */
   const handleApplyTransformations = useCallback(async (transformations) => {
     if (!selectedPublicId) {
-      // alert('请先从画廊中选择一张图片进行编辑。'); // 避免重复弹窗 
       return;
     }
 
@@ -146,9 +145,9 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
       const url = await applyTransformations(selectedPublicId, transformations);
       setTransformedImageUrl(url);
     } catch (error) {
-      alert(`转换失败: ${error.message}`);
+      messageApi.error(`转换失败: ${error.message}`);
     }
-  }, [selectedPublicId, originalImageUrl, setTransformedImageUrl]); // 添加依赖项
+  }, [selectedPublicId, originalImageUrl, setTransformedImageUrl, messageApi]);
 
   /**
    * 更新单个转换参数并重新应用所有转换
@@ -161,13 +160,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
     setCurrentTransformations(prev => {
       const newTransformations = { ...prev };
 
-      if (paramName === undefined) { // 处理无参数效果 (例如: improve, auto_brightness)
-        if (value === false) { // 如果是关闭效果
+      if (paramName === undefined) {
+        if (value === false) {
           delete newTransformations[effectType];
-        } else { // 如果是开启效果
-          newTransformations[effectType] = {}; // 效果存在即可，无需参数
+        } else {
+          newTransformations[effectType] = {};
         }
-      } else { // 处理有参数效果
+      } else {
         if (!newTransformations[effectType]) {
           newTransformations[effectType] = {};
         }
@@ -182,7 +181,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
     if (selectedPublicId) {
       handleApplyTransformations(currentTransformations);
     }
-  }, [currentTransformations, selectedPublicId, handleApplyTransformations]); // 添加 handleApplyTransformations
+  }, [currentTransformations, selectedPublicId, handleApplyTransformations]);
 
   /**
    * 保存转换后的图片到 Cloudinary
@@ -190,38 +189,23 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
    */
   const handleSaveTransformedImage = async () => {
     if (!selectedPublicId) {
-      messageApi.open({
-        type: 'warning',
-        content: '请先从画廊中选择一张图片进行编辑。',
-      });
+      messageApi.warning('请先从画廊中选择一张图片进行编辑。');
       return;
     }
     if (!transformedImageUrl || transformedImageUrl === originalImageUrl) {
-      messageApi.open({
-        type: 'warning',
-        content: '没有转换后的图片可以保存。请先应用转换。',
-      });
+      messageApi.warning('没有转换后的图片可以保存。请先应用转换。');
       return;
     }
 
     try {
-      // 从 selectedPublicId 中解析出文件夹名称
-      // 例如：'Jay/unkcruhav3aikzm3bre0' -> 'Jay'
-      // 'image_id' -> '' (或默认文件夹)
       const folderMatch = selectedPublicId ? selectedPublicId.match(/(.*)\/[^/]+$/) : null;
-      const targetFolder = folderMatch ? folderMatch[1] : 'worker_uploads'; // 如果没有文件夹，则默认保存到 'worker_uploads'
+      const targetFolder = folderMatch ? folderMatch[1] : 'worker_uploads';
 
       await saveTransformedImage(transformedImageUrl, targetFolder);
-      messageApi.open({
-        type: 'success',
-        content: `转换后图片已成功保存到 Cloudinary 文件夹: ${targetFolder}！`,
-      });
-      setRefreshGallery(prev => prev + 1); // 触发画廊刷新
+      messageApi.success(`转换后图片已成功保存到 Cloudinary 文件夹: ${targetFolder}！`);
+      setRefreshGallery(prev => prev + 1);
     } catch (error) {
-      messageApi.open({
-        type: 'error',
-        content: `保存失败: ${error.message}`,
-      });
+      messageApi.error(`保存失败: ${error.message}`);
     }
   };
 
@@ -231,10 +215,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
    */
   const handleResetAllEffects = () => {
     if (!selectedPublicId) {
-      messageApi.open({
-        type: 'warning',
-        content: '请先从画廊中选择一张图片进行编辑。',
-      });
+      messageApi.warning('请先从画廊中选择一张图片进行编辑。');
       return;
     }
     setCurrentTransformations({});
@@ -251,7 +232,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
     setAutoColor(false);
     setAutoContrast(false);
     setSharpen(false);
-    setVibrance(0);
+    setVibrance(false); // 修正为 false
     setUpscale(false);
     setEnhance(false);
     // 重置艺术效果
@@ -288,723 +269,709 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
   };
 
   return (
-    <>
-      {contextHolder} {/* 渲染 contextHolder */}
-      <Space direction="vertical" style={{ width: '100%', marginBottom: '20px' }}>
-        <h2>图片编辑</h2>
-        <Space size="large" style={{ width: '100%', justifyContent: 'center' }}>
-          <div style={{ textAlign: 'center' }}>
-            <h3>原图</h3>
-            <Image
-              src={originalImageUrl || ''}
-              alt="原图"
-              style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain', border: '1px solid #f0f0f0' }}
-              fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" // Placeholder for Ant Design Image
-            />
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <h3>转换后图片</h3>
-            <Image
-              src={transformedImageUrl || ''}
-              alt="转换后图片"
-              style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain', border: '1px solid #f0f0f0' }}
-              fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" // Placeholder for Ant Design Image
-            />
-          </div>
-        </Space>
-
-        {/* 颜色调整 */}
-        <Collapse defaultActiveKey={['1']} style={{ width: '100%', marginBottom: '20px' }}>
-          <Panel header="颜色调整" key="1">
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <div className="effect-group">
-                <label htmlFor="brightnessSlider">亮度:</label>
-                <Slider
-                  min={-100}
-                  max={100}
-                  onChange={(val) => {
-                    setBrightness(val);
-                    updateTransformation('e_brightness', 'level', val);
-                  }}
-                  value={typeof brightness === 'number' ? brightness : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-                <InputNumber
-                  min={-100}
-                  max={100}
-                  style={{ margin: '0 10px' }}
-                  value={brightness}
-                  onChange={(val) => {
-                    setBrightness(val);
-                    updateTransformation('e_brightness', 'level', val);
-                  }}
-                />
-              </div>
-              <div className="effect-group">
-                <label htmlFor="contrastSlider">对比度:</label>
-                <Slider
-                  min={-100}
-                  max={100}
-                  onChange={(val) => {
-                    setContrast(val);
-                    updateTransformation('e_contrast', 'level', val);
-                  }}
-                  value={typeof contrast === 'number' ? contrast : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-                <InputNumber
-                  min={-100}
-                  max={100}
-                  style={{ margin: '0 10px' }}
-                  value={contrast}
-                  onChange={(val) => {
-                    setContrast(val);
-                    updateTransformation('e_contrast', 'level', val);
-                  }}
-                />
-              </div>
-              <div className="effect-group">
-                <label htmlFor="saturationSlider">饱和度:</label>
-                <Slider
-                  min={-100}
-                  max={100}
-                  onChange={(val) => {
-                    setSaturation(val);
-                    updateTransformation('e_saturation', 'level', val);
-                  }}
-                  value={typeof saturation === 'number' ? saturation : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-                <InputNumber
-                  min={-100}
-                  max={100}
-                  style={{ margin: '0 10px' }}
-                  value={saturation}
-                  onChange={(val) => {
-                    setSaturation(val);
-                    updateTransformation('e_saturation', 'level', val);
-                  }}
-                />
-              </div>
-              <div className="effect-group">
-                <label htmlFor="fillLightSlider">补光:</label>
-                <Slider
-                  min={0}
-                  max={100}
-                  onChange={(val) => {
-                    setFillLight(val);
-                    updateTransformation('e_fill_light', 'level', val);
-                  }}
-                  value={typeof fillLight === 'number' ? fillLight : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-                <InputNumber
-                  min={0}
-                  max={100}
-                  style={{ margin: '0 10px' }}
-                  value={fillLight}
-                  onChange={(val) => {
-                    setFillLight(val);
-                    updateTransformation('e_fill_light', 'level', val);
-                  }}
-                />
-              </div>
-              <div className="effect-group">
-                <label htmlFor="fillLightBlendSlider">补光混合:</label>
-                <Slider
-                  min={0}
-                  max={100}
-                  onChange={(val) => {
-                    setFillLightBlend(val);
-                    updateTransformation('e_fill_light', 'blend', val);
-                  }}
-                  value={typeof fillLightBlend === 'number' ? fillLightBlend : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-                <InputNumber
-                  min={0}
-                  max={100}
-                  style={{ margin: '0 10px' }}
-                  value={fillLightBlend}
-                  onChange={(val) => {
-                    setFillLightBlend(val);
-                    updateTransformation('e_fill_light', 'blend', val);
-                  }}
-                />
-              </div>
-            </Space>
-          </Panel>
-        </Collapse>
-
-        <Collapse defaultActiveKey={['1']} style={{ width: '100%', marginBottom: '20px' }}>
-          <Panel header="增强效果" key="1">
-            <Space direction="vertical" style={{ width: '100%' }}>
-              {/* 第一行增强效果按钮 */}
-              <Space wrap>
-                <Button
-                  type={improve ? 'primary' : 'default'}
-                  onClick={() => {
-                    setImprove(!improve);
-                    updateTransformation('improve', undefined, !improve);
-                  }}
-                >
-                  Improve
-                </Button>
-                <Button
-                  type={autoBrightness ? 'primary' : 'default'}
-                  onClick={() => {
-                    setAutoBrightness(!autoBrightness);
-                    updateTransformation('auto_brightness', undefined, !autoBrightness);
-                  }}
-                >
-                  Auto Brightness
-                </Button>
-                <Button
-                  type={autoColor ? 'primary' : 'default'}
-                  onClick={() => {
-                    setAutoColor(!autoColor);
-                    updateTransformation('auto_color', undefined, !autoColor);
-                  }}
-                >
-                  Auto Color
-                </Button>
-                <Button
-                  type={autoContrast ? 'primary' : 'default'}
-                  onClick={() => {
-                    setAutoContrast(!autoContrast);
-                    updateTransformation('auto_contrast', undefined, !autoContrast);
-                  }}
-                >
-                  Auto Contrast
-                </Button>
-              </Space>
-              {/* 第二行增强效果按钮，从 Sharpen 开始 */}
-              <Space wrap>
-                <Button
-                  type={sharpen ? 'primary' : 'default'}
-                  onClick={() => {
-                    setSharpen(!sharpen);
-                    updateTransformation('sharpen', undefined, !sharpen);
-                  }}
-                >
-                  Sharpen
-                </Button>
-                <Button
-                  type={vibrance ? 'primary' : 'default'}
-                  onClick={() => {
-                    setVibrance(!vibrance);
-                    updateTransformation('e_vibrance', undefined, !vibrance); // 将 vibrance 作为一个无参数效果处理
-                  }}
-                >
-                  Vibrance
-                </Button>
-                <Button
-                  type={upscale ? 'primary' : 'default'}
-                  onClick={() => {
-                    setUpscale(!upscale);
-                    updateTransformation('upscale', undefined, !upscale);
-                  }}
-                >
-                  Upscale
-                </Button>
-                <Button
-                  type={enhance ? 'primary' : 'default'}
-                  onClick={() => {
-                    setEnhance(!enhance);
-                    updateTransformation('enhance', undefined, !enhance);
-                  }}
-                >
-                  Enhance
-                </Button>
-              </Space>
-            </Space>
-          </Panel>
-        </Collapse>
-
-        <Collapse defaultActiveKey={['1']} style={{ width: '100%', marginBottom: '20px' }}>
-          <Panel header="艺术效果" key="1">
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <div className="effect-group">
-                <Button
-                  type={cartoonify ? 'primary' : 'default'}
-                  onClick={() => {
-                    setCartoonify(!cartoonify);
-                    updateTransformation('cartoonify', undefined, !cartoonify);
-                  }}
-                >
-                  Cartoonify
-                </Button>
-                <Button
-                  type={sepia ? 'primary' : 'default'}
-                  onClick={() => {
-                    setSepia(!sepia);
-                    updateTransformation('sepia', undefined, !sepia);
-                  }}
-                >
-                  Sepia
-                </Button>
-                <Button
-                  type={vignette ? 'primary' : 'default'}
-                  onClick={() => {
-                    setVignette(!vignette);
-                    updateTransformation('vignette', undefined, !vignette);
-                  }}
-                >
-                  Vignette
-                </Button>
-                <Button
-                  type={pixelateEffect ? 'primary' : 'default'}
-                  onClick={() => {
-                    setPixelateEffect(!pixelateEffect);
-                    updateTransformation('pixelate', undefined, !pixelateEffect);
-                  }}
-                >
-                  Pixelate Effect
-                </Button>
-                <Button
-                  type={grayscale ? 'primary' : 'default'}
-                  onClick={() => {
-                    setGrayscale(!grayscale);
-                    updateTransformation('grayscale', undefined, !grayscale);
-                  }}
-                >
-                  Grayscale
-                </Button>
-              </div>
-              <div className="effect-group">
-                <label htmlFor="artFilterSelect">Art Filter:</label>
-                <Select
-                  id="artFilterSelect"
-                  value={artFilter}
-                  onChange={(val) => {
-                    setArtFilter(val);
-                    if (val) {
-                      updateTransformation('e_art', 'filter', val);
-                    } else {
-                      setCurrentTransformations(prev => {
-                        const newTransformations = { ...prev };
-                        delete newTransformations['e_art'];
-                        return newTransformations;
-                      });
-                    }
-                  }}
-                  style={{ flex: 1, margin: '0 10px' }}
-                >
-                  <Select.Option value="">None</Select.Option>
-                  <Select.Option value="al_dente">Al Dente</Select.Option>
-                  <Select.Option value="athena">Athena</Select.Option>
-                  <Select.Option value="audrey">Audrey</Select.Option>
-                  <Select.Option value="aurora">Aurora</Select.Option>
-                  <Select.Option value="daguerre">Daguerre</Select.Option>
-                  <Select.Option value="eucalyptus">Eucalyptus</Select.Option>
-                  <Select.Option value="fes">Fes</Select.Option>
-                  <Select.Option value="hokusai">Hokusai</Select.Option>
-                  <Select.Option value="incognito">Incognito</Select.Option>
-                  <Select.Option value="linen">Linen</Select.Option>
-                  <Select.Option value="peacock">Peacock</Select.Option>
-                  <Select.Option value="primavera">Primavera</Select.Option>
-                  <Select.Option value="quartz">Quartz</Select.Option>
-                  <Select.Option value="red_rock">Red Rock</Select.Option>
-                  <Select.Option value="sizzle">Sizzle</Select.Option>
-                  <Select.Option value="sonnet">Sonnet</Select.Option>
-                  <Select.Option value="ukiyo">Ukiyo</Select.Option>
-                  <Select.Option value="zorro">Zorro</Select.Option>
-                </Select>
-              </div>
-            </Space>
-          </Panel>
-        </Collapse>
-
-        <Collapse defaultActiveKey={['1']} style={{ width: '100%', marginBottom: '20px' }}>
-          <Panel header="背景与阴影" key="1">
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <div className="effect-group">
-                <Button
-                  type={removeBackground ? 'primary' : 'default'}
-                  onClick={() => {
-                    setRemoveBackground(!removeBackground);
-                    updateTransformation('remove_background', undefined, !removeBackground);
-                  }}
-                >
-                  Remove Background
-                </Button>
-                <Button
-                  type={shadow ? 'primary' : 'default'}
-                  onClick={() => {
-                    setShadow(!shadow);
-                    updateTransformation('shadow', undefined, !shadow);
-                  }}
-                >
-                  Shadow
-                </Button>
-              </div>
-            </Space>
-          </Panel>
-        </Collapse>
-
-        <Collapse defaultActiveKey={['1']} style={{ width: '100%', marginBottom: '20px' }}>
-          <Panel header="不透明度" key="1">
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <div className="effect-group">
-                <label htmlFor="opacitySlider">不透明度:</label>
-                <Slider
-                  min={0}
-                  max={100}
-                  onChange={(val) => {
-                    setOpacity(val);
-                    updateTransformation('o', 'level', val);
-                  }}
-                  value={typeof opacity === 'number' ? opacity : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-                <InputNumber
-                  min={0}
-                  max={100}
-                  style={{ margin: '0 10px' }}
-                  value={opacity}
-                  onChange={(val) => {
-                    setOpacity(val);
-                    updateTransformation('o', 'level', val);
-                  }}
-                />
-              </div>
-            </Space>
-          </Panel>
-        </Collapse>
-
-        <Collapse defaultActiveKey={['1']} style={{ width: '100%', marginBottom: '20px' }}>
-          <Panel header="替换颜色" key="1">
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <div className="effect-group">
-                <label htmlFor="replaceColorFrom">源颜色 (Hex):</label>
-                <Input
-                  id="replaceColorFrom"
-                  placeholder="#RRGGBB 或 color_name"
-                  value={replaceColorFrom}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setReplaceColorFrom(val);
-                    updateTransformation('e_replace_color', 'from_color', val);
-                  }}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-              </div>
-              <div className="effect-group">
-                <label htmlFor="replaceColorTo">目标颜色 (Hex):</label>
-                <Input
-                  id="replaceColorTo"
-                  placeholder="#RRGGBB 或 color_name"
-                  value={replaceColorTo}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setReplaceColorTo(val);
-                    updateTransformation('e_replace_color', 'to_color', val);
-                  }}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-              </div>
-              <div className="effect-group">
-                <label htmlFor="replaceColorTolerance">容差 (0-100):</label>
-                <Slider
-                  min={0}
-                  max={100}
-                  onChange={(val) => {
-                    setReplaceColorTolerance(val);
-                    updateTransformation('e_replace_color', 'tolerance', val);
-                  }}
-                  value={typeof replaceColorTolerance === 'number' ? replaceColorTolerance : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-                <InputNumber
-                  min={0}
-                  max={100}
-                  style={{ margin: '0 10px' }}
-                  value={replaceColorTolerance}
-                  onChange={(val) => {
-                    setReplaceColorTolerance(val);
-                    updateTransformation('e_replace_color', 'tolerance', val);
-                  }}
-                />
-              </div>
-            </Space>
-          </Panel>
-        </Collapse>
-
-        <Collapse defaultActiveKey={['1']} style={{ width: '100%', marginBottom: '20px' }}>
-          <Panel header="图像转换" key="1">
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <div className="effect-group">
-                <label htmlFor="formatSelect">格式转换:</label>
-                <Select
-                  id="formatSelect"
-                  value={format}
-                  onChange={(val) => {
-                    setFormat(val);
-                    if (val) {
-                      updateTransformation('f', 'format', val);
-                    } else {
-                      setCurrentTransformations(prev => {
-                        const newTransformations = { ...prev };
-                        delete newTransformations['f'];
-                        return newTransformations;
-                      });
-                    }
-                  }}
-                  style={{ flex: 1, margin: '0 10px' }}
-                >
-                  <Select.Option value="">Original</Select.Option>
-                  <Select.Option value="jpg">JPG</Select.Option>
-                  <Select.Option value="png">PNG</Select.Option>
-                  <Select.Option value="webp">WebP</Select.Option>
-                  <Select.Option value="gif">GIF</Select.Option>
-                  <Select.Option value="bmp">BMP</Select.Option>
-                  <Select.Option value="tiff">TIFF</Select.Option>
-                  <Select.Option value="pdf">PDF</Select.Option>
-                </Select>
-              </div>
-
-              <div className="effect-group">
-                <label htmlFor="cropModeSelect">裁剪模式:</label>
-                <Select
-                  id="cropModeSelect"
-                  value={cropMode}
-                  onChange={(val) => {
-                    setCropMode(val);
-                    updateTransformation('c', 'crop_mode', val);
-                  }}
-                  style={{ flex: 1, margin: '0 10px' }}
-                >
-                  <Select.Option value="">None</Select.Option>
-                  <Select.Option value="fill">Fill</Select.Option>
-                  <Select.Option value="scale">Scale</Select.Option>
-                  <Select.Option value="fit">Fit</Select.Option>
-                  <Select.Option value="limit">Limit</Select.Option>
-                  <Select.Option value="mfill">Mfill</Select.Option>
-                  <Select.Option value="lfill">Lfill</Select.Option>
-                  <Select.Option value="mpad">Mpad</Select.Option>
-                  <Select.Option value="crop">Crop</Select.Option>
-                  <Select.Option value="thumb">Thumb</Select.Option>
-                  <Select.Option value="imagga_crop">Imagga Crop</Select.Option>
-                  <Select.Option value="imagga_scale">Imagga Scale</Select.Option>
-                </Select>
-                <label htmlFor="cropWidthInput">宽度:</label>
-                <InputNumber
-                  id="cropWidthInput"
-                  placeholder="宽度"
-                  value={cropWidth}
-                  onChange={(val) => {
-                    setCropWidth(val);
-                    updateTransformation('c', 'width', val);
-                  }}
-                  style={{ margin: '0 10px' }}
-                />
-                <label htmlFor="cropHeightInput">高度:</label>
-                <InputNumber
-                  id="cropHeightInput"
-                  placeholder="高度"
-                  value={cropHeight}
-                  onChange={(val) => {
-                    setCropHeight(val);
-                    updateTransformation('c', 'height', val);
-                  }}
-                  style={{ margin: '0 10px' }}
-                />
-                <label htmlFor="cropGravitySelect">重力:</label>
-                <Select
-                  id="cropGravitySelect"
-                  value={cropGravity}
-                  onChange={(val) => {
-                    setCropGravity(val);
-                    updateTransformation('c', 'gravity', val);
-                  }}
-                  style={{ flex: 1, margin: '0 10px' }}
-                >
-                  <Select.Option value="">None</Select.Option>
-                  <Select.Option value="auto">Auto</Select.Option>
-                  <Select.Option value="face">Face</Select.Option>
-                  <Select.Option value="faces">Faces</Select.Option>
-                  <Select.Option value="north">North</Select.Option>
-                  <Select.Option value="north_east">North East</Select.Option>
-                  <Select.Option value="east">East</Select.Option>
-                  <Select.Option value="south_east">South East</Select.Option>
-                  <Select.Option value="south">South</Select.Option>
-                  <Select.Option value="south_west">South West</Select.Option>
-                  <Select.Option value="west">West</Select.Option>
-                  <Select.Option value="north_west">North West</Select.Option>
-                  <Select.Option value="center">Center</Select.Option>
-                </Select>
-              </div>
-
-              <div className="effect-group">
-                <label htmlFor="qualitySlider">质量:</label>
-                <Slider
-                  min={1}
-                  max={100}
-                  onChange={(val) => {
-                    setQuality(val);
-                    updateTransformation('q', 'level', val);
-                  }}
-                  value={typeof quality === 'number' ? quality : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                  disabled={qualityAuto}
-                />
-                <InputNumber
-                  min={1}
-                  max={100}
-                  style={{ margin: '0 10px' }}
-                  value={quality}
-                  onChange={(val) => {
-                    setQuality(val);
-                    updateTransformation('q', 'level', val);
-                  }}
-                  disabled={qualityAuto}
-                />
-                <Checkbox
-                  id="qualityAutoToggle"
-                  checked={qualityAuto}
-                  onChange={(e) => {
-                    const isChecked = e.target.checked;
-                    setQualityAuto(isChecked);
-                    if (isChecked) {
-                      updateTransformation('q', 'level', 'auto');
-                    } else {
-                      updateTransformation('q', 'level', quality); // 恢复到手动设置的值
-                    }
-                  }}
-                >
-                  自动
-                </Checkbox>
-              </div>
-
-              <div className="effect-group">
-                <label htmlFor="dprSlider">DPR:</label>
-                <Slider
-                  min={0.1}
-                  max={5}
-                  step={0.1}
-                  onChange={(val) => {
-                    setDpr(val);
-                    updateTransformation('dpr', 'value', val);
-                  }}
-                  value={typeof dpr === 'number' ? dpr : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                  disabled={dprAuto}
-                />
-                <InputNumber
-                  min={0.1}
-                  max={5}
-                  step={0.1}
-                  style={{ margin: '0 10px' }}
-                  value={dpr}
-                  onChange={(val) => {
-                    setDpr(val);
-                    updateTransformation('dpr', 'value', val);
-                  }}
-                  disabled={dprAuto}
-                />
-                <Checkbox
-                  id="dprAutoToggle"
-                  checked={dprAuto}
-                  onChange={(e) => {
-                    const isChecked = e.target.checked;
-                    setDprAuto(isChecked);
-                    if (isChecked) {
-                      updateTransformation('dpr', 'value', 'auto');
-                    } else {
-                      updateTransformation('dpr', 'value', dpr); // 恢复到手动设置的值
-                    }
-                  }}
-                >
-                  自动
-                </Checkbox>
-              </div>
-            </Space>
-          </Panel>
-        </Collapse>
-
-        <Collapse defaultActiveKey={['1']} style={{ width: '100%', marginBottom: '20px' }}>
-          <Panel header="模糊与像素化" key="1">
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <div className="effect-group">
-                <label htmlFor="blurSlider">模糊强度:</label>
-                <Slider
-                  min={0}
-                  max={2000}
-                  onChange={(val) => {
-                    setBlurStrength(val);
-                    updateTransformation('e_blur', 'strength', val);
-                  }}
-                  value={typeof blurStrength === 'number' ? blurStrength : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-                <InputNumber
-                  min={0}
-                  max={2000}
-                  style={{ margin: '0 10px' }}
-                  value={blurStrength}
-                  onChange={(val) => {
-                    setBlurStrength(val);
-                    updateTransformation('e_blur', 'strength', val);
-                  }}
-                />
-              </div>
-              <div className="effect-group">
-                <label htmlFor="pixelateSlider">像素化强度:</label>
-                <Slider
-                  min={0}
-                  max={200}
-                  onChange={(val) => {
-                    setPixelateStrength(val);
-                    updateTransformation('e_pixelate', 'strength', val);
-                  }}
-                  value={typeof pixelateStrength === 'number' ? pixelateStrength : 0}
-                  style={{ flex: 1, margin: '0 10px' }}
-                />
-                <InputNumber
-                  min={0}
-                  max={200}
-                  style={{ margin: '0 10px' }}
-                  value={pixelateStrength}
-                  onChange={(val) => {
-                    setPixelateStrength(val);
-                    updateTransformation('e_pixelate', 'strength', val);
-                  }}
-                />
-              </div>
-              <div className="effect-group">
-                <Button
-                  type={blurFaces ? 'primary' : 'default'}
-                  onClick={() => {
-                    setBlurFaces(!blurFaces);
-                    updateTransformation('e_blur_faces', undefined, !blurFaces);
-                  }}
-                >
-                  Blur Faces
-                </Button>
-                <Button
-                  type={pixelateFaces ? 'primary' : 'default'}
-                  onClick={() => {
-                    setPixelateFaces(!pixelateFaces);
-                    updateTransformation('e_pixelate_faces', undefined, !pixelateFaces);
-                  }}
-                >
-                  Pixelate Faces
-                </Button>
-              </div>
-            </Space>
-          </Panel>
-        </Collapse>
-
-        <Space size="middle" style={{ width: '100%', justifyContent: 'center', marginTop: '20px' }}>
-          <Button type="primary" onClick={handleSaveTransformedImage}>
-            保存
-          </Button>
-          <Button onClick={handleResetAllEffects}>
-            重置所有效果
-          </Button>
-        </Space>
+    <section>
+      {contextHolder}
+      <h2>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ marginRight: '10px', verticalAlign: 'middle' }}>
+          <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 16V12" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 8H12.01" stroke="#6a0dad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        图片编辑
+      </h2>
+      <Space size="large" style={{ width: '100%', justifyContent: 'center', marginBottom: '20px' }}>
+        <div style={{ textAlign: 'center' }}>
+          <h3>原图</h3>
+          <Image
+            src={originalImageUrl || ''}
+            alt="原图"
+            className="image-preview-img"
+            fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+          />
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <h3>转换后图片</h3>
+          <Image
+            src={transformedImageUrl || ''}
+            alt="转换后图片"
+            className="image-preview-img"
+            fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+          />
+        </div>
       </Space>
-    </>
+
+      {/* 颜色调整 */}
+      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
+        <Panel header="颜色调整" key="1">
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <div className="effect-group">
+              <label htmlFor="brightnessSlider">亮度:</label>
+              <Slider
+                min={-100}
+                max={100}
+                onChange={(val) => {
+                  setBrightness(val);
+                  updateTransformation('e_brightness', 'level', val);
+                }}
+                value={typeof brightness === 'number' ? brightness : 0}
+                className="effect-slider"
+              />
+              <InputNumber
+                min={-100}
+                max={100}
+                value={brightness}
+                onChange={(val) => {
+                  setBrightness(val);
+                  updateTransformation('e_brightness', 'level', val);
+                }}
+              />
+            </div>
+            <div className="effect-group">
+              <label htmlFor="contrastSlider">对比度:</label>
+              <Slider
+                min={-100}
+                max={100}
+                onChange={(val) => {
+                  setContrast(val);
+                  updateTransformation('e_contrast', 'level', val);
+                }}
+                value={typeof contrast === 'number' ? contrast : 0}
+                className="effect-slider"
+              />
+              <InputNumber
+                min={-100}
+                max={100}
+                value={contrast}
+                onChange={(val) => {
+                  setContrast(val);
+                  updateTransformation('e_contrast', 'level', val);
+                }}
+              />
+            </div>
+            <div className="effect-group">
+              <label htmlFor="saturationSlider">饱和度:</label>
+              <Slider
+                min={-100}
+                max={100}
+                onChange={(val) => {
+                  setSaturation(val);
+                  updateTransformation('e_saturation', 'level', val);
+                }}
+                value={typeof saturation === 'number' ? saturation : 0}
+                className="effect-slider"
+              />
+              <InputNumber
+                min={-100}
+                max={100}
+                value={saturation}
+                onChange={(val) => {
+                  setSaturation(val);
+                  updateTransformation('e_saturation', 'level', val);
+                }}
+              />
+            </div>
+            <div className="effect-group">
+              <label htmlFor="fillLightSlider">补光:</label>
+              <Slider
+                min={0}
+                max={100}
+                onChange={(val) => {
+                  setFillLight(val);
+                  updateTransformation('e_fill_light', 'level', val);
+                }}
+                value={typeof fillLight === 'number' ? fillLight : 0}
+                className="effect-slider"
+              />
+              <InputNumber
+                min={0}
+                max={100}
+                value={fillLight}
+                onChange={(val) => {
+                  setFillLight(val);
+                  updateTransformation('e_fill_light', 'level', val);
+                }}
+              />
+            </div>
+            <div className="effect-group">
+              <label htmlFor="fillLightBlendSlider">补光混合:</label>
+              <Slider
+                min={0}
+                max={100}
+                onChange={(val) => {
+                  setFillLightBlend(val);
+                  updateTransformation('e_fill_light', 'blend', val);
+                }}
+                value={typeof fillLightBlend === 'number' ? fillLightBlend : 0}
+                className="effect-slider"
+              />
+              <InputNumber
+                min={0}
+                max={100}
+                value={fillLightBlend}
+                onChange={(val) => {
+                  setFillLightBlend(val);
+                  updateTransformation('e_fill_light', 'blend', val);
+                }}
+              />
+            </div>
+          </Space>
+        </Panel>
+      </Collapse>
+
+      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
+        <Panel header="增强效果" key="1">
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Space wrap className="controls">
+              <Button
+                className={improve ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setImprove(!improve);
+                  updateTransformation('improve', undefined, !improve);
+                }}
+              >
+                Improve
+              </Button>
+              <Button
+                className={autoBrightness ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setAutoBrightness(!autoBrightness);
+                  updateTransformation('auto_brightness', undefined, !autoBrightness);
+                }}
+              >
+                Auto Brightness
+              </Button>
+              <Button
+                className={autoColor ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setAutoColor(!autoColor);
+                  updateTransformation('auto_color', undefined, !autoColor);
+                }}
+              >
+                Auto Color
+              </Button>
+              <Button
+                className={autoContrast ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setAutoContrast(!autoContrast);
+                  updateTransformation('auto_contrast', undefined, !autoContrast);
+                }}
+              >
+                Auto Contrast
+              </Button>
+              <Button
+                className={sharpen ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setSharpen(!sharpen);
+                  updateTransformation('sharpen', undefined, !sharpen);
+                }}
+              >
+                Sharpen
+              </Button>
+              <Button
+                className={vibrance ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setVibrance(!vibrance);
+                  updateTransformation('e_vibrance', undefined, !vibrance);
+                }}
+              >
+                Vibrance
+              </Button>
+              <Button
+                className={upscale ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setUpscale(!upscale);
+                  updateTransformation('upscale', undefined, !upscale);
+                }}
+              >
+                Upscale
+              </Button>
+              <Button
+                className={enhance ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setEnhance(!enhance);
+                  updateTransformation('enhance', undefined, !enhance);
+                }}
+              >
+                Enhance
+              </Button>
+            </Space>
+          </Space>
+        </Panel>
+      </Collapse>
+
+      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
+        <Panel header="艺术效果" key="1">
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Space wrap className="controls">
+              <Button
+                className={cartoonify ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setCartoonify(!cartoonify);
+                  updateTransformation('cartoonify', undefined, !cartoonify);
+                }}
+              >
+                Cartoonify
+              </Button>
+              <Button
+                className={sepia ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setSepia(!sepia);
+                  updateTransformation('sepia', undefined, !sepia);
+                }}
+              >
+                Sepia
+              </Button>
+              <Button
+                className={vignette ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setVignette(!vignette);
+                  updateTransformation('vignette', undefined, !vignette);
+                }}
+              >
+                Vignette
+              </Button>
+              <Button
+                className={pixelateEffect ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setPixelateEffect(!pixelateEffect);
+                  updateTransformation('pixelate', undefined, !pixelateEffect);
+                }}
+              >
+                Pixelate Effect
+              </Button>
+              <Button
+                className={grayscale ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setGrayscale(!grayscale);
+                  updateTransformation('grayscale', undefined, !grayscale);
+                }}
+              >
+                Grayscale
+              </Button>
+            </Space>
+            <div className="effect-group">
+              <label htmlFor="artFilterSelect">Art Filter:</label>
+              <Select
+                id="artFilterSelect"
+                value={artFilter}
+                onChange={(val) => {
+                  setArtFilter(val);
+                  if (val) {
+                    updateTransformation('e_art', 'filter', val);
+                  } else {
+                    setCurrentTransformations(prev => {
+                      const newTransformations = { ...prev };
+                      delete newTransformations['e_art'];
+                      return newTransformations;
+                    });
+                  }
+                }}
+                className="effect-select"
+              >
+                <Select.Option value="">None</Select.Option>
+                <Select.Option value="al_dente">Al Dente</Select.Option>
+                <Select.Option value="athena">Athena</Select.Option>
+                <Select.Option value="audrey">Audrey</Select.Option>
+                <Select.Option value="aurora">Aurora</Select.Option>
+                <Select.Option value="daguerre">Daguerre</Select.Option>
+                <Select.Option value="eucalyptus">Eucalyptus</Select.Option>
+                <Select.Option value="fes">Fes</Select.Option>
+                <Select.Option value="hokusai">Hokusai</Select.Option>
+                <Select.Option value="incognito">Incognito</Select.Option>
+                <Select.Option value="linen">Linen</Select.Option>
+                <Select.Option value="peacock">Peacock</Select.Option>
+                <Select.Option value="primavera">Primavera</Select.Option>
+                <Select.Option value="quartz">Quartz</Select.Option>
+                <Select.Option value="red_rock">Red Rock</Select.Option>
+                <Select.Option value="sizzle">Sizzle</Select.Option>
+                <Select.Option value="sonnet">Sonnet</Select.Option>
+                <Select.Option value="ukiyo">Ukiyo</Select.Option>
+                <Select.Option value="zorro">Zorro</Select.Option>
+              </Select>
+            </div>
+          </Space>
+        </Panel>
+      </Collapse>
+
+      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
+        <Panel header="背景与阴影" key="1">
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Space wrap className="controls">
+              <Button
+                className={removeBackground ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setRemoveBackground(!removeBackground);
+                  updateTransformation('remove_background', undefined, !removeBackground);
+                }}
+              >
+                Remove Background
+              </Button>
+              <Button
+                className={shadow ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setShadow(!shadow);
+                  updateTransformation('shadow', undefined, !shadow);
+                }}
+              >
+                Shadow
+              </Button>
+            </Space>
+          </Space>
+        </Panel>
+      </Collapse>
+
+      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
+        <Panel header="不透明度" key="1">
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <div className="effect-group">
+              <label htmlFor="opacitySlider">不透明度:</label>
+              <Slider
+                min={0}
+                max={100}
+                onChange={(val) => {
+                  setOpacity(val);
+                  updateTransformation('o', 'level', val);
+                }}
+                value={typeof opacity === 'number' ? opacity : 0}
+                className="effect-slider"
+              />
+              <InputNumber
+                min={0}
+                max={100}
+                value={opacity}
+                onChange={(val) => {
+                  setOpacity(val);
+                  updateTransformation('o', 'level', val);
+                }}
+              />
+            </div>
+          </Space>
+        </Panel>
+      </Collapse>
+
+      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
+        <Panel header="替换颜色" key="1">
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <div className="effect-group">
+              <label htmlFor="replaceColorFrom">源颜色 (Hex):</label>
+              <Input
+                id="replaceColorFrom"
+                placeholder="#RRGGBB 或 color_name"
+                value={replaceColorFrom}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setReplaceColorFrom(val);
+                  updateTransformation('e_replace_color', 'from_color', val);
+                }}
+              />
+            </div>
+            <div className="effect-group">
+              <label htmlFor="replaceColorTo">目标颜色 (Hex):</label>
+              <Input
+                id="replaceColorTo"
+                placeholder="#RRGGBB 或 color_name"
+                value={replaceColorTo}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setReplaceColorTo(val);
+                  updateTransformation('e_replace_color', 'to_color', val);
+                }}
+              />
+            </div>
+            <div className="effect-group">
+              <label htmlFor="replaceColorTolerance">容差 (0-100):</label>
+              <Slider
+                min={0}
+                max={100}
+                onChange={(val) => {
+                  setReplaceColorTolerance(val);
+                  updateTransformation('e_replace_color', 'tolerance', val);
+                }}
+                value={typeof replaceColorTolerance === 'number' ? replaceColorTolerance : 0}
+                className="effect-slider"
+              />
+              <InputNumber
+                min={0}
+                max={100}
+                value={replaceColorTolerance}
+                onChange={(val) => {
+                  setReplaceColorTolerance(val);
+                  updateTransformation('e_replace_color', 'tolerance', val);
+                }}
+              />
+            </div>
+          </Space>
+        </Panel>
+      </Collapse>
+
+      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
+        <Panel header="图像转换" key="1">
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <div className="effect-group">
+              <label htmlFor="formatSelect">格式转换:</label>
+              <Select
+                id="formatSelect"
+                value={format}
+                onChange={(val) => {
+                  setFormat(val);
+                  if (val) {
+                    updateTransformation('f', 'format', val);
+                  } else {
+                    setCurrentTransformations(prev => {
+                      const newTransformations = { ...prev };
+                      delete newTransformations['f'];
+                      return newTransformations;
+                    });
+                  }
+                }}
+                className="effect-select"
+              >
+                <Select.Option value="">Original</Select.Option>
+                <Select.Option value="jpg">JPG</Select.Option>
+                <Select.Option value="png">PNG</Select.Option>
+                <Select.Option value="webp">WebP</Select.Option>
+                <Select.Option value="gif">GIF</Select.Option>
+                <Select.Option value="bmp">BMP</Select.Option>
+                <Select.Option value="tiff">TIFF</Select.Option>
+                <Select.Option value="pdf">PDF</Select.Option>
+              </Select>
+            </div>
+
+            <div className="effect-group">
+              <label htmlFor="cropModeSelect">裁剪模式:</label>
+              <Select
+                id="cropModeSelect"
+                value={cropMode}
+                onChange={(val) => {
+                  setCropMode(val);
+                  updateTransformation('c', 'crop_mode', val);
+                }}
+                className="effect-select"
+              >
+                <Select.Option value="">None</Select.Option>
+                <Select.Option value="fill">Fill</Select.Option>
+                <Select.Option value="scale">Scale</Select.Option>
+                <Select.Option value="fit">Fit</Select.Option>
+                <Select.Option value="limit">Limit</Select.Option>
+                <Select.Option value="mfill">Mfill</Select.Option>
+                <Select.Option value="lfill">Lfill</Select.Option>
+                <Select.Option value="mpad">Mpad</Select.Option>
+                <Select.Option value="crop">Crop</Select.Option>
+                <Select.Option value="thumb">Thumb</Select.Option>
+                <Select.Option value="imagga_crop">Imagga Crop</Select.Option>
+                <Select.Option value="imagga_scale">Imagga Scale</Select.Option>
+              </Select>
+              <label htmlFor="cropWidthInput">宽度:</label>
+              <InputNumber
+                id="cropWidthInput"
+                placeholder="宽度"
+                value={cropWidth}
+                onChange={(val) => {
+                  setCropWidth(val);
+                  updateTransformation('c', 'width', val);
+                }}
+              />
+              <label htmlFor="cropHeightInput">高度:</label>
+              <InputNumber
+                id="cropHeightInput"
+                placeholder="高度"
+                value={cropHeight}
+                onChange={(val) => {
+                  setCropHeight(val);
+                  updateTransformation('c', 'height', val);
+                }}
+              />
+              <label htmlFor="cropGravitySelect">重力:</label>
+              <Select
+                id="cropGravitySelect"
+                value={cropGravity}
+                onChange={(val) => {
+                  setCropGravity(val);
+                  updateTransformation('c', 'gravity', val);
+                }}
+                className="effect-select"
+              >
+                <Select.Option value="">None</Select.Option>
+                <Select.Option value="auto">Auto</Select.Option>
+                <Select.Option value="face">Face</Select.Option>
+                <Select.Option value="faces">Faces</Select.Option>
+                <Select.Option value="north">North</Select.Option>
+                <Select.Option value="north_east">North East</Select.Option>
+                <Select.Option value="east">East</Select.Option>
+                <Select.Option value="south_east">South East</Select.Option>
+                <Select.Option value="south">South</Select.Option>
+                <Select.Option value="south_west">South West</Select.Option>
+                <Select.Option value="west">West</Select.Option>
+                <Select.Option value="north_west">North West</Select.Option>
+                <Select.Option value="center">Center</Select.Option>
+              </Select>
+            </div>
+
+            <div className="effect-group">
+              <label htmlFor="qualitySlider">质量:</label>
+              <Slider
+                min={1}
+                max={100}
+                onChange={(val) => {
+                  setQuality(val);
+                  updateTransformation('q', 'level', val);
+                }}
+                value={typeof quality === 'number' ? quality : 0}
+                className="effect-slider"
+                disabled={qualityAuto}
+              />
+              <InputNumber
+                min={1}
+                max={100}
+                value={quality}
+                onChange={(val) => {
+                  setQuality(val);
+                  updateTransformation('q', 'level', val);
+                }}
+                disabled={qualityAuto}
+              />
+              <Checkbox
+                id="qualityAutoToggle"
+                checked={qualityAuto}
+                onChange={(e) => {
+                  const isChecked = e.target.checked;
+                  setQualityAuto(isChecked);
+                  if (isChecked) {
+                    updateTransformation('q', 'level', 'auto');
+                  } else {
+                    updateTransformation('q', 'level', quality);
+                  }
+                }}
+              >
+                自动
+              </Checkbox>
+            </div>
+
+            <div className="effect-group">
+              <label htmlFor="dprSlider">DPR:</label>
+              <Slider
+                min={0.1}
+                max={5}
+                step={0.1}
+                onChange={(val) => {
+                  setDpr(val);
+                  updateTransformation('dpr', 'value', val);
+                }}
+                value={typeof dpr === 'number' ? dpr : 0}
+                className="effect-slider"
+                disabled={dprAuto}
+              />
+              <InputNumber
+                min={0.1}
+                max={5}
+                step={0.1}
+                value={dpr}
+                onChange={(val) => {
+                  setDpr(val);
+                  updateTransformation('dpr', 'value', val);
+                }}
+                disabled={dprAuto}
+              />
+              <Checkbox
+                id="dprAutoToggle"
+                checked={dprAuto}
+                onChange={(e) => {
+                  const isChecked = e.target.checked;
+                  setDprAuto(isChecked);
+                  if (isChecked) {
+                    updateTransformation('dpr', 'value', 'auto');
+                  } else {
+                    updateTransformation('dpr', 'value', dpr);
+                  }
+                }}
+              >
+                自动
+              </Checkbox>
+            </div>
+          </Space>
+        </Panel>
+      </Collapse>
+
+      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
+        <Panel header="模糊与像素化" key="1">
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <div className="effect-group">
+              <label htmlFor="blurSlider">模糊强度:</label>
+              <Slider
+                min={0}
+                max={2000}
+                onChange={(val) => {
+                  setBlurStrength(val);
+                  updateTransformation('e_blur', 'strength', val);
+                }}
+                value={typeof blurStrength === 'number' ? blurStrength : 0}
+                className="effect-slider"
+              />
+              <InputNumber
+                min={0}
+                max={2000}
+                value={blurStrength}
+                onChange={(val) => {
+                  setBlurStrength(val);
+                  updateTransformation('e_blur', 'strength', val);
+                }}
+              />
+            </div>
+            <div className="effect-group">
+              <label htmlFor="pixelateSlider">像素化强度:</label>
+              <Slider
+                min={0}
+                max={200}
+                onChange={(val) => {
+                  setPixelateStrength(val);
+                  updateTransformation('e_pixelate', 'strength', val);
+                }}
+                value={typeof pixelateStrength === 'number' ? pixelateStrength : 0}
+                className="effect-slider"
+              />
+              <InputNumber
+                min={0}
+                max={200}
+                value={pixelateStrength}
+                onChange={(val) => {
+                  setPixelateStrength(val);
+                  updateTransformation('e_pixelate', 'strength', val);
+                }}
+              />
+            </div>
+            <Space wrap className="controls">
+              <Button
+                className={blurFaces ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setBlurFaces(!blurFaces);
+                  updateTransformation('e_blur_faces', undefined, !blurFaces);
+                }}
+              >
+                Blur Faces
+              </Button>
+              <Button
+                className={pixelateFaces ? 'effect-button active' : 'effect-button'}
+                onClick={() => {
+                  setPixelateFaces(!pixelateFaces);
+                  updateTransformation('e_pixelate_faces', undefined, !pixelateFaces);
+                }}
+              >
+                Pixelate Faces
+              </Button>
+            </Space>
+          </Space>
+        </Panel>
+      </Collapse>
+
+      <Space size="middle" className="controls" style={{ justifyContent: 'center', marginTop: '20px' }}>
+        <Button type="primary" onClick={handleSaveTransformedImage}>
+          保存
+        </Button>
+        <Button onClick={handleResetAllEffects}>
+          重置所有效果
+        </Button>
+      </Space>
+    </section>
   );
 }
 
