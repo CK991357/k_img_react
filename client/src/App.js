@@ -42,7 +42,7 @@ function App() {
           <h1 style={{ color: '#fff', margin: 0, fontWeight: 600, letterSpacing: '0.5px' }}>K-Edit 图片管理</h1>
         </div>
       </Header>
-      <Content style={{ padding: '20px 50px' }}>
+      <Content style={{ padding: '10px 2px 10px 0px' }}> {/* 调整整体内容区域的内边距，适应移动端，左侧更靠近边缘 */}
         <div
           style={{
             background: colorBgContainer,
@@ -51,6 +51,8 @@ function App() {
             borderRadius: borderRadiusLG,
             boxShadow: '0 6px 16px rgba(106, 13, 173, 0.08)',
             border: '1px solid #f0e6ff',
+            maxWidth: '95%', /* 设置最大宽度为100% */
+            margin: '10px auto', /* 居中显示，并增加上下边距 */
           }}
         >
           <UploadSection onUploadSuccess={handleUploadSuccess} />
