@@ -1,8 +1,6 @@
-import { Button, Checkbox, Collapse, Image, Input, InputNumber, message, Select, Slider, Space } from 'antd';
+import { message } from 'antd'; // 暂时保留 message，后续根据需要移除
 import { useCallback, useEffect, useState } from 'react';
 import { applyTransformations, saveTransformedImage } from '../api';
-
-const { Panel } = Collapse;
 
 /**
  * ImageEditorSection 组件：处理图片编辑功能
@@ -279,7 +277,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
         </svg>
         图片编辑
       </h2>
-      <Space direction="vertical" size="large" style={{ width: '100%', alignItems: 'center', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', alignItems: 'center', marginBottom: '20px' }}>
         <div style={{ textAlign: 'center', width: '100%' }}>
           <h3>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
@@ -289,7 +287,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             原图
           </h3>
           {originalImageUrl ? (
-            <Image
+            <img
               src={originalImageUrl}
               alt="原图"
               className="image-preview-img"
@@ -307,7 +305,7 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             转换后图片
           </h3>
           {transformedImageUrl ? (
-            <Image
+            <img
               src={transformedImageUrl}
               alt="转换后图片"
               className="image-preview-img"
@@ -316,155 +314,172 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             <div className="image-placeholder" style={{ color: 'var(--secondary-text-color)' }}>暂无转换后图片</div>
           )}
         </div>
-      </Space>
+      </div>
 
       {/* 颜色调整 */}
-      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
-        <Panel header="颜色调整" key="1">
-          <Space direction="vertical" style={{ width: '100%' }}>
+      <div className="custom-collapse"> {/* 替换 Collapse */}
+        <div className="custom-collapse-header">颜色调整</div> {/* 替换 Panel header */}
+        <div className="custom-collapse-content-box"> {/* 替换 Panel content */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}> {/* 替换 Space */}
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="brightnessSlider">亮度:</label>
-                <Slider
+                <input
+                  type="range"
+                  id="brightnessSlider"
                   min={-100}
                   max={100}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setBrightness(val);
                     updateTransformation('e_brightness', 'level', val);
                   }}
                   value={typeof brightness === 'number' ? brightness : 0}
                   className="effect-slider"
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={-100}
                   max={100}
                   value={brightness}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setBrightness(val);
                     updateTransformation('e_brightness', 'level', val);
                   }}
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{brightness}</div>
             </div>
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="contrastSlider">对比度:</label>
-                <Slider
+                <input
+                  type="range"
+                  id="contrastSlider"
                   min={-100}
                   max={100}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setContrast(val);
                     updateTransformation('e_contrast', 'level', val);
                   }}
                   value={typeof contrast === 'number' ? contrast : 0}
                   className="effect-slider"
-                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={-100}
                   max={100}
                   value={contrast}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setContrast(val);
                     updateTransformation('e_contrast', 'level', val);
                   }}
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{contrast}</div>
             </div>
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="saturationSlider">饱和度:</label>
-                <Slider
+                <input
+                  type="range"
+                  id="saturationSlider"
                   min={-100}
                   max={100}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setSaturation(val);
                     updateTransformation('e_saturation', 'level', val);
                   }}
                   value={typeof saturation === 'number' ? saturation : 0}
                   className="effect-slider"
-                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={-100}
                   max={100}
                   value={saturation}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setSaturation(val);
                     updateTransformation('e_saturation', 'level', val);
                   }}
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{saturation}</div>
             </div>
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="fillLightSlider">补光:</label>
-                <Slider
+                <input
+                  type="range"
+                  id="fillLightSlider"
                   min={0}
                   max={100}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setFillLight(val);
                     updateTransformation('e_fill_light', 'level', val);
                   }}
                   value={typeof fillLight === 'number' ? fillLight : 0}
                   className="effect-slider"
-                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={0}
                   max={100}
                   value={fillLight}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setFillLight(val);
                     updateTransformation('e_fill_light', 'level', val);
                   }}
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{fillLight}</div>
             </div>
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="fillLightBlendSlider">补光混合:</label>
-                <Slider
+                <input
+                  type="range"
+                  id="fillLightBlendSlider"
                   min={0}
                   max={100}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setFillLightBlend(val);
                     updateTransformation('e_fill_light', 'blend', val);
                   }}
                   value={typeof fillLightBlend === 'number' ? fillLightBlend : 0}
                   className="effect-slider"
-                  style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={0}
                   max={100}
                   value={fillLightBlend}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setFillLightBlend(val);
                     updateTransformation('e_fill_light', 'blend', val);
                   }}
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{fillLightBlend}</div>
             </div>
-          </Space>
-        </Panel>
-      </Collapse>
+          </div>
+        </div>
+      </div>
 
-      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
-        <Panel header="增强效果" key="1">
-          <Space direction="vertical" style={{ width: '100%' }}>
-            <Space wrap className="controls">
-              <Button
+      <div className="custom-collapse"> {/* 替换 Collapse */}
+        <div className="custom-collapse-header">增强效果</div> {/* 替换 Panel header */}
+        <div className="custom-collapse-content-box"> {/* 替换 Panel content */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }} className="controls"> {/* 替换 Space */}
+              <button
                 className={improve ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setImprove(!improve);
@@ -472,8 +487,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 优化
-              </Button>
-              <Button
+              </button>
+              <button
                 className={autoBrightness ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setAutoBrightness(!autoBrightness);
@@ -481,8 +496,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 自动亮度
-              </Button>
-              <Button
+              </button>
+              <button
                 className={autoColor ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setAutoColor(!autoColor);
@@ -490,8 +505,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 自动颜色
-              </Button>
-              <Button
+              </button>
+              <button
                 className={autoContrast ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setAutoContrast(!autoContrast);
@@ -499,8 +514,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 自动对比度
-              </Button>
-              <Button
+              </button>
+              <button
                 className={sharpen ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setSharpen(!sharpen);
@@ -508,8 +523,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 锐化
-              </Button>
-              <Button
+              </button>
+              <button
                 className={vibrance ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setVibrance(!vibrance);
@@ -517,8 +532,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 鲜艳度
-              </Button>
-              <Button
+              </button>
+              <button
                 className={upscale ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setUpscale(!upscale);
@@ -526,8 +541,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 放大
-              </Button>
-              <Button
+              </button>
+              <button
                 className={enhance ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setEnhance(!enhance);
@@ -535,17 +550,16 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 增强
-              </Button>
-            </Space>
-          </Space>
-        </Panel>
-      </Collapse>
+              </button>
+          </div>
+        </div>
+      </div>
 
-      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
-        <Panel header="艺术效果" key="1">
-          <Space direction="vertical" style={{ width: '100%' }}>
-            <Space wrap className="controls">
-              <Button
+      <div className="custom-collapse"> {/* 替换 Collapse */}
+        <div className="custom-collapse-header">艺术效果</div> {/* 替换 Panel header */}
+        <div className="custom-collapse-content-box"> {/* 替换 Panel content */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }} className="controls"> {/* 替换 Space */}
+              <button
                 className={cartoonify ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setCartoonify(!cartoonify);
@@ -553,8 +567,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 卡通化
-              </Button>
-              <Button
+              </button>
+              <button
                 className={sepia ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setSepia(!sepia);
@@ -562,8 +576,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 复古
-              </Button>
-              <Button
+              </button>
+              <button
                 className={vignette ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setVignette(!vignette);
@@ -571,8 +585,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 暗角
-              </Button>
-              <Button
+              </button>
+              <button
                 className={pixelateEffect ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setPixelateEffect(!pixelateEffect);
@@ -580,8 +594,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 像素化
-              </Button>
-              <Button
+              </button>
+              <button
                 className={grayscale ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setGrayscale(!grayscale);
@@ -589,14 +603,15 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 灰度
-              </Button>
-            </Space>
+              </button>
+            </div>
             <div className="effect-group">
               <label htmlFor="artFilterSelect">艺术滤镜:</label>
-              <Select
+              <select
                 id="artFilterSelect"
                 value={artFilter}
-                onChange={(val) => {
+                onChange={(e) => {
+                  const val = e.target.value;
                   setArtFilter(val);
                   if (val) {
                     updateTransformation('e_art', 'filter', val);
@@ -611,36 +626,35 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 className="effect-select"
                 style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               >
-                <Select.Option value="">无</Select.Option>
-                <Select.Option value="al_dente">Al Dente</Select.Option>
-                <Select.Option value="athena">Athena</Select.Option>
-                <Select.Option value="audrey">Audley</Select.Option>
-                <Select.Option value="aurora">Aurora</Select.Option>
-                <Select.Option value="daguerre">Daguerre</Select.Option>
-                <Select.Option value="eucalyptus">Eucalyptus</Select.Option>
-                <Select.Option value="fes">Fes</Select.Option>
-                <Select.Option value="hokusai">Hokusai</Select.Option>
-                <Select.Option value="incognito">Incognito</Select.Option>
-                <Select.Option value="linen">Linen</Select.Option>
-                <Select.Option value="peacock">Peacock</Select.Option>
-                <Select.Option value="primavera">Primavera</Select.Option>
-                <Select.Option value="quartz">Quartz</Select.Option>
-                <Select.Option value="red_rock">Red Rock</Select.Option>
-                <Select.Option value="sizzle">Sizzle</Select.Option>
-                <Select.Option value="sonnet">Sonnet</Select.Option>
-                <Select.Option value="ukiyo">Ukiyo</Select.Option>
-                <Select.Option value="zorro">Zorro</Select.Option>
-              </Select>
+                <option value="">无</option>
+                <option value="al_dente">Al Dente</option>
+                <option value="athena">Athena</option>
+                <option value="audrey">Audley</option>
+                <option value="aurora">Aurora</option>
+                <option value="daguerre">Daguerre</option>
+                <option value="eucalyptus">Eucalyptus</option>
+                <option value="fes">Fes</option>
+                <option value="hokusai">Hokusai</option>
+                <option value="incognito">Incognito</option>
+                <option value="linen">Linen</option>
+                <option value="peacock">Peacock</option>
+                <option value="primavera">Primavera</option>
+                <option value="quartz">Quartz</option>
+                <option value="red_rock">Red Rock</option>
+                <option value="sizzle">Sizzle</option>
+                <option value="sonnet">Sonnet</option>
+                <option value="ukiyo">Ukiyo</option>
+                <option value="zorro">Zorro</option>
+              </select>
             </div>
-          </Space>
-        </Panel>
-      </Collapse>
+          </div>
+        </div>
 
-      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
-        <Panel header="背景与阴影" key="1">
-          <Space direction="vertical" style={{ width: '100%' }}>
-            <Space wrap className="controls">
-              <Button
+      <div className="custom-collapse"> {/* 替换 Collapse */}
+        <div className="custom-collapse-header">背景与阴影</div> {/* 替换 Panel header */}
+        <div className="custom-collapse-content-box"> {/* 替换 Panel content */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }} className="controls"> {/* 替换 Space */}
+              <button
                 className={removeBackground ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setRemoveBackground(!removeBackground);
@@ -648,8 +662,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 移除背景
-              </Button>
-              <Button
+              </button>
+              <button
                 className={shadow ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setShadow(!shadow);
@@ -657,51 +671,57 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 阴影
-              </Button>
-            </Space>
-          </Space>
-        </Panel>
-      </Collapse>
+              </button>
+            </div>
+          </div>
+        </div>
 
-      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
-        <Panel header="不透明度" key="1">
-          <Space direction="vertical" style={{ width: '100%' }}>
+      <div className="custom-collapse"> {/* 替换 Collapse */}
+        <div className="custom-collapse-header">不透明度</div> {/* 替换 Panel header */}
+        <div className="custom-collapse-content-box"> {/* 替换 Panel content */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}> {/* 替换 Space */}
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="opacitySlider">不透明度 (0-100):</label>
-                <Slider
+                <input
+                  type="range"
+                  id="opacitySlider"
                   min={0}
                   max={100}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setOpacity(val);
                     updateTransformation('o', 'level', val);
                   }}
                   value={typeof opacity === 'number' ? opacity : 0}
                   className="effect-slider"
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={0}
                   max={100}
                   value={opacity}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setOpacity(val);
                     updateTransformation('o', 'level', val);
                   }}
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{opacity}</div>
             </div>
-          </Space>
-        </Panel>
-      </Collapse>
+          </div>
+        </div>
+      </div>
 
-      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
-        <Panel header="替换颜色" key="1">
-          <Space direction="vertical" style={{ width: '100%' }}>
+      <div className="custom-collapse"> {/* 替换 Collapse */}
+        <div className="custom-collapse-header">替换颜色</div> {/* 替换 Panel header */}
+        <div className="custom-collapse-content-box"> {/* 替换 Panel content */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}> {/* 替换 Space */}
             <div className="effect-group">
               <label htmlFor="replaceColorFrom">原色:</label>
-              <Input
+              <input
+                type="text"
                 id="replaceColorFrom"
                 placeholder="例如: red 或 #FF0000"
                 value={replaceColorFrom}
@@ -715,7 +735,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             </div>
             <div className="effect-group">
               <label htmlFor="replaceColorTo">目标颜色:</label>
-              <Input
+              <input
+                type="text"
                 id="replaceColorTo"
                 placeholder="例如: blue 或 #0000FF"
                 value={replaceColorTo}
@@ -730,42 +751,48 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="replaceColorTolerance">容差 (0-100):</label>
-                <Slider
+                <input
+                  type="range"
+                  id="replaceColorTolerance"
                   min={0}
                   max={100}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setReplaceColorTolerance(val);
                     updateTransformation('e_replace_color', 'tolerance', val);
                   }}
                   value={typeof replaceColorTolerance === 'number' ? replaceColorTolerance : 0}
                   className="effect-slider"
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={0}
                   max={100}
                   value={replaceColorTolerance}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setReplaceColorTolerance(val);
                     updateTransformation('e_replace_color', 'tolerance', val);
                   }}
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{replaceColorTolerance}</div>
             </div>
-          </Space>
-        </Panel>
-      </Collapse>
+          </div>
+        </div>
+      </div>
 
-      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
-        <Panel header="图像转换" key="1">
-          <Space direction="vertical" style={{ width: '100%' }}>
+      <div className="custom-collapse"> {/* 替换 Collapse */}
+        <div className="custom-collapse-header">图像转换</div> {/* 替换 Panel header */}
+        <div className="custom-collapse-content-box"> {/* 替换 Panel content */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}> {/* 替换 Space */}
             <div className="effect-group">
               <label htmlFor="formatSelect">格式转换:</label>
-              <Select
+              <select
                 id="formatSelect"
                 value={format}
-                onChange={(val) => {
+                onChange={(e) => {
+                  const val = e.target.value;
                   setFormat(val);
                   if (val) {
                     updateTransformation('f', 'format', val);
@@ -780,98 +807,107 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 className="effect-select"
                 style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               >
-                <Select.Option value="">选择格式</Select.Option>
-                <Select.Option value="jpg">JPG</Select.Option>
-                <Select.Option value="png">PNG</Select.Option>
-                <Select.Option value="webp">WebP</Select.Option>
-                <Select.Option value="gif">GIF</Select.Option>
-                <Select.Option value="bmp">BMP</Select.Option>
-                <Select.Option value="tiff">TIFF</Select.Option>
-                <Select.Option value="pdf">PDF</Select.Option>
-              </Select>
+                <option value="">选择格式</option>
+                <option value="jpg">JPG</option>
+                <option value="png">PNG</option>
+                <option value="webp">WebP</option>
+                <option value="gif">GIF</option>
+                <option value="bmp">BMP</option>
+                <option value="tiff">TIFF</option>
+                <option value="pdf">PDF</option>
+              </select>
             </div>
 
             <div className="effect-group">
               <label htmlFor="cropModeSelect">模式:</label>
-              <Select
+              <select
                 id="cropModeSelect"
                 value={cropMode}
-                onChange={(val) => {
+                onChange={(e) => {
+                  const val = e.target.value;
                   setCropMode(val);
                   updateTransformation('c', 'crop_mode', val);
                 }}
                 className="effect-select"
                 style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               >
-                <Select.Option value="">选择模式</Select.Option>
-                <Select.Option value="fill">Fill</Select.Option>
-                <Select.Option value="scale">Scale</Select.Option>
-                <Select.Option value="fit">Fit</Select.Option>
-                <Select.Option value="limit">Limit</Select.Option>
-                <Select.Option value="mfill">Mfill</Select.Option>
-                <Select.Option value="lfill">Lfill</Select.Option>
-                <Select.Option value="mpad">Mpad</Select.Option>
-                <Select.Option value="crop">Crop</Select.Option>
-                <Select.Option value="thumb">Thumb</Select.Option>
-                <Select.Option value="imagga_crop">Imagga Crop</Select.Option>
-                <Select.Option value="imagga_scale">Imagga Scale</Select.Option>
-              </Select>
+                <option value="">选择模式</option>
+                <option value="fill">Fill</option>
+                <option value="scale">Scale</option>
+                <option value="fit">Fit</option>
+                <option value="limit">Limit</option>
+                <option value="mfill">Mfill</option>
+                <option value="lfill">Lfill</option>
+                <option value="mpad">Mpad</option>
+                <option value="crop">Crop</option>
+                <option value="thumb">Thumb</option>
+                <option value="imagga_crop">Imagga Crop</option>
+                <option value="imagga_scale">Imagga Scale</option>
+              </select>
               <label htmlFor="cropWidthInput">宽度:</label>
-              <InputNumber
+              <input
+                type="number"
                 id="cropWidthInput"
                 placeholder="宽度"
                 value={cropWidth}
-                onChange={(val) => {
+                onChange={(e) => {
+                  const val = Number(e.target.value);
                   setCropWidth(val);
                   updateTransformation('c', 'width', val);
                 }}
                 style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               />
               <label htmlFor="cropHeightInput">高度:</label>
-              <InputNumber
+              <input
+                type="number"
                 id="cropHeightInput"
                 placeholder="高度"
                 value={cropHeight}
-                onChange={(val) => {
+                onChange={(e) => {
+                  const val = Number(e.target.value);
                   setCropHeight(val);
                   updateTransformation('c', 'height', val);
                 }}
                 style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               />
               <label htmlFor="cropGravitySelect">重力:</label>
-              <Select
+              <select
                 id="cropGravitySelect"
                 value={cropGravity}
-                onChange={(val) => {
+                onChange={(e) => {
+                  const val = e.target.value;
                   setCropGravity(val);
                   updateTransformation('c', 'gravity', val);
                 }}
                 className="effect-select"
                 style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
               >
-                <Select.Option value="">无 (默认)</Select.Option>
-                <Select.Option value="auto">Auto</Select.Option>
-                <Select.Option value="face">Face</Select.Option>
-                <Select.Option value="faces">Faces</Select.Option>
-                <Select.Option value="north">North</Select.Option>
-                <Select.Option value="north_east">North East</Select.Option>
-                <Select.Option value="east">East</Select.Option>
-                <Select.Option value="south_east">South East</Select.Option>
-                <Select.Option value="south">South</Select.Option>
-                <Select.Option value="south_west">South West</Select.Option>
-                <Select.Option value="west">West</Select.Option>
-                <Select.Option value="north_west">North West</Select.Option>
-                <Select.Option value="center">Center</Select.Option>
-              </Select>
+                <option value="">无 (默认)</option>
+                <option value="auto">Auto</option>
+                <option value="face">Face</option>
+                <option value="faces">Faces</option>
+                <option value="north">North</option>
+                <option value="north_east">North East</option>
+                <option value="east">East</option>
+                <option value="south_east">South East</option>
+                <option value="south">South</option>
+                <option value="south_west">South West</option>
+                <option value="west">West</option>
+                <option value="north_west">North West</option>
+                <option value="center">Center</option>
+              </select>
             </div>
 
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="qualitySlider">质量 (1-100):</label>
-                <Slider
+                <input
+                  type="range"
+                  id="qualitySlider"
                   min={1}
                   max={100}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setQuality(val);
                     updateTransformation('q', 'level', val);
                   }}
@@ -879,11 +915,13 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   className="effect-slider"
                   disabled={qualityAuto}
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={1}
                   max={100}
                   value={quality}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setQuality(val);
                     updateTransformation('q', 'level', val);
                   }}
@@ -891,33 +929,36 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{quality}</div>
-              <Checkbox
-                id="qualityAutoToggle"
-                checked={qualityAuto}
-                onChange={(e) => {
-                  const isChecked = e.target.checked;
-                  setQualityAuto(isChecked);
-                  if (isChecked) {
-                    updateTransformation('q', 'level', 'auto');
-                  } else {
-                    updateTransformation('q', 'level', quality);
-                  }
-                }}
-                style={{ color: 'var(--secondary-text-color)' }}
-              >
+              <label htmlFor="qualityAutoToggle" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: 'var(--secondary-text-color)' }}>
+                <input
+                  type="checkbox"
+                  id="qualityAutoToggle"
+                  checked={qualityAuto}
+                  onChange={(e) => {
+                    const isChecked = e.target.checked;
+                    setQualityAuto(isChecked);
+                    if (isChecked) {
+                      updateTransformation('q', 'level', 'auto');
+                    } else {
+                      updateTransformation('q', 'level', quality);
+                    }
+                  }}
+                />
                 自动质量 (q_auto)
-              </Checkbox>
+              </label>
             </div>
 
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="dprSlider">DPR:</label>
-                <Slider
+                <input
+                  type="range"
+                  id="dprSlider"
                   min={0.1}
                   max={5}
                   step={0.1}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setDpr(val);
                     updateTransformation('dpr', 'value', val);
                   }}
@@ -925,12 +966,14 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   className="effect-slider"
                   disabled={dprAuto}
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={0.1}
                   max={5}
                   step={0.1}
                   value={dpr}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setDpr(val);
                     updateTransformation('dpr', 'value', val);
                   }}
@@ -938,85 +981,94 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{dpr}</div>
-              <Checkbox
-                id="dprAutoToggle"
-                checked={dprAuto}
-                onChange={(e) => {
-                  const isChecked = e.target.checked;
-                  setDprAuto(isChecked);
-                  if (isChecked) {
-                    updateTransformation('dpr', 'value', 'auto');
-                  } else {
-                    updateTransformation('dpr', 'value', dpr);
-                  }
-                }}
-                style={{ color: 'var(--secondary-text-color)' }}
-              >
+              <label htmlFor="dprAutoToggle" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: 'var(--secondary-text-color)' }}>
+                <input
+                  type="checkbox"
+                  id="dprAutoToggle"
+                  checked={dprAuto}
+                  onChange={(e) => {
+                    const isChecked = e.target.checked;
+                    setDprAuto(isChecked);
+                    if (isChecked) {
+                      updateTransformation('dpr', 'value', 'auto');
+                    } else {
+                      updateTransformation('dpr', 'value', dpr);
+                    }
+                  }}
+                />
                 自动DPR (dpr_auto)
-              </Checkbox>
+              </label>
             </div>
-          </Space>
-        </Panel>
-      </Collapse>
+          </div>
+        </div>
+      </div>
 
-      <Collapse defaultActiveKey={['1']} className="ant-collapse-custom">
-        <Panel header="模糊与像素化" key="1">
-          <Space direction="vertical" style={{ width: '100%' }}>
+      <div className="custom-collapse"> {/* 替换 Collapse */}
+        <div className="custom-collapse-header">模糊与像素化</div> {/* 替换 Panel header */}
+        <div className="custom-collapse-content-box"> {/* 替换 Panel content */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}> {/* 替换 Space */}
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="blurSlider">模糊强度:</label>
-                <Slider
+                <input
+                  type="range"
+                  id="blurSlider"
                   min={0}
                   max={2000}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setBlurStrength(val);
                     updateTransformation('e_blur', 'strength', val);
                   }}
                   value={typeof blurStrength === 'number' ? blurStrength : 0}
                   className="effect-slider"
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={0}
                   max={2000}
                   value={blurStrength}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setBlurStrength(val);
                     updateTransformation('e_blur', 'strength', val);
                   }}
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{blurStrength}</div>
             </div>
             <div className="effect-group">
               <div className="effect-control-row">
                 <label htmlFor="pixelateSlider">像素化强度:</label>
-                <Slider
+                <input
+                  type="range"
+                  id="pixelateSlider"
                   min={0}
                   max={200}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setPixelateStrength(val);
                     updateTransformation('e_pixelate', 'strength', val);
                   }}
                   value={typeof pixelateStrength === 'number' ? pixelateStrength : 0}
                   className="effect-slider"
                 />
-                <InputNumber
+                <input
+                  type="number"
                   min={0}
                   max={200}
                   value={pixelateStrength}
-                  onChange={(val) => {
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
                     setPixelateStrength(val);
                     updateTransformation('e_pixelate', 'strength', val);
                   }}
                   style={{ backgroundColor: 'var(--card-bg-color)', color: 'var(--text-color)', borderColor: 'var(--input-border-color)' }}
                 />
               </div>
-              <div className="slider-value-display">{pixelateStrength}</div>
             </div>
-            <Space wrap className="controls">
-              <Button
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }} className="controls"> {/* 替换 Space */}
+              <button
                 className={blurFaces ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setBlurFaces(!blurFaces);
@@ -1024,8 +1076,8 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 模糊人脸
-              </Button>
-              <Button
+              </button>
+              <button
                 className={pixelateFaces ? 'effect-button active' : 'effect-button'}
                 onClick={() => {
                   setPixelateFaces(!pixelateFaces);
@@ -1033,20 +1085,20 @@ function ImageEditorSection({ selectedPublicId, originalImageUrl, setRefreshGall
                 }}
               >
                 像素化人脸
-              </Button>
-            </Space>
-          </Space>
-        </Panel>
-      </Collapse>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <Space size="middle" className="controls" style={{ justifyContent: 'center', marginTop: '20px' }}>
-        <Button type="primary" onClick={handleSaveTransformedImage}>
+      <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '20px' }} className="controls"> {/* 替换 Space */}
+        <button type="button" className="ant-btn-primary" onClick={handleSaveTransformedImage}>
           保存
-        </Button>
-        <Button type="primary" onClick={handleResetAllEffects}>
+        </button>
+        <button type="button" className="ant-btn-primary" onClick={handleResetAllEffects}>
           重置所有效果
-        </Button>
-      </Space>
+        </button>
+      </div>
     </section>
   );
 }

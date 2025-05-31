@@ -9,21 +9,21 @@
 }
 
 /* 按钮悬停效果 */
-.ant-btn-primary {
+.ant-btn-primary { /* 保留此样式，因为 App.js 中仍在使用 */
   transition: all 0.3s ease, transform 0.2s;
   background: linear-gradient(90deg, var(--button-bg-gradient-start) 0%, var(--button-bg-gradient-end) 100%);
   border: none;
   box-shadow: 0 4px 6px var(--button-shadow-color);
 }
 
-.ant-btn-primary:hover {
+.ant-btn-primary:hover { /* 保留此样式 */
   transform: translateY(-2px);
   box-shadow: 0 6px 12px var(--button-hover-shadow-color);
   background: linear-gradient(90deg, var(--button-bg-gradient-end) 0%, var(--button-bg-gradient-start) 100%);
 }
 
 /* 卡片悬停效果 */
-.ant-card {
+.ant-card { /* 保留此样式，因为 GallerySection 和 ImageDetailSection 中仍在使用 */
   transition: all 0.3s ease;
   border-radius: 12px;
   overflow: hidden;
@@ -31,55 +31,86 @@
   background-color: var(--card-bg-color); /* Add background color for Ant Card */
 }
 
-.ant-card:hover {
+.ant-card:hover { /* 保留此样式 */
   transform: translateY(-5px);
   box-shadow: 0 10px 20px var(--section-hover-shadow-color); /* Use hover shadow variable */
   border-color: var(--image-gallery-hover-border); /* Use hover border variable */
 }
 
 /* 输入框焦点效果 */
-.ant-input:focus, .ant-input-focused {
+/* 移除 Ant Design 特定的 .ant-input 样式，改为原生 input */
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
   border-color: var(--input-focus-border-color);
   box-shadow: 0 0 0 2px var(--input-focus-shadow-color);
+  outline: none; /* 移除默认焦点轮廓 */
 }
 
-/* 折叠面板样式 */
-.ant-collapse {
-  background: var(--upload-result-bg); /* Use a background variable */
+/* 折叠面板样式 - 替换为自定义类名 */
+.custom-collapse {
+  background: var(--upload-result-bg);
   border-radius: 12px;
-  border: 1px solid var(--section-border-color); /* Ensure border color is consistent */
+  border: none !important;
 }
 
-.ant-collapse > .ant-collapse-item {
-  border-bottom: 1px solid var(--section-border-color); /* Ensure border color is consistent */
+.custom-collapse > .custom-collapse-item {
+  border-bottom: none !important;
 }
 
-.ant-collapse > .ant-collapse-item:last-child {
-  border-bottom: none;
+.custom-collapse > .custom-collapse-item:last-child {
+  border-bottom: none !important;
 }
 
-.ant-collapse-header {
+.custom-collapse-header {
   font-weight: 600;
-  color: var(--heading-color) !important;
+  color: var(--link-accent-color) !important; /* 修改为蓝色，与 show 示例中的 SVG 颜色一致 */
+  font-size: 1.1rem; /* 调整字体大小 */
+  padding: 12px 16px; /* 调整内边距 */
+  cursor: pointer; /* 添加手型光标 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* 自定义折叠面板样式 */
-.ant-collapse-custom {
-  border: 1px solid var(--section-border-color); /* 确保自定义折叠面板边框颜色一致 */
-  border-radius: 12px;
-  overflow: hidden;
+.custom-collapse-content-box {
+  padding: 16px; /* 调整内边距 */
 }
 
-/* 滑块样式 */
-.ant-slider-track {
-  background-color: var(--slider-fill-color) !important;
+/* 滑块样式 - 针对原生 input[type="range"] */
+.effect-slider::-webkit-slider-runnable-track {
+  background-color: var(--input-border-color); /* 与 show/style.css 的 --border-color 保持一致 */
+  border-radius: 5px;
+  height: 6px; /* 与 show/style.css 的 input[type="range"] 高度一致 */
 }
 
-.ant-slider-handle {
-  border-color: var(--slider-fill-color) !important;
+.effect-slider::-webkit-slider-thumb {
+  background-color: var(--primary-color); /* 与 show/style.css 的 --primary-color 保持一致 */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -7px; /* 调整以居中 */
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* 模态框样式 */
+.effect-slider::-moz-range-track {
+  background-color: var(--input-border-color); /* 与 show/style.css 的 --border-color 保持一致 */
+  border-radius: 5px;
+  height: 6px; /* 与 show/style.css 的 input[type="range"] 高度一致 */
+}
+
+.effect-slider::-moz-range-thumb {
+  background-color: var(--primary-color); /* 与 show/style.css 的 --primary-color 保持一致 */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -7px; /* 调整以居中 */
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 模态框样式 - 保持 Ant Design 模态框样式 */
 .ant-modal-content {
   border-radius: 16px;
   overflow: hidden;
@@ -131,11 +162,10 @@ body {
   width: 100%;
   margin-bottom: 15px;
   padding: 10px;
-  border: 1px solid var(--card-bg-color);
   border-radius: 8px;
   background-color: var(--effect-group-bg); /* Ensure background is set */
   box-shadow: none; /* Remove box-shadow as per image */
-  border: 1px solid var(--card-bg-color); /* Ensure border is consistent */
+  border: 1px solid var(--effect-group-border); /* 确保边框存在 */
 }
 
 .effect-control-row {
@@ -150,7 +180,7 @@ body {
   flex-shrink: 0; /* 防止标签被压缩 */
   margin-right: 15px;
   font-weight: 500;
-  color: var(--secondary-text-color);
+  color: var(--text-color); /* 修改为主要文本颜色 */
   min-width: 80px; /* 确保标签有足够的宽度 */
 }
 
@@ -159,18 +189,22 @@ body {
   margin: 0 15px !important; /* 调整滑块左右间距 */
 }
 
-.effect-group .ant-input-number {
+/* 针对原生 input[type="number"] 和 select */
+.effect-group input[type="number"],
+.effect-group select.effect-select {
   width: 80px; /* 固定输入框宽度 */
   flex-shrink: 0;
   background-color: var(--card-bg-color); /* Ensure input background matches card */
   color: var(--text-color); /* Ensure input text color matches general text */
   border: 1px solid var(--input-border-color); /* Ensure input border matches general input */
+  padding: 8px; /* 调整内边距 */
+  border-radius: 4px; /* 调整圆角 */
 }
 
 .slider-value-display {
   text-align: center;
   font-size: 14px;
-  color: var(--link-accent-color);
+  color: var(--text-color); /* 修改为主要文本颜色 */
   font-weight: 600;
   margin-top: 5px;
   background-color: var(--card-bg-color); /* 确保背景与卡片背景色一致 */
@@ -179,34 +213,36 @@ body {
 }
 
 /* 增强效果和艺术效果按钮组的布局 */
-  .controls {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    background-color: var(--card-bg-color); /* 确保背景色在移动视图中应用 */
-    padding: 10px; /* 确保内边距在移动视图中应用 */
-    border-radius: 8px; /* 确保边框圆角在移动视图中应用 */
-    border: 1px solid var(--card-bg-color); /* 确保边框在移动视图中应用 */
-  }
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background-color: var(--card-bg-color); /* 确保背景色在移动视图中应用 */
+  padding: 10px; /* 确保内边距在移动视图中应用 */
+  border-radius: 8px; /* 确保边框圆角在移动视图中应用 */
+  border: 1px solid var(--card-bg-color); /* 确保边框在移动视图中应用 */
+}
 
-  .controls button,
-  .controls .effect-group {
-    width: 100%;
-    box-sizing: border-box;
-  }
+.controls button,
+.controls .effect-group {
+  width: auto; /* 按钮宽度自适应 */
+  box-sizing: border-box;
+}
 
 .effect-button {
-  background-color: var(--card-bg-color); /* 使用卡片背景色 */
-  border-color: var(--card-bg-color); /* 使用效果组边框颜色 */
-  color: var(--link-accent-color); /* 使用强调色作为文本颜色 */
+  background-color: rgba(52, 152, 219, 0.1); /* 与 show/style.css 的 effect-button 背景一致 */
+  border: none; /* 移除边框 */
+  color: var(--primary-color); /* 与 show/style.css 的 effect-button 文本颜色一致 */
   transition: all 0.3s ease;
+  padding: 10px 15px; /* 调整按钮内边距 */
+  border-radius: 6px; /* 调整按钮圆角 */
+  cursor: pointer;
 }
 
 .effect-button:hover {
-  background-color: var(--effect-group-bg); /* 悬停时使用效果组背景色 */
-  border-color: var(--card-bg-color); /* 悬停时使用效果组边框颜色 */
-  color: var(--link-accent-color);
+  background-color: rgba(52, 152, 219, 0.2); /* 与 show/style.css 的 effect-button:hover 背景一致 */
   transform: translateY(-2px);
+  border: none; /* 确保悬停时也没有边框 */
 }
 
 .effect-button.active {
@@ -222,7 +258,7 @@ body {
   background: linear-gradient(90deg, var(--effect-button-active-gradient-end) 0%, var(--effect-button-active-gradient-start) 100%);
 }
 
-/* Select 组件样式 */
+/* Select 组件样式 - 针对原生 select */
 .effect-select {
   flex: 1;
   margin-left: 15px; /* 与标签的间距 */
@@ -231,12 +267,45 @@ body {
   border: 1px solid var(--input-border-color); /* Ensure select border matches general input */
   outline: none !important; /* 移除焦点时的轮廓 */
   box-shadow: none !important; /* 移除焦点时的阴影 */
+  padding: 8px; /* 调整内边距 */
+  border-radius: 4px; /* 调整圆角 */
 }
 
-.effect-select .ant-select-arrow {
-  right: 11px !important; /* 调整箭头位置到右侧，并提高优先级 */
-  transform: translateY(-50%) !important; /* 垂直居中，并提高优先级 */
-  color: var(--secondary-text-color); /* Adjust arrow color */
+/* 针对原生 checkbox */
+input[type="checkbox"] {
+  margin-right: 8px;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin-bottom: 0;
+  /* 自定义 checkbox 样式 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 3px;
+  background-color: var(--card-bg-color);
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--link-accent-color);
+  border-color: var(--link-accent-color);
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✔';
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* 响应式调整 */
@@ -258,7 +327,7 @@ body {
     margin: 0 10px 0 0 !important; /* 调整滑块右侧间距 */
   }
 
-  .effect-group .ant-input-number {
+  .effect-group input[type="number"] {
     width: 60px; /* 缩小输入框宽度 */
   }
 
@@ -268,7 +337,7 @@ body {
     margin-top: 5px; /* 与上方元素的间距 */
   }
 
-  /* 手机端夜览开关大小调整 */
+  /* 手机端夜览开关大小调整 - 保持 Ant Design Switch 样式 */
   .ant-switch {
     width: 44px !important; /* 减小开关宽度 */
     min-width: 44px !important; /* 确保最小宽度也被覆盖 */
@@ -291,4 +360,36 @@ body {
     font-size: 12px !important; /* 减小文字大小 */
     margin: 0 5px !important; /* 调整文字边距 */
   }
+}
+
+/* 修复夜览模式下的功能区边框问题 */
+/* 移除 Ant Design 默认边框 */
+body.dark-mode .ant-collapse-custom > .ant-collapse-item > .ant-collapse-header,
+body.dark-mode .ant-collapse-custom > .ant-collapse-item > .ant-collapse-content,
+body.dark-mode .ant-collapse-custom > .ant-collapse-item {
+  border: none !important;
+}
+
+body.dark-mode .ant-collapse-custom > .ant-collapse-item {
+  border-bottom: none !important;
+}
+
+/* 针对 Ant Design Collapse Panel 内部的 effect-group 提高优先级 */
+body.dark-mode .ant-collapse-content-box .effect-group {
+  border: 1px solid var(--effect-group-border) !important; /* 使用新的变量 */
+}
+
+/* 确保 InputNumber 内部的 input 元素边框在夜览模式下正确 */
+body.dark-mode .effect-group input[type="number"] {
+  border-color: var(--input-border-color) !important; /* 使用新的变量 */
+}
+
+/* 确保原生 select 元素边框在夜览模式下正确 */
+body.dark-mode .effect-group select.effect-select {
+  border-color: var(--input-border-color) !important; /* 使用新的变量 */
+}
+
+/* 确保原生 input[type="text"] 元素边框在夜览模式下正确 */
+body.dark-mode .effect-group input[type="text"] {
+  border-color: var(--input-border-color) !important; /* 使用新的变量 */
 }

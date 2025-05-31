@@ -58,58 +58,58 @@
 /* Dark Mode Colors */
 body.dark-mode {
   --primary-bg-color: #202020;
-  --card-bg-color: #2C3E50;
-  --top-navbar-gradient-start: #4A90E2;
-  --top-navbar-gradient-end: #8E44AD;
-  --text-color: #E0E0E0;
-  --heading-color: #E0E0E0;
-  --secondary-text-color: #A0A0A0;
-  --link-accent-color: #4A90E2;
-  --link-hover-color: #3498DB;
-  --button-bg-gradient-start: #4A90E2;
-  --button-bg-gradient-end: #8E44AD;
+  --card-bg-color: #222831; /* 与 show/style.css 的 --card-bg 保持一致 */
+  --top-navbar-gradient-start: #3498db; /* 与 show/style.css 的 --primary-color 保持一致 */
+  --top-navbar-gradient-end: #9b59b6; /* 与 show/style.css 的 --accent-color 保持一致 */
+  --text-color: #e0e0e0; /* 与 show/style.css 的 --text-color 保持一致 */
+  --heading-color: #e0e0e0; /* 与 show/style.css 的 --text-color 保持一致 */
+  --secondary-text-color: #a0a0a0; /* 与 show/style.css 的 --text-secondary 保持一致 */
+  --link-accent-color: #3498db; /* 与 show/style.css 的 --primary-color 保持一致 */
+  --link-hover-color: #2980b9; /* 与 show/style.css 的 --primary-hover 保持一致 */
+  --button-bg-gradient-start: #3498db; /* 与 show/style.css 的 --primary-color 保持一致 */
+  --button-bg-gradient-end: #9b59b6; /* 与 show/style.css 的 --accent-color 保持一致 */
   --button-text-color: #FFFFFF;
-  --button-shadow-color: rgba(74, 144, 226, 0.2);
-  --button-hover-shadow-color: rgba(74, 144, 226, 0.3);
-  --secondary-button-bg-color: #3498DB;
+  --button-shadow-color: rgba(0, 0, 0, 0.3); /* 与 show/style.css 的 --shadow 保持一致 */
+  --button-hover-shadow-color: rgba(0, 0, 0, 0.4); /* 调整为更深的阴影 */
+  --secondary-button-bg-color: #34495e; /* 与 show/style.css 的 --secondary-color 保持一致 */
   --secondary-button-text-color: #FFFFFF;
-  --input-border-color: var(--card-bg-color);
-  --input-focus-border-color: #4A90E2;
-  --input-focus-shadow-color: rgba(74, 144, 226, 0.2);
-  --slider-track-color: #606060;
-  --slider-fill-color: #4A90E2;
-  --toggle-track-bg-color: #606060;
+  --input-border-color: #2d3743; /* 与 show/style.css 的 --border-color 保持一致 */
+  --input-focus-border-color: #3498db; /* 与 show/style.css 的 --primary-color 保持一致 */
+  --input-focus-shadow-color: rgba(52, 152, 219, 0.2); /* 与 show/style.css 的 box-shadow 保持一致 */
+  --slider-track-color: #2d3743; /* 与 show/style.css 的 --border-color 保持一致 */
+  --slider-fill-color: #3498db; /* 与 show/style.css 的 --primary-color 保持一致 */
+  --toggle-track-bg-color: #2d3743; /* 与 show/style.css 的 --border-color 保持一致 */
   --toggle-thumb-color: #FFFFFF;
-  --toggle-active-color: #4A90E2;
-  --section-border-color: var(--card-bg-color);
-  --section-box-shadow-color: rgba(0, 0, 0, 0.15);
-  --section-hover-shadow-color: rgba(0, 0, 0, 0.25);
-  --section-title-shadow-color: rgba(0, 0, 0, 0.2);
-  --upload-result-bg: #2C3E50;
-  --upload-result-border-top: var(--card-bg-color);
-  --image-border-color: var(--card-bg-color);
-  --image-bg-color: #2C3E50;
-  --image-gallery-bg: #2C3E50;
-  --image-gallery-border: var(--card-bg-color);
-  --image-gallery-hover-border: #4A90E2;
-  --image-gallery-hover-shadow: rgba(0, 0, 0, 0.2);
-  --image-editor-bg: #2C3E50;
-  --image-editor-border: var(--card-bg-color);
-  --image-preview-bg: #2C3E50;
-  --image-preview-shadow: rgba(0, 0, 0, 0.15);
-  --image-detail-viewer-bg: #2C3E50;
-  --image-detail-viewer-border: var(--card-bg-color);
-  --controls-border-bottom: var(--card-bg-color);
-  --effect-button-gradient-start: #2C3E50;
-  --effect-button-gradient-end: #2C3E50;
-  --effect-button-shadow-color: rgba(0, 0, 0, 0.1);
-  --effect-button-hover-shadow-color: rgba(0, 0, 0, 0.15);
-  --effect-button-active-gradient-start: #4A90E2;
-  --effect-button-active-gradient-end: #4A90E2;
-  --effect-button-active-shadow-color: rgba(74, 144, 226, 0.3);
-  --effect-group-bg: #253545; /* 更深的背景色 */
-  --effect-group-border: var(--card-bg-color); /* 与卡片背景色一致的边框 */
-  --effect-group-shadow: rgba(0, 0, 0, 0.2); /* 更明显的阴影 */
+  --toggle-active-color: #3498db; /* 与 show/style.css 的 --primary-color 保持一致 */
+  --section-border-color: #2d3743; /* 与 show/style.css 的 --border-color 保持一致 */
+  --section-box-shadow-color: rgba(0, 0, 0, 0.3); /* 与 show/style.css 的 --shadow 保持一致 */
+  --section-hover-shadow-color: rgba(0, 0, 0, 0.4); /* 调整为更深的阴影 */
+  --section-title-shadow-color: rgba(0, 0, 0, 0.3); /* 调整为更深的阴影 */
+  --upload-result-bg: rgba(52, 152, 219, 0.05); /* 与 show/style.css 的 result-container 背景一致 */
+  --upload-result-border-top: rgba(52, 152, 219, 0.1); /* 与 show/style.css 的 result-container 边框一致 */
+  --image-border-color: #2d3743; /* 与 show/style.css 的 --border-color 保持一致 */
+  --image-bg-color: #222831; /* 与 show/style.css 的 --card-bg 保持一致 */
+  --image-gallery-bg: #222831; /* 与 show/style.css 的 --card-bg 保持一致 */
+  --image-gallery-border: #2d3743; /* 与 show/style.css 的 --border-color 保持一致 */
+  --image-gallery-hover-border: #3498db; /* 与 show/style.css 的 --primary-color 保持一致 */
+  --image-gallery-hover-shadow: rgba(0, 0, 0, 0.2); /* 与 show/style.css 的 image-gallery img:hover 阴影一致 */
+  --image-editor-bg: #222831; /* 与 show/style.css 的 --card-bg 保持一致 */
+  --image-editor-border: #2d3743; /* 与 show/style.css 的 --border-color 保持一致 */
+  --image-preview-bg: #2d3743; /* 与 show/style.css 的 preview-container 背景一致 */
+  --image-preview-shadow: rgba(0, 0, 0, 0.15); /* 调整为更深的阴影 */
+  --image-detail-viewer-bg: #222831; /* 与 show/style.css 的 --card-bg 保持一致 */
+  --image-detail-viewer-border: #2d3743; /* 与 show/style.css 的 --border-color 保持一致 */
+  --controls-border-bottom: #2d3743; /* 与 show/style.css 的 --border-color 保持一致 */
+  --effect-button-gradient-start: rgba(52, 152, 219, 0.1); /* 与 show/style.css 的 effect-button 背景一致 */
+  --effect-button-gradient-end: rgba(52, 152, 219, 0.1); /* 与 show/style.css 的 effect-button 背景一致 */
+  --effect-button-shadow-color: rgba(0, 0, 0, 0.1); /* 调整为更深的阴影 */
+  --effect-button-hover-shadow-color: rgba(0, 0, 0, 0.15); /* 调整为更深的阴影 */
+  --effect-button-active-gradient-start: #3498db; /* 与 show/style.css 的 --primary-color 保持一致 */
+  --effect-button-active-gradient-end: #3498db; /* 与 show/style.css 的 --primary-color 保持一致 */
+  --effect-button-active-shadow-color: rgba(52, 152, 219, 0.3); /* 与 show/style.css 的 effect-button.active 阴影一致 */
+  --effect-group-bg: #222831; /* 与 show/style.css 的 --card-bg 保持一致 */
+  --effect-group-border: var(--input-border-color); /* 与 show/style.css 的 --border-color 保持一致 */
+  --effect-group-shadow: rgba(0, 0, 0, 0.2); /* 与 show/style.css 的 --shadow 保持一致 */
 }
 
 body {
@@ -175,7 +175,6 @@ input[type="text"],
 button {
   padding: 10px 16px;
   margin-bottom: 12px;
-  border: 1px solid var(--input-border-color);
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
