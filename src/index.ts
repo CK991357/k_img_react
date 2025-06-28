@@ -128,6 +128,11 @@ async function handleAuthenticatedRequest(request: Request, env: { CLOUDINARY_CL
         return handleSaveTransformedImage(request, CLOUD_NAME, API_KEY, API_SECRET);
       }
       break;
+    case '/api/folders': // 新增处理 /api/folders 路径
+      if (method === 'GET') {
+        return handleGetFolders(request, CLOUD_NAME, API_KEY, API_SECRET);
+      }
+      break;
     // 移除原有的 case '/api/delete-image'，因为已经在上面处理了
   }
 
@@ -141,6 +146,51 @@ async function handleAuthenticatedRequest(request: Request, env: { CLOUDINARY_CL
     statusText: assetResponse.statusText,
     headers: newHeaders,
   });
+}
+
+/**
+ * 从 Cloudinary 获取文件夹列表
+ * @param {Request} request - 传入的 Request 对象。
+ * @param {string} cloudName - Cloudinary 云名称。
+ * @param {string} apiKey - Cloudinary API Key。
+ * @param {string} apiSecret - Cloudinary API Secret。
+ * @returns {Response} - 包含文件夹列表的 Response 对象。
+ */
+async function handleGetFolders(request: Request, cloudName: string, apiKey: string, apiSecret: string): Promise<Response> {
+  try {
+    const authHeader = btoa(`${apiKey}:${apiSecret}`);
+    const foldersUrl = `https://api.cloudinary.com/v1_1/${cloudName}/folders`;
+
+    const response = await fetch(foldersUrl, {
+      method: "GET",
+      headers: {
+        "Authorization": `Basic ${authHeader}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    const result: any = await response.json();
+
+    if (response.ok) {
+      console.log("Cloudinary 获取文件夹列表成功:", result);
+      return new Response(JSON.stringify(result), {
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "https://k-edit.10110531.xyz" },
+        status: 200
+      });
+    } else {
+      console.error("Cloudinary 获取文件夹列表失败:", result);
+      return new Response(JSON.stringify({ error: "Failed to fetch folders from Cloudinary.", details: result.error?.message || "Unknown error" }), {
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "https://k-edit.10110531.xyz" },
+        status: response.status
+      });
+    }
+  } catch (error: any) {
+    console.error("获取文件夹列表失败:", error);
+    return new Response(JSON.stringify({ error: "Failed to fetch folders.", details: error.message }), {
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "https://k-edit.10110531.xyz" },
+      status: 500
+    });
+  }
 }
 
 /**
