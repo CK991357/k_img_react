@@ -13,7 +13,7 @@ const { Text, Link } = Typography;
  * @param {function} props.setIsDetailModalOpen - 设置图片详情模态框打开状态的回调函数
  * @returns {JSX.Element} - 图片详情部分的 JSX 元素
  */
-function ImageDetailSection({ selectedPublicId, originalImageUrl, isDetailModalOpen, setIsDetailModalOpen, tags, onDeleteSuccess }) { // 添加 tags 和 onDeleteSuccess
+function ImageDetailSection({ selectedPublicId, originalImageUrl, isDetailModalOpen, setIsDetailModalOpen, onDeleteSuccess }) {
   /**
    * 处理模态框关闭事件，只关闭模态框
    * @returns {void}
@@ -93,12 +93,6 @@ function ImageDetailSection({ selectedPublicId, originalImageUrl, isDetailModalO
         )}
         <Text strong style={{ color: 'var(--text-color)' }}>Public ID:</Text>
         <Text copyable style={{ color: 'var(--text-color)' }}>{selectedPublicId || 'N/A'}</Text>
-        {tags && tags.length > 0 && ( // 检查tags是否存在且不为空
-          <>
-            <Text strong style={{ color: 'var(--text-color)' }}>Tags:</Text>
-            <Text style={{ color: 'var(--text-color)' }}>{tags.join(', ')}</Text>
-          </>
-        )}
         <Text strong style={{ color: 'var(--text-color)' }}>URL:</Text>
         <Link href={originalImageUrl || '#'} target="_blank" rel="noopener noreferrer" copyable style={{ color: 'var(--link-accent-color)' }}>
           {originalImageUrl || 'N/A'}

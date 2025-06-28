@@ -1,7 +1,7 @@
 import { DeleteOutlined, FolderOutlined, SearchOutlined } from '@ant-design/icons';
-import { Button, Card, Empty, Input, List, message, Space, Spin } from 'antd';
+import { Button, Card, Empty, Input, List, message, Select, Space, Spin } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
-import { deleteImage, fetchImages } from '../api';
+import { deleteImage, fetchFolders, fetchImages } from '../api';
 
 const { useMessage } = message;
 const { Meta } = Card;
@@ -17,13 +17,14 @@ const { Meta } = Card;
  * @param {function} props.setIsDetailModalOpen - 设置图片详情模态框打开状态的回调函数
  * @returns {JSX.Element} - 图片画廊部分的 JSX 元素
  */
-function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, setOriginalImageUrl, refreshTrigger, setIsDetailModalOpen, setSelectedImageTags }) {
+function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, setOriginalImageUrl, refreshTrigger, setIsDetailModalOpen }) {
   const [messageApi, contextHolder] = useMessage();
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [folderInput, setFolderInput] = useState('');
   const [searchTagInput, setSearchTagInput] = useState('');
+  const [folders, setFolders] = useState([]); // 新增文件夹列表状态
 
   /**
    * 从后端获取图片列表并显示在画廊中
@@ -52,6 +53,22 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
   }, [fetchAndDisplayImages, currentFolder, refreshTrigger]);
 
   /**
+   * 获取文件夹列表
+   */
+  useEffect(() => {
+    const getFolders = async () => {
+      try {
+        const fetchedFolders = await fetchFolders();
+        // 添加“所有图片”选项
+        setFolders([{ label: '所有图片', value: '' }, ...fetchedFolders.map(f => ({ label: f, value: f }))]);
+      } catch (err) {
+        messageApi.error(`获取文件夹列表失败: ${err.message}`);
+      }
+    };
+    getFolders();
+  }, [messageApi]);
+
+  /**
    * 处理图片点击事件，设置选中图片信息
    * @param {object} image - 被点击的图片对象
    * @returns {void}
@@ -59,7 +76,6 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
   const handleImageClick = (image) => {
     setSelectedPublicId(image.public_id);
     setOriginalImageUrl(image.secure_url);
-    setSelectedImageTags(image.tags); // 传递 tags
     setIsDetailModalOpen(true);
   };
 
@@ -94,6 +110,24 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
         图片画廊
       </h2>
       <div style={{ marginBottom: '20px' }}>
+        <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start', marginBottom: '16px' }}>
+          <span style={{ whiteSpace: 'nowrap', fontWeight: 500, color: 'var(--secondary-text-color)' }}>选择文件夹: </span>
+          <Select
+            showSearch
+            placeholder="选择或搜索文件夹"
+            optionFilterProp="children"
+            onChange={(value) => {
+              fetchAndDisplayImages(value);
+              setSearchTagInput(''); // 清除标签搜索
+            }}
+            value={currentFolder || ''} // 如果 currentFolder 为空，则显示“所有图片”
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
+            options={folders}
+            style={{ flexGrow: 1, minWidth: '150px', maxWidth: 'calc(100% - 100px)' }}
+          />
+        </Space>
         <Space size={[8, 16]} wrap style={{ width: '100%', justifyContent: 'flex-start' }}>
           <span style={{ whiteSpace: 'nowrap', fontWeight: 500, color: 'var(--secondary-text-color)' }}>当前文件夹: </span>
           <Input

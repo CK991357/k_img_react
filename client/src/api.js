@@ -147,3 +147,25 @@ export async function deleteImage(publicId) {
     throw error;
   }
 }
+
+/**
+ * 从 Cloudinary 获取所有根文件夹列表
+ * @returns {Promise<string[]>} - 文件夹名称数组
+ * @throws {Error} - 如果获取失败
+ */
+export async function fetchFolders() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/folders`);
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || '获取文件夹列表失败');
+    }
+    // Cloudinary API 返回的文件夹列表可能包含嵌套结构，这里我们只取根文件夹名称
+    // 假设返回的结构是 { folders: [{ name: 'folder1' }, { name: 'folder2' }] }
+    return result.folders.map(folder => folder.name);
+  } catch (error) {
+    console.error('获取文件夹列表错误:', error);
+    throw error;
+  }
+}
