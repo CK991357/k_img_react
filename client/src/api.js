@@ -163,7 +163,11 @@ export async function fetchFolders() {
     }
     // Cloudinary API 返回的文件夹列表可能包含嵌套结构，这里我们只取根文件夹名称
     // 假设返回的结构是 { folders: [{ name: 'folder1' }, { name: 'folder2' }] }
-    return result.folders.map(folder => folder.name);
+    // 确保 result.folders 存在且是数组，否则返回空数组
+    if (result && Array.isArray(result.folders)) {
+      return result.folders.map(folder => folder.name);
+    }
+    return [];
   } catch (error) {
     console.error('获取文件夹列表错误:', error);
     throw error;

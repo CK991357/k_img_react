@@ -59,8 +59,12 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
     const getFolders = async () => {
       try {
         const fetchedFolders = await fetchFolders();
-        // 添加“所有图片”选项
-        setFolders([{ label: '所有图片', value: '' }, ...fetchedFolders.map(f => ({ label: f, value: f }))]);
+        // 确保 fetchedFolders 是一个数组，并添加“所有图片”选项
+        if (Array.isArray(fetchedFolders)) {
+          setFolders([{ label: '所有图片', value: '' }, ...fetchedFolders.map(f => ({ label: f, value: f }))]);
+        } else {
+          setFolders([{ label: '所有图片', value: '' }]); // 如果不是数组，只保留“所有图片”选项
+        }
       } catch (err) {
         messageApi.error(`获取文件夹列表失败: ${err.message}`);
       }
