@@ -156,11 +156,21 @@ export async function deleteImage(publicId) {
 export async function fetchFolders() {
   try {
     const response = await fetch(`${API_BASE_URL}/api/folders`);
-    const result = await response.json();
-
+    
     if (!response.ok) {
-      throw new Error(result.error || '获取文件夹列表失败');
+      const errorText = await response.text(); // 尝试获取非 JSON 错误信息
+      throw new Error(`获取文件夹列表失败: ${response.status} ${response.statusText} - ${errorText}`);
     }
+
+    let result;
+    try {
+      result = await response.json();
+    } catch (jsonError) {
+      const errorText = await response.text(); // 获取原始响应文本
+      console.error('解析 JSON 失败，原始响应:', errorText);
+      throw new Error(`获取文件夹列表失败: 无法解析响应为 JSON - ${jsonError.message}. 原始响应: ${errorText}`);
+    }
+    
     // Cloudinary API 返回的文件夹列表可能包含嵌套结构，这里我们只取根文件夹名称
     // 假设返回的结构是 { folders: [{ name: 'folder1' }, { name: 'folder2' }] }
     // 确保 result.folders 存在且是数组，否则返回空数组
