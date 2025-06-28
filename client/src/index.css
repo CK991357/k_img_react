@@ -578,6 +578,11 @@ a:hover {
   border-color: var(--input-border-color) !important;
 }
 
+/* 确保 Ant Design Upload 组件在暗黑模式下的文件列表文字颜色正确 */
+body.dark-mode .ant-upload-list-item-name {
+  color: var(--secondary-text-color) !important;
+}
+
 /* 确保 InputNumber 内部的数值颜色正确 */
 .ant-input-number-input {
   color: var(--text-color) !important;

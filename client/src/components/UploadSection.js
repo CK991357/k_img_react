@@ -95,7 +95,13 @@ function UploadSection({ onUploadSuccess }) {
     setUploadedCount(0);
     setTotalFiles(selectedFiles.length);
     setUploadErrors([]);
-    messageApi.loading(`正在批量上传 ${selectedFiles.length} 个文件...`, 0);
+    // 使用一个明确的key，并设置duration为0，表示需要手动关闭
+    messageApi.open({
+      key: 'bulk-upload-loading',
+      type: 'loading',
+      content: `正在批量上传 ${selectedFiles.length} 个文件...`,
+      duration: 0,
+    });
 
     const tagsArray = uploadTags.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
     const targetFolder = uploadFolder.trim() === '' ? 'worker_uploads' : uploadFolder;
@@ -104,11 +110,12 @@ function UploadSection({ onUploadSuccess }) {
       try {
         const result = await uploadImage(file, targetFolder, tagsArray);
         setUploadedCount(prev => prev + 1);
+        // 更新加载提示的进度
         messageApi.open({
-          key: 'bulk-upload-progress',
+          key: 'bulk-upload-loading',
           type: 'loading',
           content: `正在上传... (${index + 1}/${selectedFiles.length})`,
-          duration: 0,
+          duration: 0, // 保持duration为0，直到所有上传完成
         });
         return { status: 'fulfilled', value: result };
       } catch (error) {
@@ -119,15 +126,17 @@ function UploadSection({ onUploadSuccess }) {
 
     await Promise.allSettled(uploadPromises);
 
-    messageApi.destroy('bulk-upload-progress');
+    // 所有上传完成后，销毁加载提示
+    messageApi.destroy('bulk-upload-loading');
     setIsUploading(false);
 
+    // 根据上传结果显示最终提示，duration设置为默认值以便自动消失
     if (uploadErrors.length === 0) {
-      messageApi.success('所有文件批量上传成功！');
+      messageApi.success('所有文件批量上传成功！', 3); // 3秒后自动消失
     } else if (uploadErrors.length === selectedFiles.length) {
-      messageApi.error('所有文件批量上传失败！');
+      messageApi.error('所有文件批量上传失败！', 5); // 5秒后自动消失
     } else {
-      messageApi.warning(`部分文件上传成功，${uploadErrors.length} 个文件上传失败。`);
+      messageApi.warning(`部分文件上传成功，${uploadErrors.length} 个文件上传失败。`, 5); // 5秒后自动消失
     }
 
     if (onUploadSuccess) {
