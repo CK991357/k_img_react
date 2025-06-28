@@ -19,7 +19,7 @@ client/build/ # 忽略 client 目录下的 build 文件夹
 .env.test.local
 .env.production.local
 
-
+/backup
 
 npm-debug.log*
 yarn-debug.log*
