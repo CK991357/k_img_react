@@ -17,7 +17,7 @@ const { Meta } = Card;
  * @param {function} props.setIsDetailModalOpen - 设置图片详情模态框打开状态的回调函数
  * @returns {JSX.Element} - 图片画廊部分的 JSX 元素
  */
-function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, setOriginalImageUrl, refreshTrigger, setIsDetailModalOpen }) {
+function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, setOriginalImageUrl, refreshTrigger, setIsDetailModalOpen, setSelectedImageTags }) {
   const [messageApi, contextHolder] = useMessage();
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,6 +59,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
   const handleImageClick = (image) => {
     setSelectedPublicId(image.public_id);
     setOriginalImageUrl(image.secure_url);
+    setSelectedImageTags(image.tags); // 传递 tags
     setIsDetailModalOpen(true);
   };
 
@@ -140,7 +141,7 @@ function GallerySection({ currentFolder, setCurrentFolder, setSelectedPublicId, 
           <List
             grid={{
               gutter: 20,
-              xs: 1,
+              xs: 3, // 将 xs 从 1 修改为 3
               sm: 2,
               md: 3,
               lg: 4,

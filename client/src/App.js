@@ -14,6 +14,7 @@ function App() {
   const [currentFolder, setCurrentFolder] = useState('');
   const [selectedPublicId, setSelectedPublicId] = useState(null);
   const [originalImageUrl, setOriginalImageUrl] = useState(null);
+  const [selectedImageTags, setSelectedImageTags] = useState([]); // 新增 state
   const [refreshGallery, setRefreshGallery] = useState(0);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -129,15 +130,18 @@ function App() {
             setCurrentFolder={setCurrentFolder}
             setSelectedPublicId={setSelectedPublicId}
             setOriginalImageUrl={setOriginalImageUrl}
+            setSelectedImageTags={setSelectedImageTags} // 传递 setSelectedImageTags
             refreshTrigger={refreshGallery}
             setIsDetailModalOpen={setIsDetailModalOpen}
           />
-
+ 
           <ImageDetailSection
             selectedPublicId={selectedPublicId}
             originalImageUrl={originalImageUrl}
+            tags={selectedImageTags} // 传递 tags
             isDetailModalOpen={isDetailModalOpen}
             setIsDetailModalOpen={setIsDetailModalOpen}
+            onDeleteSuccess={handleUploadSuccess} // 复用 handleUploadSuccess 来刷新画廊
           />
 
           <ImageEditorSection

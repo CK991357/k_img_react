@@ -1,5 +1,6 @@
 
-import { Image, Modal, Space, Typography } from 'antd';
+import { Button, Image, message, Modal, Space, Typography } from 'antd'; // 添加 Button 和 message
+import { deleteImage } from '../api'; // 导入 deleteImage
 
 const { Text, Link } = Typography;
 
@@ -12,13 +13,50 @@ const { Text, Link } = Typography;
  * @param {function} props.setIsDetailModalOpen - 设置图片详情模态框打开状态的回调函数
  * @returns {JSX.Element} - 图片详情部分的 JSX 元素
  */
-function ImageDetailSection({ selectedPublicId, originalImageUrl, isDetailModalOpen, setIsDetailModalOpen }) {
+function ImageDetailSection({ selectedPublicId, originalImageUrl, isDetailModalOpen, setIsDetailModalOpen, tags, onDeleteSuccess }) { // 添加 tags 和 onDeleteSuccess
   /**
    * 处理模态框关闭事件，只关闭模态框
    * @returns {void}
    */
   const handleCancel = () => {
     setIsDetailModalOpen(false);
+  };
+
+  /**
+   * 处理删除图片
+   * @returns {Promise<void>}
+   */
+  const handleDelete = async () => {
+    if (!selectedPublicId) {
+      message.error('无法删除：Public ID 不存在。');
+      return;
+    }
+    try {
+      await deleteImage(selectedPublicId);
+      message.success('图片删除成功！');
+      setIsDetailModalOpen(false);
+      onDeleteSuccess(); // 通知父组件刷新
+    } catch (error) {
+      message.error(`删除图片失败: ${error.message}`);
+    }
+  };
+
+  /**
+   * 处理下载图片
+   * @returns {void}
+   */
+  const handleDownload = () => {
+    if (originalImageUrl) {
+      const link = document.createElement('a');
+      link.href = originalImageUrl;
+      link.download = selectedPublicId ? `${selectedPublicId}.jpg` : 'downloaded_image.jpg'; // 使用publicId作为文件名
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      message.success('图片下载中...');
+    } else {
+      message.error('无法下载：图片URL不存在。');
+    }
   };
 
   return (
@@ -35,7 +73,14 @@ function ImageDetailSection({ selectedPublicId, originalImageUrl, isDetailModalO
       }
       open={isDetailModalOpen}
       onCancel={handleCancel}
-      footer={null}
+      footer={[
+        <Button key="delete" danger onClick={handleDelete}>
+          删除图片
+        </Button>,
+        <Button key="download" type="primary" onClick={handleDownload}>
+          下载
+        </Button>,
+      ]}
       centered
     >
       <Space direction="vertical" style={{ width: '100%', alignItems: 'center' }}>
@@ -48,6 +93,12 @@ function ImageDetailSection({ selectedPublicId, originalImageUrl, isDetailModalO
         )}
         <Text strong style={{ color: 'var(--text-color)' }}>Public ID:</Text>
         <Text copyable style={{ color: 'var(--text-color)' }}>{selectedPublicId || 'N/A'}</Text>
+        {tags && tags.length > 0 && ( // 检查tags是否存在且不为空
+          <>
+            <Text strong style={{ color: 'var(--text-color)' }}>Tags:</Text>
+            <Text style={{ color: 'var(--text-color)' }}>{tags.join(', ')}</Text>
+          </>
+        )}
         <Text strong style={{ color: 'var(--text-color)' }}>URL:</Text>
         <Link href={originalImageUrl || '#'} target="_blank" rel="noopener noreferrer" copyable style={{ color: 'var(--link-accent-color)' }}>
           {originalImageUrl || 'N/A'}
